@@ -2,8 +2,8 @@ from BaseClasses import Entrance, Region
 from worlds.AutoWorld import World
 from typing import Dict, Optional, Callable
 
-from .Locations import DWLocation
-import Names
+from locations import DWLocation
+import names
 
 """
 CHEST MEMORY NOTES:
@@ -54,11 +54,11 @@ def create_regions(world: World, active_locations):
 
     # TODO: Add these memory locations?
     tantegel_throne_room_region_locations = {
-        Names.tantegel_throne_room_gold_chest,
-        Names.tantegel_throne_room_key_chest,
-        Names.tantegel_throne_room_torch_chest,
+        names.tantegel_throne_room_gold_chest,
+        names.tantegel_throne_room_key_chest,
+        names.tantegel_throne_room_torch_chest,
     }
-    tantegel_throne_room_region = create_region(world, active_locations, Names.tantegel_throne_room,
+    tantegel_throne_room_region = create_region(world, active_locations, names.tantegel_throne_room,
                                        tantegel_throne_room_region_locations)
 
 

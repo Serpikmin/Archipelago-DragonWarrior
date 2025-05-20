@@ -1,3 +1,4 @@
+import logging
 from worlds._bizhawk.client import BizHawkClient
 from NetUtils import NetworkItem
 from typing import List, Optional
@@ -5,7 +6,10 @@ import worlds._bizhawk as bizhawk
 
 from worlds._bizhawk.context import BizHawkClientContext
 
-EXPECTED_ROM_NAME= "DRAGON WARRIOR"
+nes_logger = logging.getLogger("NES")
+logger = logging.getLogger("Client")
+
+EXPECTED_ROM_NAME = b"DRAGON WARRIOR"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -18,12 +22,10 @@ class DragonWarriorClient(BizHawkClient):
         super().__init__()
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
-        from CommonClient import logger
-
         try:
             # Check ROM name/patch version
             rom_name_bytes = (
-                await bizhawk.read(ctx.bizhawk_ctx, [(0x1FFE0, 16, "PRG ROM")])
+                await bizhawk.read(ctx.bizhawk_ctx, [(0xFFF0, 14, "PRG ROM")])
             )[0]
 
             rom_name = bytes([byte for byte in rom_name_bytes if byte != 0]).decode(
