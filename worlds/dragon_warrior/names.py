@@ -14,7 +14,6 @@ herb = "Medicinal Herb"
 chimaera_wing = "Chimaera Wing"
 torch = "Torch"
 fairy_water = "Fairy Water"
-magic_key = "Magic Key"
 
 # Cursed Items
 cursed_belt = "Cursed Belt"
@@ -28,6 +27,7 @@ erdricks_token = "Erdrick's Token"
 staff_of_rain = "Staff of Rain"
 stones_of_sunlight = "Stones of Sunlight"
 rainbow_drop = "Rainbow Drop"
+magic_key = "Magic Key"
 
 ######################
 #    REGION NAMES    #
@@ -78,11 +78,11 @@ brecconary_equip_shop_4 = "Brecconary Equipment Shop"
 brecconary_equip_shop_5 = "Brecconary Equipment Shop"
 brecconary_equip_shop_6 = "Brecconary Equipment Shop"
 
-breconnary_item_shop_1 = "Brecconary Item Shop"
-breconnary_item_shop_2 = "Brecconary Item Shop"
-breconnary_item_shop_3 = "Brecconary Item Shop"
+brecconary_item_shop_1 = "Brecconary Item Shop"
+brecconary_item_shop_2 = "Brecconary Item Shop"
+brecconary_item_shop_3 = "Brecconary Item Shop"
 
-breconnary_fairy_water = "Brecconary Fairy Water Vendor"
+brecconary_fairy_water = "Brecconary Fairy Water Vendor"
 
 # Garinham
 garinham_equip_shop_1 = "Garinham - Equipment Shop"
@@ -128,7 +128,7 @@ rimuldar_inn_chest = "Rimuldar - Inn Chest"
 rimuldar_magic_key_vendor = "Rimuldar - Magic Key Vendor"
 
 # Hauksness
-hauksness_erdrick_armor = "Hauwsness - Erdrick's Armor"
+hauksness_erdrick_armor = "Hauksness - Erdrick's Armor"
 
 # Cantlin
 cantlin_equip_shop_1_1 = "Cantlin - Equipment Shop 1"
@@ -177,13 +177,13 @@ garins_grave_3_chest_1 = "Garin's Grave - Level 3 - Chest 1"
 garins_grave_3_chest_2 = "Garin's Grave - Level 3 - Chest 2"
 
 # Staff of Rain Shrine
-staff_of_rain = "Staff of Rain"
+staff_of_rain_location = "Staff of Rain"
 
 # Erdrick's Token
-erdrick_token = "Erdrick's Token"
+erdricks_token_location = "Erdrick's Token"
 
 # Rainbow Drop Shrine
-rainbow_drop = "Rainbow Drop"
+rainbow_drop_location = "Rainbow Drop"
 
 # Charlock Castle
 charlock_castle_erdrick_sword = "Charlock Castle - Erdrick's Sword"
