@@ -6,18 +6,28 @@ import names
 class DWLocation(Location):
     game = "Dragon Warrior"
 
+# Chests in DQ1 are stored as 4 bytes in the ROM, Map ID,X,Y,Contents. There is nothing stored to determine if a chest
+# ever been opened before if it contains gold or a consumable, only that certain chests with key items don't spawn if
+# the player has them in their inventory. However, data for chests opened on the CURRENT MAP are stored in the
+# NES System Bus from address 0x601C to 0x602B, where each two bytes are the X and Y coords of the checked chest. The
+# game compares these values with the current map to determine which chests to unload. Using this, we can set the
+# location checks for these chests to be a 3 byte ID, building it from the Map ID stored in the RAM at 0x0045 with
+# the two location bytes stored in the System Bus between 0x601C to 0x602B.
+
+# TODO: Figure out shops
+
 throne_room_locations = {
-    names.tantegel_throne_room_gold_chest: 0x001,
-    names.tantegel_throne_room_key_chest: 0x002,
-    names.tantegel_throne_room_torch_chest: 0x003,
+    names.tantegel_throne_room_gold_chest: 0x050404,
+    names.tantegel_throne_room_key_chest: 0x050601,
+    names.tantegel_throne_room_torch_chest: 0x050504,
 }
 
 tantegel_castle_locations = {
-    names.tantegel_castle_gold_chest_1: 0x004,
-    names.tantegel_castle_gold_chest_2: 0x005,
-    names.tantegel_castle_gold_chest_3: 0x006,
-    names.tantegel_castle_gold_chest_4: 0x007,
-    names.tantegel_castle_basement: 0x008,
+    names.tantegel_castle_gold_chest_1: 0x04010D,
+    names.tantegel_castle_gold_chest_2: 0x04010F,
+    names.tantegel_castle_gold_chest_3: 0x04020E,
+    names.tantegel_castle_gold_chest_4: 0x04030F,
+    names.tantegel_castle_basement: 0x0C0405,
 }
 
 brecconary_locations = {
@@ -48,9 +58,9 @@ garinham_locations = {
     names.garinham_item_shop_2: 0x01B,
     names.garinham_item_shop_3: 0x01C,
 
-    names.garinham_chest_1: 0x01D,
-    names.garinham_chest_2: 0x01E,
-    names.garinham_chest_3: 0x01F,
+    names.garinham_chest_1: 0x090805,
+    names.garinham_chest_2: 0x090806,
+    names.garinham_chest_3: 0x090905,
 }
 
 kol_locations = {
@@ -76,7 +86,7 @@ rimuldar_locations = {
     names.rimuldar_equip_shop_5: 0x02E,
     names.rimuldar_equip_shop_6: 0x02F,
 
-    names.rimuldar_inn_chest: 0x030,
+    names.rimuldar_inn_chest: 0x0B1817,
     names.rimuldar_magic_key_vendor: 0x031,
 }
 
@@ -107,38 +117,38 @@ cantlin_locations = {
 }
 
 mountain_cave_locations = {
-    names.mountain_cave_1_chest: 0x044,
+    names.mountain_cave_1_chest: 0x160D05,
 
-    names.mountain_cave_2_chest_1: 0x045,
-    names.mountain_cave_2_chest_2: 0x046,
-    names.mountain_cave_2_chest_3: 0x047,
-    names.mountain_cave_2_chest_4: 0x048,
+    names.mountain_cave_2_chest_1: 0x170106,
+    names.mountain_cave_2_chest_2: 0x170302,
+    names.mountain_cave_2_chest_3: 0x170202,
+    names.mountain_cave_2_chest_4: 0x170A09,
 }
 
 garins_grave_locations = {
-    names.garins_grave_1_chest_1: 0x049,
-    names.garins_grave_1_chest_2: 0x04A,
-    names.garins_grave_1_chest_3: 0x04B,
+    names.garins_grave_1_chest_1: 0x180B00,
+    names.garins_grave_1_chest_2: 0x180C00,
+    names.garins_grave_1_chest_3: 0x180D00,
 
-    names.garins_grave_3_chest_1: 0x04C,
-    names.garins_grave_3_chest_1: 0x04D,
+    names.garins_grave_3_chest_1: 0x1A0101,
+    names.garins_grave_3_chest_2: 0x1A0D06,
 }
 
 charlock_locations = {
-    names.charlock_castle_erdrick_sword: 0x04E,
+    names.charlock_castle_erdrick_sword: 0x100505,
 
-    names.charlock_castle_chest_1: 0x04F,
-    names.charlock_castle_chest_2: 0x050,
-    names.charlock_castle_chest_3: 0x051,
-    names.charlock_castle_chest_4: 0x052,
-    names.charlock_castle_chest_5: 0x053,
-    names.charlock_castle_chest_6: 0x054,
+    names.charlock_castle_chest_1: 0x140B0B,
+    names.charlock_castle_chest_2: 0x140B0C,
+    names.charlock_castle_chest_3: 0x140B0D,
+    names.charlock_castle_chest_4: 0x140C0C,
+    names.charlock_castle_chest_5: 0x140C0D,
+    names.charlock_castle_chest_6: 0x140D0D,
 }
 
 misc_locations = {
     names.hauksness_erdrick_armor: 0x055,
-    names.erdrick_tablet: 0x056,
-    names.staff_of_rain_location: 0x057,
+    names.erdrick_tablet: 0x1D0903,
+    names.staff_of_rain_location: 0x0D0304,
     names.erdricks_token_location: 0x058,
     names.rainbow_drop_location: 0x059
 }
