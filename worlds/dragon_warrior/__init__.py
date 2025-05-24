@@ -1,9 +1,12 @@
 import threading
 from typing import Any, Dict, List, Optional
 
-from items import DWItem
+import names
+from items import DWItem, item_table, cursed_table, filler_table
+from locations import location_table
+from regions import create_regions, connect_regions
 import settings
-from BaseClasses import Item, Location, MultiWorld, Tutorial
+from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 from rom import DRAGON_WARRIOR_HASH
 
@@ -50,31 +53,45 @@ class DragonWarriorWorld(World):
         super().__init__(multiworld, player)
 
     def create_regions(self) -> None:
-        pass # TODO
+        create_regions(self)
+        connect_regions(self)
 
-    def create_item(self, name: str) -> DWItem:
-        pass # TODO
+        itempool = []
+
+        total_locations = len(location_table)
+
+        itempool += [self.create_item(names.silver_harp), 
+                     self.create_item(names.staff_of_rain), 
+                     self.create_item(names.stones_of_sunlight), 
+                     self.create_item(names.magic_key)]
+
+        while len(itempool) < len(total_locations):
+            itempool += [self.create_item(self.get_filler_item_name())]
+
+        self.multiworld.itempool += itempool
+
+
+    def create_item(self, name: str, force_non_progression=False) -> Item:
+        data = item_table[name]
+
+        if force_non_progression:
+            classification = ItemClassification.filler
+        elif data.progression:
+            classification = ItemClassification.progression
+        else:
+            classification = ItemClassification.filler
+
+        created_item = DWItem(name, classification, data.code, self.player)
+
+        return created_item
 
     def get_filler_item_name(self) -> str:
-        pass # TODO
-
-    def create_items(self) -> None:
-        pass # TODO
-
-    def generate_early(self) -> None:
-        pass # TODO
+        return self.multiworld.random.choice(list(cursed_table.keys() + filler_table.keys()))
 
     def generate_basic(self) -> None:
         pass # TODO
 
-    def fill_hook(self, 
-                  progitempool: List["Item"], 
-                  usefulitempool: List["Item"], 
-                  filleritempool: List["Item"], 
-                  fill_locations: List["Location"]) -> None:
-        pass # TODO
-
-    def generate_output(self, output_directory: str) -> None:
+    def set_rules(self):
         pass # TODO
 
     def fill_slot_data(self) -> Dict[str, Any]:
