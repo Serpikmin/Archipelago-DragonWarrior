@@ -33,13 +33,15 @@ magic_key = "Magic Key"
 #    REGION NAMES    #
 ######################
 
+overworld = "Overworld"
 tantegel_throne_room = "Tantegel Throne Room Region"
 tantegel_castle = "Tantegel Castle Region"
-tantegel_basement = "Tantegel Basement Region"
 breconnary = "Brecconary Region"
 garinham = "Garinham Region"
+garinham_keys = "Garinham Region - Keys Required"
 kol = "Kol Region"
 rimuldar = "Rimuldar Region"
+rimuldar_keys = "Rimuldar Region - Keys Required"
 hauksness = "Hauksness Region"
 cantlin = "Cantlin Region"
 erdricks_cave = "Erdrick's Cave Region"

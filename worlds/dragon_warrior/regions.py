@@ -2,7 +2,7 @@ from BaseClasses import Entrance, Region
 from worlds.AutoWorld import World
 from typing import Dict, Optional, Callable
 
-from locations import DWLocation
+import locations
 import names
 
 """
@@ -49,33 +49,108 @@ TODO: Find where code for opening chests is and hijack to not grant chest conten
 as well as send data to the client regarding which check was opened
 """
 
-def create_regions(world: World, active_locations):
-    menu_region = create_region(world, active_locations, 'Menu', None)
+class DWRegion(Region):
+    game = "Dragon Warrior"
 
-    # TODO: Add these memory locations?
-    tantegel_throne_room_region_locations = {
-        names.tantegel_throne_room_gold_chest,
-        names.tantegel_throne_room_key_chest,
-        names.tantegel_throne_room_torch_chest,
-    }
-    tantegel_throne_room_region = create_region(world, active_locations, names.tantegel_throne_room,
-                                       tantegel_throne_room_region_locations)
+def create_regions(world: World) -> None:
+    menu_region = create_region(world, 'Menu', None)
+
+    overworld_region = create_region(world, names.overworld, {})
+
+    tantegel_throne_room_region = create_region(world, names.tantegel_throne_room, locations.throne_room_locations)
+    
+    tantegel_castle_region = create_region(world, names.tantegel_castle, locations.tantegel_castle_locations)
+
+    brecconary_region = create_region(world, names.breconnary, locations.brecconary_locations)
+
+    garinham_region = create_region(world, names.garinham, locations.garinham_locations)
+
+    garinham_key_region = create_region(world, names.garinham_keys, locations.garinham_key_locations)
+
+    kol_region = create_region(world, names.kol, locations.kol_locations)
+
+    rimuldar_region = create_region(world, names.rimuldar, locations.rimuldar_locations)    
+
+    rimuldar_key_region = create_region(world, names.rimuldar_keys, locations.rimuldar_key_locations)
+
+    cantlin_region = create_region(world, names.cantlin, locations.cantlin_locations)
+
+    mountain_cave_region = create_region(world, names.mountain_cave, locations.mountain_cave_locations)
+
+    garins_grave_region = create_region(world, names.garins_grave, locations.garins_grave_locations)
+
+    charlock_region = create_region(world, names.charlock_castle, locations.charlock_locations)
+
+    hauksness_region = create_region(world, names.hauksness, locations.hauksness_locations)
+
+    erdricks_cave_region = create_region(world, names.erdricks_cave, locations.erdricks_cave_locations)
+
+    shrine_of_rain_region = create_region(world, names.staff_of_rain_shrine, locations.shrine_of_rain_locations)
+
+    erdricks_token_region = create_region(world, names.erdricks_token_tile, locations.erdricks_token_locations)
+
+    rainbow_shrine_region = create_region(world, names.rainbow_drop_shrine, locations.rainbow_shrine_locations)
+
+    world.multiworld.regions += [
+        menu_region,
+        overworld_region,
+        tantegel_throne_room_region,
+        tantegel_castle_region,
+        brecconary_region,
+        garinham_region,
+        garinham_key_region,
+        kol_region,
+        rimuldar_region,
+        rimuldar_key_region,
+        cantlin_region,
+        mountain_cave_region,
+        garins_grave_region,
+        charlock_region,
+        hauksness_region,
+        erdricks_cave_region,
+        shrine_of_rain_region,
+        erdricks_token_region,
+        rainbow_shrine_region
+    ]
 
 
+def connect_regions(world: World) -> None:
+    region_names: Dict[str, int] = {}
 
-def create_region(world: World, active_locations, name: str, locations=None):
-    # Shamelessly stolen from the DKC3 definition
-    ret = Region(name, world.player, world.multiworld)
+    connect(world, world.player, region_names, 'Menu', names.tantegel_throne_room)
+    connect(world, world.player, region_names, names.tantegel_throne_room, names.overworld)
+    connect(world, world.player, region_names, names.overworld, names.breconnary)
+    connect(world, world.player, region_names, names.overworld, names.garinham)
+    connect(world, world.player, region_names, names.overworld, names.kol)             # Connect with gear later
+    connect(world, world.player, region_names, names.overworld, names.rimuldar)        # Connect with gear later
+    connect(world, world.player, region_names, names.overworld, names.hauksness)       # Connect with gear later
+    connect(world, world.player, region_names, names.overworld, names.cantlin)         # Connect with gear & flute later
+    connect(world, world.player, region_names, names.overworld, names.erdricks_cave)
+    connect(world, world.player, region_names, names.overworld, names.mountain_cave)   # Connect with gear later
+
+    connect(world, world.player, region_names, names.overworld, names.tantegel_castle, 
+            lambda state: (state.has(names.magic_key, world.player)))
+    connect(world, world.player, region_names, names.overworld, names.garinham_keys, 
+            lambda state: (state.has(names.magic_key, world.player)))
+    connect(world, world.player, region_names, names.overworld, names.rimuldar_keys,  # Connect with gear later
+            lambda state: (state.has(names.magic_key, world.player)))
+    connect(world, world.player, region_names, names.garinham_keys, names.garins_grave) # Connect with gear later
+    connect(world, world.player, region_names, names.overworld, names.staff_of_rain_shrine, 
+            lambda state: (state.has(names.silver_harp, world.player)))
+    connect(world, world.player, region_names, names.overworld, names.erdricks_token_tile)  # Connect with gear later
+    connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,  # Connect with gear later
+            lambda state: (state.has(names.staff_of_rain, world.player) and 
+                           state.has(names.stones_of_sunlight, world.player)))
+    connect(world, world.player, region_names, names.overworld, names.charlock_castle,      # Connect with gear later
+            lambda state: (state.has(names.rainbow_drop, world.player)))
+    
+
+def create_region(world: World, name: str, locations=None):
+    ret = DWRegion(name, world.player, world.multiworld)
     if locations:
-        for locationName, locationData in locations.items():
-            loc_id = active_locations.get(locationName, 0)
-            if loc_id:
-                loc_byte   = locationData[0] if (len(locationData) > 0) else 0
-                loc_bit    = locationData[1] if (len(locationData) > 1) else 0
-                loc_invert = locationData[2] if (len(locationData) > 2) else False
-
-                location = DWLocation(world.player, locationName, loc_id, ret, loc_byte, loc_bit, loc_invert)
-                ret.locations.append(location)
+        for locName, locId in locations.items():
+            location = locations.DWLocation(world.player, locName, locId)
+            ret.locations.append(location)
 
     return ret
 
