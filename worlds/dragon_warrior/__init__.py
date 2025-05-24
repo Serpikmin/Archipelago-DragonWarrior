@@ -88,9 +88,6 @@ class DragonWarriorWorld(World):
     def get_filler_item_name(self) -> str:
         return self.multiworld.random.choice(list(cursed_table.keys() + filler_table.keys()))
 
-    def generate_basic(self) -> None:
-        pass # TODO
-
     def set_rules(self):
         pass # TODO
 
