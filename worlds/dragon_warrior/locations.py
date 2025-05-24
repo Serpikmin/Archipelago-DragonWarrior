@@ -184,7 +184,7 @@ location_table = {
     **garins_grave_locations,
     **charlock_locations,
     **hauksness_locations,
-    **erdricks_grave_locations,
+    **erdricks_cave_locations,
     **shrine_of_rain_locations,
     **erdricks_token_locations,
     **rainbow_shrine_locations
