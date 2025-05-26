@@ -57,5 +57,5 @@ item_names: Dict[str, Set[str]] = {
     "Consumable": Set(name for name in filler_table.keys())
     }
 
-lookup_item_to_id: Dict[str, int] = {item_name: data.code for item_name, data in item_table.items()}
+lookup_name_to_id: Dict[str, int] = {item_name: data.code for item_name, data in item_table.items()}
 lookup_id_to_name: Dict[int, str] = {data.code: item_name for item_name, data in item_table.items() if data.code}

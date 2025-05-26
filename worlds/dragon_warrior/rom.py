@@ -1,7 +1,7 @@
 import hashlib
 import os
-from Archipelago import Utils
-from Archipelago.worlds.Files import APDeltaPatch
+import Utils
+from worlds.Files import APDeltaPatch
 
 DRAGON_WARRIOR_HASH = "25cf03eb7ac2dec4ef332425c151f373"
 
@@ -54,9 +54,11 @@ class LocalRom:
 
 
 class DWDeltaPatch(APDeltaPatch):
-    hash = DRAGON_WARRIOR_HASH
+    hash = [DRAGON_WARRIOR_HASH]
     game = "Dragon Warrior"
     patch_file_ending = ".apdw"
+    result_file_ending = ".nes"
+    name: bytearray
 
     @classmethod
     def get_source_data(cls) -> bytes:
