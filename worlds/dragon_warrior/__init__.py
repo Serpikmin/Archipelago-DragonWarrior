@@ -1,21 +1,24 @@
+import hashlib
+import os
 import threading
-from typing import Any, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Sequence, Tuple
 
 import names
-from items import DWItem, item_table, cursed_table, filler_table
-from locations import location_table
+from items import DWItem, item_table, cursed_table, filler_table, lookup_name_to_id, item_names
+from locations import location_table, lookup_location_to_id, location_names
 from regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
-from rom import DRAGON_WARRIOR_HASH
+from rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch
+from options import DWOptions
 
 class DWSettings(settings.Group):
     class RomFile(settings.UserFilePath):
         """File name of the Dragon Warrior ROM"""
         description = "Dragon Warrior ROM File"
         copy_to: Optional[str] = "Dragon Warrior (USA) (Rev A).nes"
-        md5s = DRAGON_WARRIOR_HASH
+        md5s = [DRAGON_WARRIOR_HASH]
     
     rom_file: RomFile = RomFile(RomFile.copy_to)
 
@@ -41,10 +44,14 @@ class DragonWarriorWorld(World):
     on a quest to vanquish the Dragonlord, and save the land from darkness!
     """
     game = "Dragon Warrior"
-    item_name_to_id = []
-    location_name_to_id = []
-    item_name_groups = []
-    location_name_groups = []
+    settings: ClassVar[DWSettings]
+    options_dataclass = DWOptions
+    options: DWOptions
+    item_name_to_id = lookup_name_to_id
+    location_name_to_id = lookup_location_to_id
+    item_name_groups = item_names
+    location_name_groups = location_names
+    web = DWWebWorld()
     rom_name: bytearray
 
     def __init__(self, multiworld: MultiWorld, player: int):
@@ -88,8 +95,18 @@ class DragonWarriorWorld(World):
     def get_filler_item_name(self) -> str:
         return self.multiworld.random.choice(list(cursed_table.keys() + filler_table.keys()))
 
-    def set_rules(self):
-        pass # TODO
+    def generate_output(self, output_directory: str) -> None:
+        try:
+            rom = LocalRom(get_base_rom_path())
+            # Patch rom with dwrandomizer
+            rompath = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.sfc")
+            rom.write_to_file(rompath)
+            self.rom_name = rom.name
 
-    def fill_slot_data(self) -> Dict[str, Any]:
-        return {}
+            patch = DWDeltaPatch(os.path.splitext(rompath)[0]+DWDeltaPatch.patch_file_ending, player=self.player,
+                                   player_name=self.multiworld.player_name[self.player], patched_path=rompath)
+            patch.write()
+        except Exception:
+            raise
+        finally:
+            self.rom_name_available_event.set()

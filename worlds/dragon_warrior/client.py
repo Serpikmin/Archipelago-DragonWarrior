@@ -45,3 +45,6 @@ class DragonWarriorClient(BizHawkClient):
         ctx.items_handling = 0b111
 
         return True
+    
+    async def game_watcher(self, ctx):
+        pass # TODO
