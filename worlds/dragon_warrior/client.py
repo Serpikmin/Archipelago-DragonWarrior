@@ -47,4 +47,41 @@ class DragonWarriorClient(BizHawkClient):
         return True
     
     async def game_watcher(self, ctx):
-        pass # TODO
+        from worlds._bizhawk import read, write
+
+        if ctx.server is None or ctx.slot is None:
+            return
+        
+        # Game Completion
+
+        # Search for new location checks
+        new_checks = []
+
+        # Check for opened chests
+        current_map = await read(ctx.bizhawk_ctx, [
+            (0x45, 1, "RAM")
+        ])
+        chests_array = await read(ctx.bizhawk_ctx, [
+            (0x601C, 16, "System Bus")
+        ])
+
+        # See locations.py for an explanation
+        for i in range(0, 16, 2):
+            chest = chests_array[i:i + 2]
+            location_data = hex((current_map << 16) | chest)
+            if location_data not in ctx.checked_locations:
+                new_checks.append(location_data)
+
+        # Send found checks
+        for new_check_id in new_checks:
+            ctx.locations_checked.add(new_check_id)
+            location = ctx.location_names.lookup_in_game(new_check_id)
+            nes_logger.info(
+                f'New Check: {location} ({len(ctx.locations_checked)}/'
+                f'{len(ctx.missing_locations) + len(ctx.checked_locations)})')
+            await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
+
+
+        # Receive Items
+        # Compare an items_received index in the ROM to len(ctx.items_received)
+        # If smaller, we should grant the missing items

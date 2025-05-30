@@ -1,5 +1,6 @@
 import hashlib
 import os
+from Archipelago.worlds.AutoWorld import World
 import Utils
 from worlds.Files import APDeltaPatch
 
@@ -41,16 +42,12 @@ class LocalRom:
         with open(file, 'rb') as stream:
             self.buffer = bytearray(stream.read())
 
-    def find_free_space(self, start, size):
-        for i in range(start, 0xffff - size + 1):
-            found = True
-            if self.read_bytes(i, size) != bytearray([0xff] * size):
-                found = False
-                break
 
-            if found:
-                return i
-        return -1
+def patch_rom(world: World, rom: LocalRom):
+    from Utils import __version__
+    rom.name = bytearray(f'DW{__version__.replace(".", "")[0:3]}_{world.player}_{world.multiworld.seed:11}\0', 'utf8')[:21]
+    rom.name.extend([0] * (21 - len(rom.name)))
+    rom.write_bytes(0xD100, rom.name)
 
 
 class DWDeltaPatch(APDeltaPatch):

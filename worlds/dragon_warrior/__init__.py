@@ -10,8 +10,9 @@ from regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
-from rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch
+from rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch, patch_rom
 from options import DWOptions
+import dwr  # Package in requirements.txt
 
 class DWSettings(settings.Group):
     class RomFile(settings.UserFilePath):
@@ -97,10 +98,14 @@ class DragonWarriorWorld(World):
 
     def generate_output(self, output_directory: str) -> None:
         try:
-            rom = LocalRom(get_base_rom_path())
+            rompath = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.nes")
+
             # Patch rom with dwrandomizer
-            rompath = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.sfc")
-            rom.write_to_file(rompath)
+            flags = self.determine_flags()
+            dwr.py_dwr_randomize(get_base_rom_path(), self.multiworld.seed, flags, rompath)
+
+            rom = LocalRom(rompath)
+            patch_rom(rom)
             self.rom_name = rom.name
 
             patch = DWDeltaPatch(os.path.splitext(rompath)[0]+DWDeltaPatch.patch_file_ending, player=self.player,
@@ -110,3 +115,8 @@ class DragonWarriorWorld(World):
             raise
         finally:
             self.rom_name_available_event.set()
+
+    def determine_flags(self) -> str:
+        default_flags = "AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAUAAAAAA"
+        # TODO
+        return default_flags
