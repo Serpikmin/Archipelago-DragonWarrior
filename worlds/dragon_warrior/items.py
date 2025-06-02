@@ -14,34 +14,34 @@ class DWItem(Item):
     game = "Dragon Warrior"
 
 equipment_table = {
-    names.progressive_weapon: ItemData(0x001, True),
-    names.progressive_shield: ItemData(0x002, True),
-    names.progressive_armor: ItemData(0x003, True),
-    names.dragon_scale: ItemData(0x004),
-    names.fighters_ring: ItemData(0x005)
+    names.progressive_weapon: ItemData(0xE1, True),
+    names.progressive_shield: ItemData(0xE2, True),
+    names.progressive_armor: ItemData(0xE3, True),
+    names.dragon_scale: ItemData(0x4),
+    names.fighters_ring: ItemData(0x6)
 }
 
 important_table = {
-    names.fairy_flute: ItemData(0x006, True),
-    names.silver_harp: ItemData(0x007, True),
-    names.gwaelins_love: ItemData(0x008, True),
-    names.erdricks_token: ItemData(0x009, True),
-    names.staff_of_rain: ItemData(0x00A, True),
-    names.stones_of_sunlight: ItemData(0x00B, True),
-    names.rainbow_drop: ItemData(0x00C, True, True),
-    names.magic_key: ItemData(0x00D, True, True),
+    names.fairy_flute: ItemData(0x5, True),
+    names.erdricks_token: ItemData(0x7, True),
+    names.gwaelins_love: ItemData(0x8, True),
+    names.silver_harp: ItemData(0xA, True),
+    names.stones_of_sunlight: ItemData(0xC, True),
+    names.staff_of_rain: ItemData(0xD, True),
+    names.rainbow_drop: ItemData(0xE, True, True),
+    names.magic_key: ItemData(0xD4, True, True),
 }
 
 cursed_table = {
-    names.cursed_belt: ItemData(0x00E),
-    names.death_necklace: ItemData(0x00F)
+    names.cursed_belt: ItemData(0x9),
+    names.death_necklace: ItemData(0xB)
 }
 
 filler_table = {
-    names.herb: ItemData(0x010),
-    names.chimaera_wing: ItemData(0x011),
-    names.torch: ItemData(0x012),
-    names.fairy_water: ItemData(0x013)
+    names.herb: ItemData(0x0),
+    names.torch: ItemData(0x1),
+    names.fairy_water: ItemData(0x2),
+    names.chimaera_wing: ItemData(0x3),
 }
 
 item_table = {
