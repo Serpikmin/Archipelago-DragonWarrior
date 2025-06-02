@@ -1,6 +1,6 @@
 import hashlib
 import os
-from Archipelago.worlds.AutoWorld import World
+from worlds.AutoWorld import World
 import Utils
 from worlds.Files import APDeltaPatch
 

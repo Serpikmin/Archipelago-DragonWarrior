@@ -3,15 +3,15 @@ import os
 import threading
 from typing import Any, ClassVar, Dict, List, Optional, Sequence, Tuple
 
-import names
-from items import DWItem, item_table, cursed_table, filler_table, lookup_name_to_id, item_names
-from locations import location_table, lookup_location_to_id, location_names
-from regions import create_regions, connect_regions
+from . import names
+from .items import DWItem, item_table, cursed_table, filler_table, lookup_name_to_id, item_names
+from .locations import location_table, lookup_location_to_id, location_names
+from .regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
-from rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch, patch_rom
-from options import DWOptions
+from .rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch, patch_rom
+from .options import DWOptions
 import dwr  # Package in requirements.txt
 
 class DWSettings(settings.Group):

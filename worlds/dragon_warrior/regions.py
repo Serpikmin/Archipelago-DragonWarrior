@@ -2,8 +2,8 @@ from BaseClasses import Entrance, Region
 from worlds.AutoWorld import World
 from typing import Dict, Optional, Callable
 
-import locations
-import names
+from . import locations
+from . import names
 
 """
 CHEST MEMORY NOTES:
