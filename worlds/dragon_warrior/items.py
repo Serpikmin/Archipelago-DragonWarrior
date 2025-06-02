@@ -52,9 +52,9 @@ item_table = {
 }
 
 item_names: Dict[str, Set[str]] = {
-    "Equipment": Set(name for name in equipment_table.keys() + cursed_table.keys()),
-    "Progression": Set(name for name in important_table.keys()),
-    "Consumable": Set(name for name in filler_table.keys())
+    "Equipment": set(name for name in list(equipment_table.keys()) + list(cursed_table.keys())),
+    "Progression": set(name for name in important_table.keys()),
+    "Consumable": set(name for name in filler_table.keys())
     }
 
 lookup_name_to_id: Dict[str, int] = {item_name: data.code for item_name, data in item_table.items()}

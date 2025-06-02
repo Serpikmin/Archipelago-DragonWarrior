@@ -1,6 +1,6 @@
 from typing import Dict, Set
 from BaseClasses import Location
-import names
+from . import names
 
 
 class DWLocation(Location):
@@ -191,20 +191,20 @@ location_table = {
 }
 
 location_names: Dict[str, Set[str]] = { 
-    "Tantegel Castle": Set(name for name in throne_room_locations.keys() + tantegel_castle_locations.keys()),
-    "Brecconary": Set(name for name in brecconary_locations.keys()),
-    "Garinham": Set(name for name in garinham_locations.keys() + garinham_key_locations.keys()),
-    "Kol": Set(name for name in kol_locations.keys()),
-    "Rimuldar": Set(name for name in rimuldar_locations.keys() + rimuldar_key_locations.keys()),
-    "Cantlin": Set(name for name in cantlin_locations.keys()),
-    "Mountain Cave": Set(name for name in mountain_cave_locations.keys()),
-    "Garin's Grave": Set(name for name in garins_grave_locations.keys()),
-    "Charlock": Set(name for name in charlock_locations.keys()),
-    "Hauksness": Set([names.hauksness_erdrick_armor]),
-    "Erdrick's Grave": Set([names.erdrick_tablet]),
-    "Staff of Rain Shrine": Set([names.staff_of_rain_location]),
-    "Erdrick's Token": Set([names.erdricks_token_location]),
-    "Rainbow Drop Shrine": Set([names.rainbow_drop_location])
+    "Tantegel Castle": set(name for name in list(throne_room_locations.keys()) + list(tantegel_castle_locations.keys())),
+    "Brecconary": set(name for name in brecconary_locations.keys()),
+    "Garinham": set(name for name in list(garinham_locations.keys()) + list(garinham_key_locations.keys())),
+    "Kol": set(name for name in kol_locations.keys()),
+    "Rimuldar": set(name for name in list(rimuldar_locations.keys()) + list(rimuldar_key_locations.keys())),
+    "Cantlin": set(name for name in cantlin_locations.keys()),
+    "Mountain Cave": set(name for name in mountain_cave_locations.keys()),
+    "Garin's Grave": set(name for name in garins_grave_locations.keys()),
+    "Charlock": set(name for name in charlock_locations.keys()),
+    "Hauksness": set([names.hauksness_erdrick_armor]),
+    "Erdrick's Grave": set([names.erdrick_tablet]),
+    "Staff of Rain Shrine": set([names.staff_of_rain_location]),
+    "Erdrick's Token": set([names.erdricks_token_location]),
+    "Rainbow Drop Shrine": set([names.rainbow_drop_location])
 }
 
 lookup_location_to_id: Dict[str, int] = {location: idx for location, idx in location_table.items() if idx is not None}
