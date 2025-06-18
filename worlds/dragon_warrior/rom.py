@@ -52,11 +52,10 @@ def patch_rom(world: World, rom: LocalRom):
 
 
 class DWDeltaPatch(APDeltaPatch):
-    hash = [DRAGON_WARRIOR_HASH]
+    hash = DRAGON_WARRIOR_HASH
     game = "Dragon Warrior"
     patch_file_ending = ".apdw"
     result_file_ending = ".nes"
-    name: bytearray
 
     @classmethod
     def get_source_data(cls) -> bytes:
