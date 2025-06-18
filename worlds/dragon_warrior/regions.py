@@ -55,7 +55,7 @@ class DWRegion(Region):
 def create_regions(world: World) -> None:
     menu_region = create_region(world, 'Menu', None)
 
-    overworld_region = create_region(world, names.overworld, {})
+    overworld_region = create_region(world, names.overworld, None)
 
     tantegel_throne_room_region = create_region(world, names.tantegel_throne_room, locations.throne_room_locations)
     
@@ -145,11 +145,11 @@ def connect_regions(world: World) -> None:
             lambda state: (state.has(names.rainbow_drop, world.player)))
     
 
-def create_region(world: World, name: str, locations=None):
+def create_region(world: World, name: str, location_checks=None):
     ret = DWRegion(name, world.player, world.multiworld)
-    if locations:
-        for locName, locId in locations.items():
-            location = locations.DWLocation(world.player, locName, locId)
+    if location_checks:
+        for locName, locId in location_checks.items():
+            location = locations.DWLocation(world.player, locName, locId, ret)
             ret.locations.append(location)
 
     return ret
