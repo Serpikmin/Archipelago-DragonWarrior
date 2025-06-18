@@ -1,10 +1,11 @@
 import logging
 from worlds._bizhawk.client import BizHawkClient
 from NetUtils import ClientStatus, NetworkItem, color
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
 import worlds._bizhawk as bizhawk
 
-from worlds._bizhawk.context import BizHawkClientContext
+if TYPE_CHECKING:
+    from worlds._bizhawk.context import BizHawkClientContext
 
 nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
@@ -17,9 +18,6 @@ class DragonWarriorClient(BizHawkClient):
     patch_suffix = ".apdw"
     item_queue: List[NetworkItem] = []
     rom: Optional[bytes] = None
-
-    def __init__(self) -> None:
-        super().__init__()
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         try:
@@ -57,7 +55,7 @@ class DragonWarriorClient(BizHawkClient):
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
-            (0xC1, 4, "RAM")
+            (0xC1, 4, "RAM"),
             (0xE4, 1, "RAM")
         ])
 

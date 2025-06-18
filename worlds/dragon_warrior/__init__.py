@@ -15,6 +15,7 @@ from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 from .rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch, patch_rom
 from .options import DWOptions, DWOptionGroups
+from .client import DragonWarriorClient
 
 class DWSettings(settings.Group):
     class RomFile(settings.UserFilePath):
@@ -131,7 +132,7 @@ class DragonWarriorWorld(World):
 
     def generate_output(self, output_directory: str) -> None:
         # Created in stage_generate_early
-        import dwr
+        import dwr # type: ignore
 
         try:
             rompath = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.nes")
@@ -140,14 +141,17 @@ class DragonWarriorWorld(World):
             dwr_output_dir = os.path.join(os.getcwd(), "dragon_warrior_randomizer")
             flags = self.determine_flags()
             # Cython requires Python to pass strings in as bytes encoded in ascii, seed is an unsigned long long
-            dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), self.multiworld.seed, bytes(flags, encoding="ascii"), bytes(dwr_output_dir, encoding="ascii"))
+            dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), self.multiworld.seed // 100, bytes(flags, encoding="ascii"), bytes(dwr_output_dir, encoding="ascii"))
 
             rom = LocalRom(os.path.join(dwr_output_dir, "Dragon Warrior (USA) (Rev A).nes"))
             patch_rom(self, rom)
             self.rom_name = rom.name
+            rom.write_to_file(rompath)
 
-            patch = DWDeltaPatch(os.path.splitext(rompath)[0]+DWDeltaPatch.patch_file_ending, player=self.player,
-                                   player_name=self.multiworld.player_name[self.player], patched_path=rompath)
+            patch = DWDeltaPatch(os.path.splitext(rompath)[0] + ".apdw",
+                            self.player, 
+                            self.multiworld.player_name[self.player],
+                            patched_path=os.path.splitext(rompath)[0] + ".nes")
             patch.write()
         except Exception:
             raise

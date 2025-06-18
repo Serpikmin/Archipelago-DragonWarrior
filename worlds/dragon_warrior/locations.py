@@ -167,7 +167,7 @@ erdricks_token_locations = {
 }
 
 rainbow_shrine_locations = {
-    # names.rainbow_drop_location: 0x059     # Need Stones of Sunlight & Staff of Rain
+    names.rainbow_drop_location: 0x0E0505     # Need Stones of Sunlight & Staff of Rain
 }
 
 location_table = {
