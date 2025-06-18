@@ -2,6 +2,7 @@ import hashlib
 import os
 from worlds.AutoWorld import World
 import Utils
+import settings
 from worlds.Files import APDeltaPatch
 
 DRAGON_WARRIOR_HASH = "25cf03eb7ac2dec4ef332425c151f373"
@@ -47,7 +48,7 @@ def patch_rom(world: World, rom: LocalRom):
     from Utils import __version__
     rom.name = bytearray(f'DW{__version__.replace(".", "")[0:3]}_{world.player}_{world.multiworld.seed:11}\0', 'utf8')[:21]
     rom.name.extend([0] * (21 - len(rom.name)))
-    rom.write_bytes(0xD100, rom.name)
+    # rom.write_bytes(0xD100, rom.name)
 
 
 class DWDeltaPatch(APDeltaPatch):
@@ -77,9 +78,9 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
     return base_rom_bytes
 
 def get_base_rom_path(file_name: str = "") -> str:
-    options = Utils.get_options()
+    options = settings.get_settings()
     if not file_name:
-        file_name = options["dw_options"]["rom_file"]
+        file_name = options.dw_options["rom_file"]
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
