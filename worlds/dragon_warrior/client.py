@@ -22,9 +22,9 @@ class DragonWarriorClient(BizHawkClient):
         from worlds._bizhawk import RequestFailedError, read
         try:
             # Check ROM name/patch version
-            rom_name_bytes = (await read(ctx.bizhawk_ctx, [(0xFFF0, 14, "PRG ROM")]))
+            rom_name_bytes = (await read(ctx.bizhawk_ctx, [(0x7FE0, 14, "PRG ROM")]))
 
-            if rom_name_bytes[:14] != EXPECTED_ROM_NAME:
+            if rom_name_bytes[:14] != [EXPECTED_ROM_NAME]:
                 logger.info(
                     "ERROR: Rom is not valid!"
                 )
@@ -54,7 +54,7 @@ class DragonWarriorClient(BizHawkClient):
             (0xE4, 1, "RAM")
         ])
 
-        dragonlord_dead = dragonlord_dead & 0x4
+        dragonlord_dead = dragonlord_dead[0] & 0x4
         
         # Game Completion
         if not ctx.finished_game and dragonlord_dead:
@@ -69,7 +69,8 @@ class DragonWarriorClient(BizHawkClient):
         # See locations.py for an explanation
         for i in range(0, 16, 2):
             chest = chests_array[i:i + 2]
-            location_data = int(hex((current_map << 16) | chest), 16)
+            # I hate working with bytes in Python
+            location_data = int(hex((current_map[0] << 16) | ((chest[0] << 8) | chest[1])), 16)
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
 
@@ -114,7 +115,7 @@ class DragonWarriorClient(BizHawkClient):
                         new_byte = slot + lo_item
                         found_space = True
                     if found_space:
-                        writes.append(0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM")
+                        writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                         break
 
                 if not found_space:  # No free space found, kick out a filler item
@@ -130,11 +131,11 @@ class DragonWarriorClient(BizHawkClient):
                             new_byte = slot + lo_item
                             found_space = True
                         if found_space:
-                            writes.append(0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM")
+                            writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                             break
 
             elif item.item == 0xD4:  # Magic Key
-                writes.append((0xBF, bytes(1), "RAM"))
+                writes.append((0xBF, bytes.fromhex('01'), "RAM"))
 
             elif item.item < 0xF: 
                 
@@ -152,7 +153,7 @@ class DragonWarriorClient(BizHawkClient):
                         new_byte = slot + lo_item
                         found_space = True
                     if found_space:
-                        writes.append(0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM")
+                        writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                         break
                 # For now, skip adding if no inventory space found
             else:
