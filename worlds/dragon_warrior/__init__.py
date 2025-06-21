@@ -105,7 +105,10 @@ class DragonWarriorWorld(World):
                      self.create_item(names.staff_of_rain), 
                      self.create_item(names.stones_of_sunlight),
                      self.create_item(names.rainbow_drop),
-                     self.create_item(names.magic_key)]
+                     self.create_item(names.magic_key),
+                     self.create_item(names.erdricks_sword),
+                     self.create_item(names.death_necklace),
+                     self.create_item(names.cursed_belt)]
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
@@ -128,7 +131,7 @@ class DragonWarriorWorld(World):
         return created_item
 
     def get_filler_item_name(self) -> str:
-        return self.multiworld.random.choice(list(cursed_table.keys()) + list(filler_table.keys()))
+        return self.multiworld.random.choice(filler_table.keys())
 
     def generate_output(self, output_directory: str) -> None:
         # Created in stage_generate_early

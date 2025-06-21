@@ -142,12 +142,12 @@ garins_grave_locations = {
 charlock_locations = {
     names.charlock_castle_erdrick_sword: 0x100505,   # Need Rainbow Drop
 
-    names.charlock_castle_chest_1: 0x140B0B,  # Need Rainbow Drop
-    names.charlock_castle_chest_2: 0x140B0C,  # Need Rainbow Drop
-    names.charlock_castle_chest_3: 0x140B0D,  # Need Rainbow Drop
-    names.charlock_castle_chest_4: 0x140C0C,  # Need Rainbow Drop
-    names.charlock_castle_chest_5: 0x140C0D,  # Need Rainbow Drop
-    names.charlock_castle_chest_6: 0x140D0D,  # Need Rainbow Drop
+    names.charlock_castle_chest_1: 0x060B0B,  # Need Rainbow Drop + Magic Key
+    names.charlock_castle_chest_2: 0x060B0C,  # Need Rainbow Drop + Magic Key
+    names.charlock_castle_chest_3: 0x060B0D,  # Need Rainbow Drop + Magic Key
+    names.charlock_castle_chest_4: 0x060C0C,  # Need Rainbow Drop + Magic Key
+    names.charlock_castle_chest_5: 0x060C0D,  # Need Rainbow Drop + Magic Key
+    names.charlock_castle_chest_6: 0x060D0D,  # Need Rainbow Drop + Magic Key
 }
 
 hauksness_locations = {
