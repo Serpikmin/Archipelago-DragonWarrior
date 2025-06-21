@@ -166,10 +166,6 @@ erdricks_token_locations = {
     # names.erdricks_token_location: 0x058,
 }
 
-rainbow_shrine_locations = {
-    names.rainbow_drop_location: 0x0E0505     # Need Stones of Sunlight & Staff of Rain
-}
-
 location_table = {
     **throne_room_locations,
     **tantegel_castle_locations,
@@ -187,7 +183,6 @@ location_table = {
     **erdricks_cave_locations,
     **shrine_of_rain_locations,
     **erdricks_token_locations,
-    **rainbow_shrine_locations
 }
 
 location_names: Dict[str, Set[str]] = { 
@@ -203,8 +198,7 @@ location_names: Dict[str, Set[str]] = {
     "Hauksness": set([names.hauksness_erdrick_armor]),
     "Erdrick's Grave": set([names.erdrick_tablet]),
     "Staff of Rain Shrine": set([names.staff_of_rain_location]),
-    "Erdrick's Token": set([names.erdricks_token_location]),
-    "Rainbow Drop Shrine": set([names.rainbow_drop_location])
+    "Erdrick's Token": set([names.erdricks_token_location])
 }
 
 lookup_location_to_id: Dict[str, int] = {location: idx for location, idx in location_table.items() if idx is not None}

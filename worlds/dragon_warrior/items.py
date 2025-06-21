@@ -29,7 +29,6 @@ important_table = {
     names.silver_harp: ItemData(0xA, True),
     names.stones_of_sunlight: ItemData(0xC, True),
     names.staff_of_rain: ItemData(0xD, True),
-    names.rainbow_drop: ItemData(0xE, True, True),
     names.magic_key: ItemData(0xD4, True, True),
 }
 

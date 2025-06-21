@@ -89,8 +89,6 @@ def create_regions(world: World) -> None:
 
     erdricks_token_region = create_region(world, names.erdricks_token_tile, locations.erdricks_token_locations)
 
-    rainbow_shrine_region = create_region(world, names.rainbow_drop_shrine, locations.rainbow_shrine_locations)
-
     world.multiworld.regions += [
         menu_region,
         overworld_region,
@@ -110,7 +108,6 @@ def create_regions(world: World) -> None:
         erdricks_cave_region,
         shrine_of_rain_region,
         erdricks_token_region,
-        rainbow_shrine_region
     ]
 
 
@@ -138,11 +135,9 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.overworld, names.staff_of_rain_shrine, 
             lambda state: (state.has(names.silver_harp, world.player)))
     connect(world, world.player, region_names, names.overworld, names.erdricks_token_tile)  # Connect with gear later
-    connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,  # Connect with gear later
-            lambda state: (state.has(names.staff_of_rain, world.player) and 
-                           state.has(names.stones_of_sunlight, world.player)))
     connect(world, world.player, region_names, names.overworld, names.charlock_castle,      # Connect with gear later
-            lambda state: (state.has(names.rainbow_drop, world.player) and 
+            lambda state: (state.has(names.staff_of_rain, world.player) and 
+                           state.has(names.stones_of_sunlight, world.player) and
                            state.has(names.magic_key, world.player)))
     
 
