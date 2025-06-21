@@ -46,12 +46,14 @@ class DragonWarriorClient(BizHawkClient):
             return
         
         current_map, chests_array, recv_count, inventory_bytes, \
-            dragonlord_dead = await read(ctx.bizhawk_ctx, [
+            dragonlord_dead, herbs, equip_byte = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
             (0xC1, 4, "RAM"),
-            (0xE4, 1, "RAM")
+            (0xE4, 1, "RAM"),
+            (0xC0, 1, "RAM"),
+            (0xBE, 1, "RAM")
         ])
 
         dragonlord_dead = dragonlord_dead[0] & 0x4
@@ -112,7 +114,7 @@ class DragonWarriorClient(BizHawkClient):
                         new_byte = (item.item << 4) + lo_item
                         found_space = True
                     elif lo_item == 0:
-                        new_byte = slot + lo_item
+                        new_byte = (hi_item << 4) + item.item
                         found_space = True
                     if found_space:
                         writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
@@ -128,16 +130,13 @@ class DragonWarriorClient(BizHawkClient):
                             new_byte = (item.item << 4) + lo_item
                             found_space = True
                         elif lo_item in filler_items:
-                            new_byte = slot + lo_item
+                            new_byte = (hi_item << 4) + item.item
                             found_space = True
                         if found_space:
                             writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                             break
 
-            elif item.item == 0xD4:  # Magic Key
-                writes.append((0xBF, bytes.fromhex('01'), "RAM"))
-
-            elif item.item < 0xF: 
+            elif item.item < 0xF: # Non-herb consumable, remove?
                 
                 found_space = False
 
@@ -150,16 +149,23 @@ class DragonWarriorClient(BizHawkClient):
                         new_byte = (item.item << 4) + lo_item
                         found_space = True
                     elif lo_item == 0:
-                        new_byte = slot + lo_item
+                        new_byte = (hi_item << 4) + item.item
                         found_space = True
                     if found_space:
                         writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                         break
                 # For now, skip adding if no inventory space found
-            else:
-                pass # Progressive Equipment
+            
+            elif item.item == 0xD4:  # Magic Key
+                writes.append((0xBF, bytes.fromhex('01'), "RAM"))
+            
+            elif item.item == 0xF:  # Magic herb
+                writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))
 
-            recv_index += 1
+            else: # Progressive Equipment (Erdrick's Sword for now)
+                new_byte = equip_byte[0] | 0xE0
+                writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
+
             writes.append((0x0E, recv_index.to_bytes(1, 'little'), "RAM"))
         
         await write(ctx.bizhawk_ctx, writes)

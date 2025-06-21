@@ -14,11 +14,12 @@ class DWItem(Item):
     game = "Dragon Warrior"
 
 equipment_table = {
-    names.progressive_weapon: ItemData(0xE1, True),
-    names.progressive_shield: ItemData(0xE2, True),
-    names.progressive_armor: ItemData(0xE3, True),
-    names.dragon_scale: ItemData(0x4),
-    names.fighters_ring: ItemData(0x6)
+    # names.progressive_weapon: ItemData(0xE1, True),
+    # names.progressive_shield: ItemData(0xE2, True),
+    # names.progressive_armor: ItemData(0xE3, True),
+    names.erdricks_sword: ItemData(0xFF, True, True),
+    names.dragon_scale: ItemData(0x4, False, True),
+    names.fighters_ring: ItemData(0x6, False, True)
 }
 
 important_table = {

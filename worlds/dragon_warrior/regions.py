@@ -142,7 +142,8 @@ def connect_regions(world: World) -> None:
             lambda state: (state.has(names.staff_of_rain, world.player) and 
                            state.has(names.stones_of_sunlight, world.player)))
     connect(world, world.player, region_names, names.overworld, names.charlock_castle,      # Connect with gear later
-            lambda state: (state.has(names.rainbow_drop, world.player)))
+            lambda state: (state.has(names.rainbow_drop, world.player) and 
+                           state.has(names.magic_key, world.player)))
     
 
 def create_region(world: World, name: str, location_checks=None):
