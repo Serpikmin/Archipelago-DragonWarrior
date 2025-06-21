@@ -2,7 +2,6 @@ import logging
 from worlds._bizhawk.client import BizHawkClient
 from NetUtils import ClientStatus, NetworkItem, color
 from typing import List, Optional, TYPE_CHECKING
-import worlds._bizhawk as bizhawk
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -20,23 +19,19 @@ class DragonWarriorClient(BizHawkClient):
     rom: Optional[bytes] = None
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
+        from worlds._bizhawk import RequestFailedError, read
         try:
             # Check ROM name/patch version
-            rom_name_bytes = (
-                await bizhawk.read(ctx.bizhawk_ctx, [(0xFFF0, 14, "PRG ROM")])
-            )[0]
+            rom_name_bytes = (await read(ctx.bizhawk_ctx, [(0xFFF0, 14, "PRG ROM")]))
 
-            rom_name = bytes([byte for byte in rom_name_bytes if byte != 0]).decode(
-                "ascii"
-            )
-            if not rom_name.startswith(EXPECTED_ROM_NAME):
+            if rom_name_bytes[:14] != EXPECTED_ROM_NAME:
                 logger.info(
                     "ERROR: Rom is not valid!"
                 )
                 return False
         except UnicodeDecodeError:
             return False
-        except bizhawk.RequestFailedError:
+        except RequestFailedError:
             return False  # Should verify on the next pass
 
         ctx.game = self.game
