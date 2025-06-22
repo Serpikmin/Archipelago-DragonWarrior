@@ -2,7 +2,7 @@
 
 ## How do I generate a multiworld with Dragon Warrior?
 
-You can install the dragon_warrior.apworld file in the Releases tab to your AP Launcher to generate a YAML, as well as a multiworld. Be sure to send the Dragon Warrior player the generated `.apdw` patch file so they can play!
+You can install the `dragon_warrior.apworld` file in the Releases tab to your AP Launcher to generate a YAML, as well as a multiworld. Be sure to send the Dragon Warrior player the generated `.apdw` patch file so they can play!
 
 ## How do I join a multiworld with Dragon Warrior?
 
