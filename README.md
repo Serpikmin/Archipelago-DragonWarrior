@@ -1,143 +1,41 @@
-# [Archipelago](https://archipelago.gg) ![Discord Shield](https://discordapp.com/api/guilds/731205301247803413/widget.png?style=shield) | [Install](https://github.com/ArchipelagoMW/Archipelago/releases)
+# Dragon Warrior APWorld
 
-Archipelago provides a generic framework for developing multiworld capability for game randomizers. In all cases,
-presently, Archipelago is also the randomizer itself.
+## How do I generate a multiworld with Dragon Warrior?
 
-Currently, the following games are supported:
+You can install the dragon_warrior.apworld file in the Releases tab to your AP Launcher to generate a YAML, as well as a multiworld. Be sure to send the Dragon Warrior player the generated `.apdw` patch file so they can play!
 
-* The Legend of Zelda: A Link to the Past
-* Factorio
-* Minecraft
-* Subnautica
-* Risk of Rain 2
-* The Legend of Zelda: Ocarina of Time
-* Timespinner
-* Super Metroid
-* Secret of Evermore
-* Final Fantasy
-* Rogue Legacy
-* VVVVVV
-* Raft
-* Super Mario 64
-* Meritous
-* Super Metroid/Link to the Past combo randomizer (SMZ3)
-* ChecksFinder
-* ArchipIDLE
-* Hollow Knight
-* The Witness
-* Sonic Adventure 2: Battle
-* Starcraft 2
-* Donkey Kong Country 3
-* Dark Souls 3
-* Super Mario World
-* Pokémon Red and Blue
-* Hylics 2
-* Overcooked! 2
-* Zillion
-* Lufia II Ancient Cave
-* Blasphemous
-* Wargroove
-* Stardew Valley
-* The Legend of Zelda
-* The Messenger
-* Kingdom Hearts 2
-* The Legend of Zelda: Link's Awakening DX
-* Clique
-* Adventure
-* DLC Quest
-* Noita
-* Undertale
-* Bumper Stickers
-* Mega Man Battle Network 3: Blue Version
-* Muse Dash
-* DOOM 1993
-* Terraria
-* Lingo
-* Pokémon Emerald
-* DOOM II
-* Shivers
-* Heretic
-* Landstalker: The Treasures of King Nole
-* Final Fantasy Mystic Quest
-* TUNIC
-* Kirby's Dream Land 3
-* Celeste 64
-* Castlevania 64
-* A Short Hike
-* Yoshi's Island
-* Mario & Luigi: Superstar Saga
-* Bomb Rush Cyberfunk
-* Aquaria
-* Yu-Gi-Oh! Ultimate Masters: World Championship Tournament 2006
-* A Hat in Time
-* Old School Runescape
-* Kingdom Hearts 1
-* Mega Man 2
-* Yacht Dice
-* Faxanadu
-* Saving Princess
-* Castlevania: Circle of the Moon
-* Inscryption
-* Civilization VI
-* The Legend of Zelda: The Wind Waker
+## How do I join a multiworld with Dragon Warrior?
 
-For setup and instructions check out our [tutorials page](https://archipelago.gg/tutorial/).
-Downloads can be found at [Releases](https://github.com/ArchipelagoMW/Archipelago/releases), including compiled
-windows binaries.
+Your host should send you the `.apdw` patch file, ensure you have the Archipelago Launcher, and open the `.apdw` patch file using the "Open Patch" option in the launcher. NOTE THAT DOUBLE CLICKING THE PATCH FILE WILL NOT WORK!! (due to some under the hood stuff)
 
-## History
+## What does randomization do to this game?
 
-Archipelago is built upon a strong legacy of brilliant hobbyists. We want to honor that legacy by showing it here.
-The repositories which Archipelago is built upon, inspired by, or otherwise owes its gratitude to are:
+Currently, only chests and their contents are randomized into the multiworld. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
 
-* [bonta0's MultiWorld](https://github.com/Bonta0/ALttPEntranceRandomizer/tree/multiworld_31)
-* [AmazingAmpharos' Entrance Randomizer](https://github.com/AmazingAmpharos/ALttPEntranceRandomizer)
-* [VT Web Randomizer](https://github.com/sporchia/alttp_vt_randomizer)
-* [Dessyreqt's alttprandomizer](https://github.com/Dessyreqt/alttprandomizer)
-* [Zarby89's](https://github.com/Ijwu/Enemizer/commits?author=Zarby89)
-  and [sosuke3's](https://github.com/Ijwu/Enemizer/commits?author=sosuke3) contributions to Enemizer, which make up the
-  vast majority of Enemizer contributions.
+## What is the goal of Dragon Warrior when randomized?
 
-We recognize that there is a strong community of incredibly smart people that have come before us and helped pave the
-path. Just because one person's name may be in a repository title does not mean that only one person made that project
-happen. We can't hope to perfectly cover every single contribution that lead up to Archipelago, but we hope to honor
-them fairly.
+In order to beat the game, you must receive the Staff of Rain + Stones of Sunlight, and take them to the Rainbow Shrine (alongside with Erdrick's Token, which is currently in it's vanilla location) in order to receive the Rainbow Drop and reach Charlock Castle. The completion condition is to defeat the Dragonlord.
 
-### Path to the Archipelago
+## What items and locations get shuffled?
 
-Archipelago was directly forked from bonta0's `multiworld_31` branch of ALttPEntranceRandomizer (this project has a
-long legacy of its own, please check it out linked above) on January 12, 2020. The repository was then named to
-_MultiWorld-Utilities_ to better encompass its intended function. As Archipelago matured, then known as
-"Berserker's MultiWorld" by some, we found it necessary to transform our repository into a root level repository
-(as opposed to a 'forked repo') and change the name (which came later) to better reflect our project.
+All items contained in chests are shuffled around.
 
-## Running Archipelago
+## Which items can be in another player's world?
 
-For most people, all you need to do is head over to
-the [releases page](https://github.com/ArchipelagoMW/Archipelago/releases), then download and run the appropriate
-installer, or AppImage for Linux-based systems.
+Any shuffled item can be in other players' worlds.
 
-If you are a developer or are running on a platform with no compiled releases available, please see our doc on
-[running Archipelago from source](docs/running%20from%20source.md).
+## What does another world's item look like in Dragon Warrior?
 
-## Related Repositories
+All items, both remote and local, appear in chests as "APItem".
 
-This project makes use of multiple other projects. We wouldn't be here without these other repositories and the
-contributions of their developers, past and present.
+## When the player receives an item, what happens?
 
-* [z3randomizer](https://github.com/ArchipelagoMW/z3randomizer)
-* [Enemizer](https://github.com/Ijwu/Enemizer)
-* [Ocarina of Time Randomizer](https://github.com/TestRunnerSRL/OoT-Randomizer)
+Currently, items are silently added to the player's inventory. If it is full, a filler item will be dropped for a quest item. Otherwise the item is ignored.
 
-## Contributing
+## Future plans:
 
-To contribute to Archipelago, including the WebHost, core program, or by adding a new game, see our
-[Contributing guidelines](/docs/contributing.md).
-
-## FAQ
-
-For Frequently asked questions, please see the website's [FAQ Page](https://archipelago.gg/faq/en/).
-
-## Code of Conduct
-
-Please refer to our [code of conduct](/docs/code_of_conduct.md).
+- (Nearly) Full suite of options from the [DWRandomizer](https://dwrandomizer.com/)
+- Add the three search spots to the item/location pool (Fairy Flute, Erdrick's Token, Erdrick's Armor)
+- Add equipment shop slots as locations and create progressive equipment
+- Add boss kills as checks (Green Dragon, Golem, Knight Aberrant)
+- Spellsanity/Levelsanity
