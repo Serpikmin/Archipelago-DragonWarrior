@@ -49,7 +49,9 @@ class DWPatch(APAutoPatchInterface):
         sys.path.append(new_dir)
 
         self.read()
-        write_rom(8519378015, "AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAUAAAAAA", target)
+        # Extract seed from directory name
+        seed = int(os.path.splitext(target)[0].split("AP_")[1][:15])
+        write_rom(seed, "AAAAAQAAABAAAAAAAAAAAAAAAAABAAAAAUAAAAAA", target)
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
