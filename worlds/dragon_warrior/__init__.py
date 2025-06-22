@@ -1,19 +1,16 @@
 import logging
 import os
-import platform
-import sys
-import zipfile
 import threading
 from typing import Any, ClassVar, Dict, List, Optional, Sequence, Tuple
 
 from . import names
-from .items import DWItem, item_table, cursed_table, filler_table, lookup_name_to_id, item_names
+from .items import DWItem, item_table, filler_table, lookup_name_to_id, item_names
 from .locations import location_table, lookup_location_to_id, location_names
 from .regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
-from .rom import DRAGON_WARRIOR_HASH, LocalRom, get_base_rom_path, DWDeltaPatch, patch_rom
+from .rom import DRAGON_WARRIOR_HASH, DWPatch
 from .options import DWOptions, DWOptionGroups
 from .client import DragonWarriorClient
 
@@ -66,33 +63,6 @@ class DragonWarriorWorld(World):
         self.rom_name_available_event = threading.Event()
         super().__init__(multiworld, player)
 
-    @classmethod
-    def stage_generate_early(cls, multiworld: MultiWorld):
-        # Extract the dwr module from the .apworld depending on OS into a temp directory
-        current_directory = os.getcwd()
-        new_dir = os.path.join(current_directory, "dragon_warrior_randomizer")
-
-        try:
-            os.mkdir(new_dir)
-        except FileExistsError:
-            pass
-
-        if platform.system() == "Windows":
-            file = "dwr.cp312-win_amd64.pyd"
-        else:
-            file = "dwr.cpython-312-x86_64-linux-gnu.so"
-        
-        with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
-            zf.extract("dragon_warrior/" + file, path=new_dir)
-
-        # Clean up format from zip file
-        os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
-        os.rmdir(os.path.join(new_dir, "dragon_warrior"))
-        open(os.path.join(new_dir, "__init__.py"), "a")
-
-        sys.path.append(new_dir)
-
-
     def create_regions(self) -> None:
         create_regions(self)
         connect_regions(self)
@@ -133,28 +103,15 @@ class DragonWarriorWorld(World):
         return self.multiworld.random.choice(list(filler_table.keys()))
 
     def generate_output(self, output_directory: str) -> None:
-        # Created in stage_generate_early
-        import dwr # type: ignore
-
         try:
             rompath = os.path.join(output_directory, f"{self.multiworld.get_out_file_name_base(self.player)}.nes")
 
-            # Write the patched ROM to the temp directory
-            dwr_output_dir = os.path.join(os.getcwd(), "dragon_warrior_randomizer")
-            flags = self.determine_flags()
-            # Cython requires Python to pass strings in as bytes encoded in ascii, seed is an unsigned long long
-            dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), self.multiworld.seed // 100, bytes(flags, encoding="ascii"), bytes(dwr_output_dir, encoding="ascii"))
-
-            rom = LocalRom(os.path.join(dwr_output_dir, "Dragon Warrior (USA) (Rev A).nes"))
-            patch_rom(self, rom)
-            self.rom_name = rom.name
-            rom.write_to_file(rompath)
-
-            patch = DWDeltaPatch(os.path.splitext(rompath)[0] + ".apdw",
+            patch = DWPatch(os.path.splitext(rompath)[0] + ".apdw",
                             self.player, 
                             self.multiworld.player_name[self.player],
-                            patched_path=os.path.splitext(rompath)[0] + ".nes")
+                            self.determine_flags())
             patch.write()
+
         except Exception:
             raise
         finally:

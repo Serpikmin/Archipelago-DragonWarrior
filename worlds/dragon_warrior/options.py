@@ -289,108 +289,109 @@ class DisableRedFlashes(Toggle):
     display_name = "Disable Red Flashes"
 
 DWOptionGroups = [
-    OptionGroup("Random Options", [
-        RandomGrowth,
-        RandomSpellLearning,
-        HealHurtBeforeMore, 
-        RandomXPRequirements,
-        RandomMonsterAbilities,
-        RandomMonsterZones,
-        RandomMonsterStats,
-        RandomMonsterXP,
-        MakeRandomStatsConsistent
-    ]),
-    OptionGroup("Challenge Options", [
-        ScaredMetalSlimes,
-        ScaledMetalSlimeXP,
-        NoHurtMore,
-        OnlyHealmore,
-        NoNumbers,
-        InvisibleHero,
-        InvisibleNPCs
-    ]),
-    OptionGroup("QOL Options", [
-        EnableMenuWrapping,
-        EnableDeathNecklace,
-        EnableBattleTorches,
-        RepelInDungeons,
-        PermanentRepel,
-        PermanentTorch,
-        FastText,
-        SpeedHacks,
-        LevellingSpeed,
-        Level1Radiant,
-        Level1Repel,
-        EasyCharlock,
-        ModernSpellNames,
-        SkipOriginalCredits,
-        ReturnEscapes,
-        ReturnToTown,
-        WarpWhistle,
-        LevelupRefill,
-        CharlockInn,
-        DL1Crits,
-        DL2Crits
-    ]),
-    OptionGroup("Other Options", [
-        ShuffleMusic,
-        DisableMusic,
-        ShowDeathCounter,
-        DisableSpellFlashing,
-        DisableRedFlashes,
-        NoirMode,
-        MagicHerbs,
-        NormalFluteSpeed
-    ])
+    # OptionGroup("Random Options", [
+    #     RandomGrowth,
+    #     RandomSpellLearning,
+    #     HealHurtBeforeMore, 
+    #     RandomXPRequirements,
+    #     RandomMonsterAbilities,
+    #     RandomMonsterZones,
+    #     RandomMonsterStats,
+    #     RandomMonsterXP,
+    #     MakeRandomStatsConsistent
+    # ]),
+    # OptionGroup("Challenge Options", [
+    #     ScaredMetalSlimes,
+    #     ScaledMetalSlimeXP,
+    #     NoHurtMore,
+    #     OnlyHealmore,
+    #     NoNumbers,
+    #     InvisibleHero,
+    #     InvisibleNPCs
+    # ]),
+    # OptionGroup("QOL Options", [
+    #     EnableMenuWrapping,
+    #     EnableDeathNecklace,
+    #     EnableBattleTorches,
+    #     RepelInDungeons,
+    #     PermanentRepel,
+    #     PermanentTorch,
+    #     FastText,
+    #     SpeedHacks,
+    #     LevellingSpeed,
+    #     Level1Radiant,
+    #     Level1Repel,
+    #     EasyCharlock,
+    #     ModernSpellNames,
+    #     SkipOriginalCredits,
+    #     ReturnEscapes,
+    #     ReturnToTown,
+    #     WarpWhistle,
+    #     LevelupRefill,
+    #     CharlockInn,
+    #     DL1Crits,
+    #     DL2Crits
+    # ]),
+    # OptionGroup("Other Options", [
+    #     ShuffleMusic,
+    #     DisableMusic,
+    #     ShowDeathCounter,
+    #     DisableSpellFlashing,
+    #     DisableRedFlashes,
+    #     NoirMode,
+    #     MagicHerbs,
+    #     NormalFluteSpeed
+    # ])
 ]
 
 @dataclass
 class DWOptions(PerGameCommonOptions):
-    random_growth: RandomGrowth
-    random_spell_learning: RandomSpellLearning
-    heal_hurt_before_more: HealHurtBeforeMore
-    random_xp_requirements: RandomXPRequirements
-    random_monster_abilities: RandomMonsterAbilities
-    random_monster_zones: RandomMonsterZones
-    random_monster_stats: RandomMonsterStats
-    random_monster_xp: RandomMonsterXP
-    make_random_stats_consistent: MakeRandomStatsConsistent
+    pass
+    # random_growth: RandomGrowth
+    # random_spell_learning: RandomSpellLearning
+    # heal_hurt_before_more: HealHurtBeforeMore
+    # random_xp_requirements: RandomXPRequirements
+    # random_monster_abilities: RandomMonsterAbilities
+    # random_monster_zones: RandomMonsterZones
+    # random_monster_stats: RandomMonsterStats
+    # random_monster_xp: RandomMonsterXP
+    # make_random_stats_consistent: MakeRandomStatsConsistent
 
-    scared_metal_slimes: ScaredMetalSlimes
-    scaled_metal_slime_xp: ScaledMetalSlimeXP
-    no_hurtmore: NoHurtMore
-    only_healmore: OnlyHealmore
-    no_numbers: NoNumbers
-    invisible_hero: InvisibleHero
-    invisible_npcs: InvisibleNPCs
+    # scared_metal_slimes: ScaredMetalSlimes
+    # scaled_metal_slime_xp: ScaledMetalSlimeXP
+    # no_hurtmore: NoHurtMore
+    # only_healmore: OnlyHealmore
+    # no_numbers: NoNumbers
+    # invisible_hero: InvisibleHero
+    # invisible_npcs: InvisibleNPCs
 
-    enable_menu_wrapping: EnableMenuWrapping
-    enable_death_necklace: EnableDeathNecklace
-    enable_battle_torches: EnableBattleTorches
-    repel_in_dungeons: RepelInDungeons
-    permanent_repel: PermanentRepel
-    permanent_torch: PermanentTorch
-    fast_text: FastText
-    speed_hacks: SpeedHacks
-    levelling_speed: LevellingSpeed
-    level_1_radiant: Level1Radiant
-    level_1_repel: Level1Repel
-    easy_charlock: EasyCharlock
-    modern_spell_names: ModernSpellNames
-    skip_original_credits: SkipOriginalCredits
-    return_escapes: ReturnEscapes
-    return_to_town: ReturnToTown
-    warp_whistle: WarpWhistle
-    levelup_refill: LevelupRefill
-    charlock_inn: CharlockInn
-    dl1_crits: DL1Crits
-    dl2_crits: DL2Crits
+    # enable_menu_wrapping: EnableMenuWrapping
+    # enable_death_necklace: EnableDeathNecklace
+    # enable_battle_torches: EnableBattleTorches
+    # repel_in_dungeons: RepelInDungeons
+    # permanent_repel: PermanentRepel
+    # permanent_torch: PermanentTorch
+    # fast_text: FastText
+    # speed_hacks: SpeedHacks
+    # levelling_speed: LevellingSpeed
+    # level_1_radiant: Level1Radiant
+    # level_1_repel: Level1Repel
+    # easy_charlock: EasyCharlock
+    # modern_spell_names: ModernSpellNames
+    # skip_original_credits: SkipOriginalCredits
+    # return_escapes: ReturnEscapes
+    # return_to_town: ReturnToTown
+    # warp_whistle: WarpWhistle
+    # levelup_refill: LevelupRefill
+    # charlock_inn: CharlockInn
+    # dl1_crits: DL1Crits
+    # dl2_crits: DL2Crits
 
-    shuffle_music: ShuffleMusic
-    disable_music: DisableMusic
-    show_death_counter: ShowDeathCounter
-    disable_spell_flashing: DisableSpellFlashing
-    disable_red_flashes: DisableRedFlashes
-    noir_mode: NoirMode
-    magic_herbs: MagicHerbs
-    normal_flute_speed: NormalFluteSpeed
+    # shuffle_music: ShuffleMusic
+    # disable_music: DisableMusic
+    # show_death_counter: ShowDeathCounter
+    # disable_spell_flashing: DisableSpellFlashing
+    # disable_red_flashes: DisableRedFlashes
+    # noir_mode: NoirMode
+    # magic_herbs: MagicHerbs
+    # normal_flute_speed: NormalFluteSpeed
