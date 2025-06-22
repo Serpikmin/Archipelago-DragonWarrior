@@ -89,7 +89,7 @@ class DragonWarriorClient(BizHawkClient):
         # If smaller, we should grant the missing items
         writes = []
         important_items = [0x5, 0x7, 0x8, 0xA, 0xC, 0xD, 0xE]
-        filler_items = [0x0, 0x1, 0x2, 0x3, 0x4, 0x6, 0x9, 0xB]
+        filler_items = [0x1, 0x2, 0x3, 0x4, 0x6, 0x9, 0xB]
 
         recv_index = recv_count[0]
 
@@ -100,7 +100,7 @@ class DragonWarriorClient(BizHawkClient):
                 color(ctx.item_names.lookup_in_game(item.item), 'red', 'bold'),
                 color(ctx.player_names[item.player], 'yellow'),
                 ctx.location_names.lookup_in_slot(item.location, item.player), recv_index, len(ctx.items_received)))
-            if item.item in important_items:  # Add item to inventory no matter what
+            if item.item in important_items:  # Quest item, add to inventory no matter what
 
                 found_space = False
 
@@ -135,7 +135,7 @@ class DragonWarriorClient(BizHawkClient):
                             writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                             break
 
-            elif item.item < 0xF: # Non-herb consumable, remove?
+            elif item.item < 0xF: # Non-herb consumable, add to inventory if space
                 
                 found_space = False
 
@@ -153,12 +153,11 @@ class DragonWarriorClient(BizHawkClient):
                     if found_space:
                         writes.append((0xC1 + i, new_byte.to_bytes(1, 'little'), "RAM"))
                         break
-                # For now, skip adding if no inventory space found
             
             elif item.item == 0xD4:  # Magic Key
                 writes.append((0xBF, bytes.fromhex('01'), "RAM"))
             
-            elif item.item == 0xF:  # Magic herb
+            elif item.item == 0xF:  # Medicinal herb
                 writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))
 
             else: # Progressive Equipment (Erdrick's Sword for now)
