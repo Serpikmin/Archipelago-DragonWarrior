@@ -16,7 +16,6 @@ class DragonWarriorClient(BizHawkClient):
     system = "NES"
     patch_suffix = ".apdw"
     item_queue: List[NetworkItem] = []
-    rom: Optional[bytes] = None
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         from worlds._bizhawk import RequestFailedError, read
