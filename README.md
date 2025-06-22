@@ -85,7 +85,7 @@ You can install the `dragon_warrior.apworld` file in the Releases tab to your AP
 ## How do I join a multiworld with Dragon Warrior?
 >>>>>>> 0c91ffc7 (Update readme)
 
-Your host should send you the `.apdw` patch file, ensure you have the Archipelago Launcher, and open the `.apdw` patch file using the "Open Patch" option in the launcher. NOTE THAT DOUBLE CLICKING THE PATCH FILE WILL NOT WORK!! (due to some under the hood stuff)
+Your host should send you the `.apdw` patch file, ensure you have the Archipelago Launcher, and open the `.apdw` patch file using the "Open Patch" option in the launcher. **NOTE THAT DOUBLE CLICKING THE PATCH FILE WILL NOT WORK!!** (due to some under the hood stuff) After Bizhawk + Client open, be sure to type your multiworld's corresponding URL + port at the top and hit connect, you'll be prompted to type your player name (slot number), and then you're good!
 
 ## What does randomization do to this game?
 
