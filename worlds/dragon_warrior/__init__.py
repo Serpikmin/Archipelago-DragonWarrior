@@ -108,8 +108,7 @@ class DragonWarriorWorld(World):
 
             patch = DWPatch(os.path.splitext(rompath)[0] + ".apdw",
                             self.player, 
-                            self.multiworld.player_name[self.player],
-                            self.determine_flags())
+                            self.multiworld.player_name[self.player],)
             patch.write()
 
         except Exception:

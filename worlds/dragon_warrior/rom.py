@@ -30,21 +30,21 @@ class DWPatch(APAutoPatchInterface):
 
         try:
             os.mkdir(new_dir)
+            if platform.system() == "Windows":
+                file = "dwr.cp312-win_amd64.pyd"
+            else:
+                file = "dwr.cpython-312-x86_64-linux-gnu.so"
+            
+            with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
+                zf.extract("dragon_warrior/" + file, path=new_dir)
+
+            # Clean up format from zip file
+            os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
+            os.rmdir(os.path.join(new_dir, "dragon_warrior"))
+            open(os.path.join(new_dir, "__init__.py"), "a")
+
         except FileExistsError:
             pass
-
-        if platform.system() == "Windows":
-            file = "dwr.cp312-win_amd64.pyd"
-        else:
-            file = "dwr.cpython-312-x86_64-linux-gnu.so"
-        
-        with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
-            zf.extract("dragon_warrior/" + file, path=new_dir)
-
-        # Clean up format from zip file
-        os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
-        os.rmdir(os.path.join(new_dir, "dragon_warrior"))
-        open(os.path.join(new_dir, "__init__.py"), "a")
 
         sys.path.append(new_dir)
 
@@ -76,5 +76,4 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 def write_rom(seed: int, flags: str, target: str) -> None:
     import dwr # type: ignore
-    logging.Logger.info("Reached write_rom()")
     dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), seed, bytes(flags, encoding="ascii"), bytes(target, encoding="ascii"))
