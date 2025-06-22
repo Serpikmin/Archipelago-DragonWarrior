@@ -9,7 +9,8 @@ if TYPE_CHECKING:
 nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
-EXPECTED_ROM_NAME = b"DRAGON WARRIOR"
+EXPECTED_ROM_NAME = "DWAPV"
+EXPECTED_VERSION = "0100"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -21,13 +22,19 @@ class DragonWarriorClient(BizHawkClient):
         from worlds._bizhawk import RequestFailedError, read
         try:
             # Check ROM name/patch version
-            rom_name_bytes = (await read(ctx.bizhawk_ctx, [(0x7FE0, 14, "PRG ROM")]))
+            rom_name_bytes, version_bytes = (await read(ctx.bizhawk_ctx, [(0x7FE0, 5, "PRG ROM"),
+                                                                          (0x7FE5, 4, "PRG ROM")]))
 
-            if rom_name_bytes[:14] != [EXPECTED_ROM_NAME]:
+            if rom_name_bytes[:5].decode("ascii") != EXPECTED_ROM_NAME:
                 logger.info(
-                    "ERROR: Rom is not valid!"
+                    "Expected: " + EXPECTED_ROM_NAME + ", got: " + rom_name_bytes[:5].decode("ascii")
                 )
                 return False
+            
+            if version_bytes[:4].decode("ascii") != EXPECTED_VERSION:
+                logger.info(
+                    "WARNING: Version mismatch, this was generated on an earlier version of the apworld and may not function as expected"
+                )
         except UnicodeDecodeError:
             return False
         except RequestFailedError:
