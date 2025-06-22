@@ -38,7 +38,7 @@ cursed_table = {
 }
 
 filler_table = {
-    names.herb: ItemData(0x0),
+    names.herb: ItemData(0xF),
     names.torch: ItemData(0x1),
     names.fairy_water: ItemData(0x2),
     names.chimaera_wing: ItemData(0x3),
