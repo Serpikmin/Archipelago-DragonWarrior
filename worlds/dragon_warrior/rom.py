@@ -1,57 +1,18 @@
 import hashlib
 import os
+import sys
+import logging
+import platform
+from typing_extensions import override
+import zipfile
 from worlds.AutoWorld import World
 import Utils
 import settings
-from worlds.Files import APDeltaPatch
+from worlds.Files import APAutoPatchInterface
 
 DRAGON_WARRIOR_HASH = "25cf03eb7ac2dec4ef332425c151f373"
 
-
-class LocalRom:
-
-    def __init__(self, file, name=None, hash=None):
-        self.name = name
-        self.hash = hash
-
-        with open(file, 'rb') as stream:
-            self.buffer = bytearray(stream.read())
-
-    def read_bit(self, address: int, bit_number: int) -> bool:
-        bitflag = (1 << bit_number)
-        return ((self.buffer[address] & bitflag) != 0)
-
-    def read_byte(self, address: int) -> int:
-        return self.buffer[address]
-
-    def read_bytes(self, startaddress: int, length: int) -> bytearray:
-        return self.buffer[startaddress:startaddress + length]
-
-    def write_byte(self, address: int, value: int):
-        self.buffer[address] = value
-
-    def write_bytes(self, startaddress: int, values):
-        pass
-        self.buffer[startaddress:startaddress + len(values)] = values
-        pass
-
-    def write_to_file(self, file):
-        with open(file, 'wb') as outfile:
-            outfile.write(self.buffer)
-
-    def read_from_file(self, file):
-        with open(file, 'rb') as stream:
-            self.buffer = bytearray(stream.read())
-
-
-def patch_rom(world: World, rom: LocalRom):
-    from Utils import __version__
-    rom.name = bytearray(f'DW{__version__.replace(".", "")[0:3]}_{world.player}_{world.multiworld.seed:11}\0', 'utf8')[:21]
-    rom.name.extend([0] * (21 - len(rom.name)))
-    # rom.write_bytes(0xD100, rom.name)
-
-
-class DWDeltaPatch(APDeltaPatch):
+class DWPatch(APAutoPatchInterface):
     hash = DRAGON_WARRIOR_HASH
     game = "Dragon Warrior"
     patch_file_ending = ".apdw"
@@ -60,13 +21,42 @@ class DWDeltaPatch(APDeltaPatch):
     @classmethod
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
+    
+    @override
+    def patch(self, target: str) -> None:
+        # Extract the dwr module from the .apworld depending on OS into a temp directory
+        current_directory = os.getcwd()
+        new_dir = os.path.join(current_directory, "dragon_warrior_randomizer")
+
+        try:
+            os.mkdir(new_dir)
+        except FileExistsError:
+            pass
+
+        if platform.system() == "Windows":
+            file = "dwr.cp312-win_amd64.pyd"
+        else:
+            file = "dwr.cpython-312-x86_64-linux-gnu.so"
+        
+        with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
+            zf.extract("dragon_warrior/" + file, path=new_dir)
+
+        # Clean up format from zip file
+        os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
+        os.rmdir(os.path.join(new_dir, "dragon_warrior"))
+        open(os.path.join(new_dir, "__init__.py"), "a")
+
+        sys.path.append(new_dir)
+
+        self.read()
+        write_rom(seed=8519378015, flags="AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAUAAAAAA", target=target)
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
     base_rom_bytes = getattr(get_base_rom_bytes, "base_rom_bytes", None)
     if not base_rom_bytes:
         file_name = get_base_rom_path(file_name)
-        base_rom_bytes = bytes(open(file_name, "rb").read())
+        base_rom_bytes = open(file_name, "rb").read()
 
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
@@ -83,3 +73,8 @@ def get_base_rom_path(file_name: str = "") -> str:
     if not os.path.exists(file_name):
         file_name = Utils.user_path(file_name)
     return file_name
+
+def write_rom(seed: int, flags: str, target: str) -> None:
+    import dwr # type: ignore
+    logging.Logger.info("Reached write_rom()")
+    dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), seed, bytes(flags, encoding="ascii"), bytes(target, encoding="ascii"))
