@@ -32,10 +32,11 @@ All items, both remote and local, appear in chests as "APItem".
 
 Currently, items are silently added to the player's inventory. If it is full, a filler item will be dropped for a quest item. Otherwise the item is ignored.
 
-## Future plans:
+## Future plans (roughly ordered):
 
 - (Nearly) Full suite of options from the [DWRandomizer](https://dwrandomizer.com/)
 - Add the three search spots to the item/location pool (Fairy Flute, Erdrick's Token, Erdrick's Armor)
 - Add equipment shop slots as locations and create progressive equipment
-- Add boss kills as checks (Green Dragon, Golem, Knight Aberrant)
+- Add boss kills as checks (Green Dragon, Golem, Axe Knight)
 - Spellsanity/Levelsanity
+- Deathlink
