@@ -49,8 +49,14 @@ class DWPatch(APAutoPatchInterface):
         sys.path.append(new_dir)
 
         self.read()
-        # Extract seed from directory name
-        seed = int(os.path.splitext(target)[0].split("AP_")[1][:15])
+        # Create seed using target path hash
+        temp = hash(target)
+        if temp < 0:
+            temp *= 1
+        temp = str(temp)
+        while len(temp) < 15:
+            temp = temp + "0"
+        seed = int(temp[:15])
         write_rom(seed, "AAAAAQAAABAAAAAAAAAAAAAAAAABAAAAAUAAAAAA", target)
 
 
