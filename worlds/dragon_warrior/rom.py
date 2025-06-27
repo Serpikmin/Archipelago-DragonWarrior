@@ -28,23 +28,23 @@ class DWPatch(APAutoPatchInterface):
         current_directory = os.getcwd()
         new_dir = os.path.join(current_directory, "dragon_warrior_randomizer")
 
+        if platform.system() == "Windows":
+            file = "dwr.cp312-win_amd64.pyd"
+        else:
+            file = "dwr.cpython-312-x86_64-linux-gnu.so"
+
         try:
             os.mkdir(new_dir)
-            if platform.system() == "Windows":
-                file = "dwr.cp312-win_amd64.pyd"
-            else:
-                file = "dwr.cpython-312-x86_64-linux-gnu.so"
-            
-            with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
-                zf.extract("dragon_warrior/" + file, path=new_dir)
-
-            # Clean up format from zip file
-            os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
-            os.rmdir(os.path.join(new_dir, "dragon_warrior"))
-            open(os.path.join(new_dir, "__init__.py"), "a")
-
         except FileExistsError:
             pass
+
+        with zipfile.ZipFile(os.path.join(current_directory, "custom_worlds", "dragon_warrior.apworld")) as zf:
+            zf.extract("dragon_warrior/" + file, path=new_dir)
+
+        # Clean up format from zip file
+        os.replace(os.path.join(new_dir, "dragon_warrior", file), os.path.join(new_dir, file))
+        os.rmdir(os.path.join(new_dir, "dragon_warrior"))
+        open(os.path.join(new_dir, "__init__.py"), "a")
 
         sys.path.append(new_dir)
 
@@ -52,7 +52,7 @@ class DWPatch(APAutoPatchInterface):
         # Create seed using target path hash
         temp = hash(target)
         if temp < 0:
-            temp *= 1
+            temp *= -1
         temp = str(temp)
         while len(temp) < 15:
             temp = temp + "0"
