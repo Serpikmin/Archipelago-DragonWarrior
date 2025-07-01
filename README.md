@@ -113,9 +113,9 @@ Currently, items are silently added to the player's inventory. If it is full, a 
 
 ## Future plans (roughly ordered):
 
-- (Nearly) Full suite of options from the [DWRandomizer](https://dwrandomizer.com/)
+- Add boss kills as checks (Green Dragon, Golem, Axe Knight)
 - Add the three search spots to the item/location pool (Fairy Flute, Erdrick's Token, Erdrick's Armor)
 - Add equipment shop slots as locations and create progressive equipment
-- Add boss kills as checks (Green Dragon, Golem, Axe Knight)
-- Spellsanity/Levelsanity
+- Add some remaining map/goal options from [DWRandomizer](https://dwrandomizer.com/)
+- Spellsanity
 - Deathlink
