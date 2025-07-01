@@ -155,8 +155,8 @@ class DragonWarriorWorld(World):
         flag_list[6] += int(self.options.repel_in_dungeons) * 2
         flag_list[7] += int(self.options.permanent_repel) * 16
         flag_list[7] += int(self.options.permanent_torch) * 4
-        flag_list[12] += int(self.options.fast_text) * 4
-        flag_list[12] += int(self.options.speed_hacks) * 1
+        flag_list[11] += int(self.options.fast_text) * 4
+        flag_list[11] += int(self.options.speed_hacks) * 1
         flag_list[21] += int(self.options.summer_sale) * 1
         flag_list[21] += int(self.options.levelling_speed) * 4   # I think this just works???
         flag_list[30] += int(self.options.level_1_radiant) * 8
