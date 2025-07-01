@@ -10,11 +10,12 @@ import Utils
 import settings
 from worlds.Files import APAutoPatchInterface
 
-DRAGON_WARRIOR_HASH = "25cf03eb7ac2dec4ef332425c151f373"
+DRAGON_WARRIOR_PRG0_HASH = "1cfeeac7a20b405780eea318d3d1af2a"
+DRAGON_WARRIOR_PRG1_HASH = "25cf03eb7ac2dec4ef332425c151f373"
 
 class DWPatch(APAutoPatchInterface):
     # Add flags to the APAutoPatchInterface to pass to DWR during patch time
-    hash = DRAGON_WARRIOR_HASH
+    hash = [DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH]
     game = "Dragon Warrior"
     patch_file_ending = ".apdw"
     result_file_ending = ".nes"
@@ -93,8 +94,8 @@ def get_base_rom_bytes(file_name: str = "") -> bytes:
 
         basemd5 = hashlib.md5()
         basemd5.update(base_rom_bytes)
-        if DRAGON_WARRIOR_HASH != basemd5.hexdigest():
-            raise Exception('Supplied Base Rom does not match known MD5 for US(PRG1) release.'
+        if basemd5.hexdigest() not in [DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH]:
+            raise Exception('Supplied Base Rom does not match known MD5 for US(PRG0) or US(PRG1) release.'
                             'Get the correct game and version, then dump it')
         get_base_rom_bytes.base_rom_bytes = base_rom_bytes
     return base_rom_bytes
