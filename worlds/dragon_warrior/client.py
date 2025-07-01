@@ -52,19 +52,19 @@ class DragonWarriorClient(BizHawkClient):
             return
         
         current_map, chests_array, recv_count, inventory_bytes, \
-            dragonlord_dead, herbs, equip_byte = await read(ctx.bizhawk_ctx, [
+            dragonlord_dead, herbs, equip_byte, level_byte = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
             (0xC1, 4, "RAM"),
             (0xE4, 1, "RAM"),
             (0xC0, 1, "RAM"),
-            (0xBE, 1, "RAM")
+            (0xBE, 1, "RAM"),
+            (0xC7, 1, "RAM")
         ])
 
-        dragonlord_dead = dragonlord_dead[0] & 0x4
-        
         # Game Completion
+        dragonlord_dead = dragonlord_dead[0] & 0x4
         if not ctx.finished_game and dragonlord_dead:
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
@@ -74,13 +74,23 @@ class DragonWarriorClient(BizHawkClient):
         # Search for new location checks
         new_checks = []
 
-        # See locations.py for an explanation
+        # Chest checks, See locations.py for an explanation
         for i in range(0, 16, 2):
             chest = chests_array[i:i + 2]
             # I hate working with bytes in Python
             location_data = int(hex((current_map[0] << 16) | ((chest[0] << 8) | chest[1])), 16)
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
+
+        # Level checks
+        level_byte = level_byte[0]
+        location_data = "0xD"
+        if level_byte < 10:
+            location_data += "0"
+        location_data += str(level_byte)
+        location_data = int(location_data, 16)
+        if location_data not in ctx.checked_locations:
+            new_checks.append(location_data)
 
         # Send found checks
         for new_check_id in new_checks:
