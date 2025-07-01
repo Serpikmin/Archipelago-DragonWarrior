@@ -166,6 +166,31 @@ erdricks_token_locations = {
     # names.erdricks_token_location: 0x058,
 }
 
+level_locations = {
+    names.level_2: 0xD02,
+    names.level_3: 0xD03,
+    names.level_4: 0xD04,
+    names.level_5: 0xD05,
+    names.level_6: 0xD06,
+    names.level_7: 0xD07,
+    names.level_8: 0xD08,
+    names.level_9: 0xD09,
+    names.level_10: 0xD10,
+}
+
+high_level_locations = {
+    names.level_11: 0xD11,
+    names.level_12: 0xD12,
+    names.level_13: 0xD13,
+    names.level_14: 0xD14,
+    names.level_15: 0xD15,
+    names.level_16: 0xD16,
+    names.level_17: 0xD17,
+    names.level_18: 0xD18,
+    names.level_19: 0xD19,
+    names.level_20: 0xD20,
+}
+
 location_table = {
     **throne_room_locations,
     **tantegel_castle_locations,
@@ -183,6 +208,8 @@ location_table = {
     **erdricks_cave_locations,
     **shrine_of_rain_locations,
     **erdricks_token_locations,
+    **level_locations,
+    **high_level_locations,
 }
 
 location_names: Dict[str, Set[str]] = { 
@@ -198,7 +225,8 @@ location_names: Dict[str, Set[str]] = {
     "Hauksness": set([names.hauksness_erdrick_armor]),
     "Erdrick's Grave": set([names.erdrick_tablet]),
     "Staff of Rain Shrine": set([names.staff_of_rain_location]),
-    "Erdrick's Token": set([names.erdricks_token_location])
+    "Erdrick's Token": set([names.erdricks_token_location]),
+    "Level Ups": set(name for name in list(level_locations.keys()) + list(high_level_locations.keys())),
 }
 
 lookup_location_to_id: Dict[str, int] = {location: idx for location, idx in location_table.items() if idx is not None}

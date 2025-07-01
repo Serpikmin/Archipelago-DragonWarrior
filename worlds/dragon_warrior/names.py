@@ -35,6 +35,7 @@ magic_key = "Magic Key"
 ######################
 
 overworld = "Overworld"
+strong_overworld = "Overworld"
 tantegel_throne_room = "Tantegel Throne Room Region"
 tantegel_castle = "Tantegel Castle Region"
 breconnary = "Brecconary Region"
@@ -58,6 +59,27 @@ charlock_castle = "Charlock Castle Region"
 ######################
 #   LOCATION NAMES   #
 ######################
+
+# Level Ups
+level_2 = "Level 2"
+level_3 = "Level 3"
+level_4 = "Level 4"
+level_5 = "Level 5"
+level_6 = "Level 6"
+level_7 = "Level 7"
+level_8 = "Level 8"
+level_9 = "Level 9"
+level_10 = "Level 10"
+level_11 = "Level 11"
+level_12 = "Level 12"
+level_13 = "Level 13"
+level_14 = "Level 14"
+level_15 = "Level 15"
+level_16 = "Level 16"
+level_17 = "Level 17"
+level_18 = "Level 18"
+level_19 = "Level 19"
+level_20 = "Level 20"
 
 # Tantegel Throne Room
 tantegel_throne_room_gold_chest = "Throne Room - Gold Chest"

@@ -55,7 +55,10 @@ class DWRegion(Region):
 def create_regions(world: World) -> None:
     menu_region = create_region(world, 'Menu', None)
 
-    overworld_region = create_region(world, names.overworld, None)
+    overworld_region = create_region(world, names.overworld, locations.level_locations)
+
+    # For location checks on levels 11-20
+    strong_overworld_region = create_region(world, names.strong_overworld, locations.high_level_locations)
 
     tantegel_throne_room_region = create_region(world, names.tantegel_throne_room, locations.throne_room_locations)
     
@@ -92,6 +95,7 @@ def create_regions(world: World) -> None:
     world.multiworld.regions += [
         menu_region,
         overworld_region,
+        strong_overworld_region,
         tantegel_throne_room_region,
         tantegel_castle_region,
         brecconary_region,
@@ -116,6 +120,8 @@ def connect_regions(world: World) -> None:
 
     connect(world, world.player, region_names, 'Menu', names.tantegel_throne_room)
     connect(world, world.player, region_names, names.tantegel_throne_room, names.overworld)
+    connect(world, world.player, region_names, names.overworld, names.strong_overworld,
+            lambda state: (state.has(names.magic_key, world.player)))
     connect(world, world.player, region_names, names.overworld, names.breconnary)
     connect(world, world.player, region_names, names.overworld, names.garinham)
     connect(world, world.player, region_names, names.overworld, names.kol)             # Connect with gear later
