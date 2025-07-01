@@ -14,6 +14,18 @@ class RandomSpellLearning(Toggle):
     """
     display_name = "Random Spell Learning"
 
+class RandomWeaponShops(Toggle):
+    """
+    The weapons available in each shop will be randomized.
+    """
+    display_name = "Random Weapon Shops"
+
+class RandomWeaponPrices(Toggle):
+    """
+    The prices of weapons in shops will be randomized.
+    """
+    display_name = "Random Weapon Prices"
+
 class HealHurtBeforeMore(Toggle):
     """ 
     HEAL must come before HEALMORE; HURT before HURTMORE. This option only does something if you have Random Spell Learning on
@@ -38,13 +50,13 @@ class EnableDeathNecklace(DefaultOnToggle):
     """
     display_name = "Enable Death Necklace"
 
-class EnableBattleTorches(Toggle):
+class EnableBattleTorches(DefaultOnToggle):
     """ 
     Torches and Fairy water can be thrown at monsters
     """
     display_name = "Enable Torches in Battle"
 
-class RepelInDungeons(Toggle):
+class RepelInDungeons(DefaultOnToggle):
     """ 
     Enables REPEL to work in dungeons
     """
@@ -56,7 +68,7 @@ class PermanentRepel(Toggle):
     """
     display_name = "Permanent Repel"
 
-class PermanentTorch(DefaultOnToggle):
+class PermanentTorch(Toggle):
     """ 
     At least a 3x3 area will always be lit in dungeons
     """
@@ -104,13 +116,13 @@ class ScaledMetalSlimeXP(Toggle):
     """
     display_name = "Scaled Metal Slime XP"
 
-class FastText(DefaultOnToggle):
+class FastText(Toggle):
     """ 
     All text will progress much faster
     """
     display_name = "Fast Text"
 
-class SpeedHacks(DefaultOnToggle):
+class SpeedHacks(Toggle):
     """ 
     Various aspects of the game will be much faster
     """
@@ -127,6 +139,12 @@ class SpeedHacks(DefaultOnToggle):
 #     Charlock Dungeon will be much shorter
 #     """
 #     display_name = "Short Charlock"
+
+class SummerSale(Toggle):
+    """
+    All weapons and armor 35-65% off!
+    """
+    display_name = "Summer Sale"
 
 class LevellingSpeed(Choice):
     """ 
@@ -252,6 +270,12 @@ class LevelupRefill(Toggle):
     """
     display_name = "Levelup Refill"
 
+class AsceticKing(DefaultOnToggle):
+    """
+    King Lorik will let the player keep their hard-earned gold upon dying.
+    """
+    display_name = "Ascetic King"
+
 class CharlockInn(Toggle):
     """ 
     Make the final dive easier by having a comfy bed and breakfast at the Dragonlord's
@@ -289,109 +313,116 @@ class DisableRedFlashes(Toggle):
     display_name = "Disable Red Flashes"
 
 DWOptionGroups = [
-    # OptionGroup("Random Options", [
-    #     RandomGrowth,
-    #     RandomSpellLearning,
-    #     HealHurtBeforeMore, 
-    #     RandomXPRequirements,
-    #     RandomMonsterAbilities,
-    #     RandomMonsterZones,
-    #     RandomMonsterStats,
-    #     RandomMonsterXP,
-    #     MakeRandomStatsConsistent
-    # ]),
-    # OptionGroup("Challenge Options", [
-    #     ScaredMetalSlimes,
-    #     ScaledMetalSlimeXP,
-    #     NoHurtMore,
-    #     OnlyHealmore,
-    #     NoNumbers,
-    #     InvisibleHero,
-    #     InvisibleNPCs
-    # ]),
-    # OptionGroup("QOL Options", [
-    #     EnableMenuWrapping,
-    #     EnableDeathNecklace,
-    #     EnableBattleTorches,
-    #     RepelInDungeons,
-    #     PermanentRepel,
-    #     PermanentTorch,
-    #     FastText,
-    #     SpeedHacks,
-    #     LevellingSpeed,
-    #     Level1Radiant,
-    #     Level1Repel,
-    #     EasyCharlock,
-    #     ModernSpellNames,
-    #     SkipOriginalCredits,
-    #     ReturnEscapes,
-    #     ReturnToTown,
-    #     WarpWhistle,
-    #     LevelupRefill,
-    #     CharlockInn,
-    #     DL1Crits,
-    #     DL2Crits
-    # ]),
-    # OptionGroup("Other Options", [
-    #     ShuffleMusic,
-    #     DisableMusic,
-    #     ShowDeathCounter,
-    #     DisableSpellFlashing,
-    #     DisableRedFlashes,
-    #     NoirMode,
-    #     MagicHerbs,
-    #     NormalFluteSpeed
-    # ])
+    OptionGroup("Random Options", [
+        RandomGrowth,
+        RandomSpellLearning,
+        RandomWeaponShops,
+        RandomWeaponPrices,
+        HealHurtBeforeMore, 
+        RandomXPRequirements,
+        RandomMonsterAbilities,
+        RandomMonsterZones,
+        RandomMonsterStats,
+        RandomMonsterXP,
+        MakeRandomStatsConsistent
+    ]),
+    OptionGroup("Challenge Options", [
+        ScaredMetalSlimes,
+        ScaledMetalSlimeXP,
+        NoHurtMore,
+        OnlyHealmore,
+        NoNumbers,
+        InvisibleHero,
+        InvisibleNPCs
+    ]),
+    OptionGroup("QOL Options", [
+        EnableMenuWrapping,
+        EnableDeathNecklace,
+        EnableBattleTorches,
+        RepelInDungeons,
+        PermanentRepel,
+        PermanentTorch,
+        FastText,
+        SpeedHacks,
+        SummerSale,
+        LevellingSpeed,
+        Level1Radiant,
+        Level1Repel,
+        EasyCharlock,
+        ModernSpellNames,
+        SkipOriginalCredits,
+        ReturnEscapes,
+        ReturnToTown,
+        WarpWhistle,
+        LevelupRefill,
+        AsceticKing,
+        CharlockInn,
+        DL1Crits,
+        DL2Crits
+    ]),
+    OptionGroup("Other Options", [
+        ShuffleMusic,
+        DisableMusic,
+        ShowDeathCounter,
+        DisableSpellFlashing,
+        DisableRedFlashes,
+        NoirMode,
+        MagicHerbs,
+        NormalFluteSpeed
+    ])
 ]
 
 @dataclass
 class DWOptions(PerGameCommonOptions):
-    pass
-    # random_growth: RandomGrowth
-    # random_spell_learning: RandomSpellLearning
-    # heal_hurt_before_more: HealHurtBeforeMore
-    # random_xp_requirements: RandomXPRequirements
-    # random_monster_abilities: RandomMonsterAbilities
-    # random_monster_zones: RandomMonsterZones
-    # random_monster_stats: RandomMonsterStats
-    # random_monster_xp: RandomMonsterXP
-    # make_random_stats_consistent: MakeRandomStatsConsistent
+    random_growth: RandomGrowth
+    random_spell_learning: RandomSpellLearning
+    random_weapon_shops: RandomWeaponShops
+    random_weapon_prices: RandomWeaponPrices
+    heal_hurt_before_more: HealHurtBeforeMore
+    random_xp_requirements: RandomXPRequirements
+    random_monster_abilities: RandomMonsterAbilities
+    random_monster_zones: RandomMonsterZones
+    random_monster_stats: RandomMonsterStats
+    random_monster_xp: RandomMonsterXP
+    make_random_stats_consistent: MakeRandomStatsConsistent
 
-    # scared_metal_slimes: ScaredMetalSlimes
-    # scaled_metal_slime_xp: ScaledMetalSlimeXP
-    # no_hurtmore: NoHurtMore
-    # only_healmore: OnlyHealmore
-    # no_numbers: NoNumbers
-    # invisible_hero: InvisibleHero
-    # invisible_npcs: InvisibleNPCs
+    scared_metal_slimes: ScaredMetalSlimes
+    scaled_metal_slime_xp: ScaledMetalSlimeXP
+    no_hurtmore: NoHurtMore
+    only_healmore: OnlyHealmore
+    no_numbers: NoNumbers
+    invisible_hero: InvisibleHero
+    invisible_npcs: InvisibleNPCs
 
-    # enable_menu_wrapping: EnableMenuWrapping
-    # enable_death_necklace: EnableDeathNecklace
-    # enable_battle_torches: EnableBattleTorches
-    # repel_in_dungeons: RepelInDungeons
-    # permanent_repel: PermanentRepel
-    # permanent_torch: PermanentTorch
-    # fast_text: FastText
-    # speed_hacks: SpeedHacks
-    # levelling_speed: LevellingSpeed
-    # level_1_radiant: Level1Radiant
-    # level_1_repel: Level1Repel
-    # easy_charlock: EasyCharlock
-    # modern_spell_names: ModernSpellNames
-    # skip_original_credits: SkipOriginalCredits
-    # return_escapes: ReturnEscapes
-    # return_to_town: ReturnToTown
-    # warp_whistle: WarpWhistle
-    # levelup_refill: LevelupRefill
-    # charlock_inn: CharlockInn
-    # dl1_crits: DL1Crits
-    # dl2_crits: DL2Crits
+    enable_menu_wrapping: EnableMenuWrapping
+    enable_death_necklace: EnableDeathNecklace
+    enable_battle_torches: EnableBattleTorches
+    repel_in_dungeons: RepelInDungeons
+    permanent_repel: PermanentRepel
+    permanent_torch: PermanentTorch
+    fast_text: FastText
+    speed_hacks: SpeedHacks
+    summer_sale: SummerSale
+    levelling_speed: LevellingSpeed
+    level_1_radiant: Level1Radiant
+    level_1_repel: Level1Repel
+    easy_charlock: EasyCharlock
+    modern_spell_names: ModernSpellNames
+    skip_original_credits: SkipOriginalCredits
+    return_escapes: ReturnEscapes
+    return_to_town: ReturnToTown
+    warp_whistle: WarpWhistle
+    levelup_refill: LevelupRefill
+    ascetic_king: AsceticKing
+    charlock_inn: CharlockInn
+    dl1_crits: DL1Crits
+    dl2_crits: DL2Crits
 
-    # shuffle_music: ShuffleMusic
-    # disable_music: DisableMusic
-    # show_death_counter: ShowDeathCounter
-    # disable_spell_flashing: DisableSpellFlashing
-    # disable_red_flashes: DisableRedFlashes
-    # noir_mode: NoirMode
-    # magic_herbs: MagicHerbs
-    # normal_flute_speed: NormalFluteSpeed
+    shuffle_music: ShuffleMusic
+    disable_music: DisableMusic
+    show_death_counter: ShowDeathCounter
+    disable_spell_flashing: DisableSpellFlashing
+    disable_red_flashes: DisableRedFlashes
+    noir_mode: NoirMode
+    magic_herbs: MagicHerbs
+    normal_flute_speed: NormalFluteSpeed
