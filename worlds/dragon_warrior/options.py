@@ -284,7 +284,7 @@ class NormalFluteSpeed(DefaultOnToggle):
 
 class DisableRedFlashes(Toggle):
     """
-    Prevents the screen from falshing when walking on damage tiles
+    Prevents the screen from flashing when walking on damage tiles
     """
     display_name = "Disable Red Flashes"
 
