@@ -13,14 +13,39 @@ from worlds.Files import APAutoPatchInterface
 DRAGON_WARRIOR_HASH = "25cf03eb7ac2dec4ef332425c151f373"
 
 class DWPatch(APAutoPatchInterface):
+    # Add flags to the APAutoPatchInterface to pass to DWR during patch time
     hash = DRAGON_WARRIOR_HASH
     game = "Dragon Warrior"
     patch_file_ending = ".apdw"
     result_file_ending = ".nes"
 
+    flags: str
+
+    def __init__(self,
+                path: str | None = None,
+                player: int | None = None,
+                player_name: str = "",
+                server: str = "",
+                *,
+                flags: str = "") -> None:
+        super().__init__(path=path, player=player, player_name=player_name, server=server)
+        self.flags = flags
+
     @classmethod
     def get_source_data(cls) -> bytes:
         return get_base_rom_bytes()
+    
+    @override
+    def write_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
+        super().write_contents(opened_zipfile)
+        opened_zipfile.writestr("flags.txt",
+                                self.flags,
+                                compress_type=zipfile.ZIP_DEFLATED)
+
+    @override
+    def read_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
+        super().read_contents(opened_zipfile)
+        self.flags = opened_zipfile.read("flags.txt").decode()
     
     @override
     def patch(self, target: str) -> None:
@@ -57,7 +82,7 @@ class DWPatch(APAutoPatchInterface):
         while len(temp) < 15:
             temp = temp + "0"
         seed = int(temp[:15])
-        write_rom(seed, "AAAAAQAAABAAAAAAAAAAAAAAAAABAAAAAUAAAAAA", target)
+        write_rom(seed, self.flags, target)
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:

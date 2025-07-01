@@ -116,7 +116,7 @@ class DragonWarriorWorld(World):
         finally:
             self.rom_name_available_event.set()
 
-    # def determine_flags(self) -> str:
-    #     default_flags = "AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAUAAAAAA"
-    #     # TODO
-    #     return default_flags
+    def determine_flags(self) -> str:
+        default_flags = "AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAUAAAAAA"
+        # TODO
+        return default_flags
