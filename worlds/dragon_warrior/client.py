@@ -10,7 +10,7 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "0110"
+EXPECTED_VERSION = "0200"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -52,7 +52,7 @@ class DragonWarriorClient(BizHawkClient):
             return
         
         current_map, chests_array, recv_count, inventory_bytes, \
-            dragonlord_dead, herbs, equip_byte, level_byte = await read(ctx.bizhawk_ctx, [
+            dragonlord_dead, herbs, equip_byte, level_byte, gold_byte = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
@@ -60,7 +60,8 @@ class DragonWarriorClient(BizHawkClient):
             (0xE4, 1, "RAM"),
             (0xC0, 1, "RAM"),
             (0xBE, 1, "RAM"),
-            (0xC7, 1, "RAM")
+            (0xC7, 1, "RAM"),
+            (0xBD, 1, "RAM")
         ])
 
         # Game Completion
@@ -173,6 +174,12 @@ class DragonWarriorClient(BizHawkClient):
             
             elif item.item == 0xD4:  # Magic Key
                 writes.append((0xBF, bytes.fromhex('01'), "RAM"))
+
+            elif item.item == 0xD1:  # Gold (256)
+                writes.append((0xBD, (gold_byte[0] + 1).to_bytes(1, 'little'), "RAM"))
+            
+            elif item.item == 0xD2:  # High Gold (1536)
+                writes.append((0xBD, (gold_byte[0] + 6).to_bytes(1, 'little'), "RAM"))
             
             elif item.item == 0xF:  # Medicinal herb
                 writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))

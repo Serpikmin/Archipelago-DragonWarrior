@@ -15,6 +15,8 @@ herb = "Medicinal Herb"
 chimaera_wing = "Chimaera Wing"
 torch = "Torch"
 fairy_water = "Fairy Water"
+gold = "Gold"
+high_gold = "High Gold"
 
 # Cursed Items
 cursed_belt = "Cursed Belt"

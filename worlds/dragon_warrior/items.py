@@ -39,9 +39,14 @@ cursed_table = {
 
 filler_table = {
     names.herb: ItemData(0xF),
-    names.torch: ItemData(0x1),
-    names.fairy_water: ItemData(0x2),
-    names.chimaera_wing: ItemData(0x3),
+    # names.torch: ItemData(0x1),
+    # names.fairy_water: ItemData(0x2),
+    # names.chimaera_wing: ItemData(0x3),
+    names.gold: ItemData(0xD1),
+}
+
+useful_table = {
+    names.high_gold: ItemData(0xD2)
 }
 
 item_table = {
@@ -49,12 +54,13 @@ item_table = {
     **important_table,
     **cursed_table,
     **filler_table,
+    **useful_table,
 }
 
 item_names: Dict[str, Set[str]] = {
     "Equipment": set(name for name in list(equipment_table.keys()) + list(cursed_table.keys())),
     "Progression": set(name for name in important_table.keys()),
-    "Consumable": set(name for name in filler_table.keys())
+    "Consumable": set(name for name in list(filler_table.keys()) + list(useful_table.keys())),
     }
 
 lookup_name_to_id: Dict[str, int] = {item_name: data.code for item_name, data in item_table.items()}

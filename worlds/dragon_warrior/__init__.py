@@ -10,7 +10,7 @@ from .regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
-from .rom import DRAGON_WARRIOR_HASH, DWPatch
+from .rom import DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH, DWPatch
 from .options import DWOptions, DWOptionGroups
 from .client import DragonWarriorClient
 
@@ -19,7 +19,7 @@ class DWSettings(settings.Group):
         """File name of the Dragon Warrior ROM"""
         description = "Dragon Warrior ROM File"
         copy_to: Optional[str] = "Dragon Warrior (USA) (Rev A).nes"
-        md5s = [DRAGON_WARRIOR_HASH]
+        md5s = [DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH]
     
     rom_file: RomFile = RomFile(RomFile.copy_to)
 
@@ -77,7 +77,11 @@ class DragonWarriorWorld(World):
                      self.create_item(names.magic_key),
                      self.create_item(names.erdricks_sword),
                      self.create_item(names.death_necklace),
-                     self.create_item(names.cursed_belt)]
+                     self.create_item(names.cursed_belt),
+                     self.create_item(names.high_gold),    # Manually put in 4 high gold items cuz I'm lazy
+                     self.create_item(names.high_gold),
+                     self.create_item(names.high_gold),
+                     self.create_item(names.high_gold)]
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
