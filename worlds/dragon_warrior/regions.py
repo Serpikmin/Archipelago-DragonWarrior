@@ -119,7 +119,7 @@ def connect_regions(world: World) -> None:
     region_names: Dict[str, int] = {}
 
     connect(world, world.player, region_names, 'Menu', names.tantegel_throne_room)
-    connect(world, world.player, region_names, names.tantegel_throne_room, names.overworld)
+    connect(world, world.player, region_names, 'Menu', names.overworld)
     connect(world, world.player, region_names, names.overworld, names.strong_overworld,
             lambda state: (state.has(names.magic_key, world.player)))
     connect(world, world.player, region_names, names.overworld, names.breconnary)

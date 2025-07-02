@@ -37,7 +37,7 @@ magic_key = "Magic Key"
 ######################
 
 overworld = "Overworld"
-strong_overworld = "Overworld"
+strong_overworld = "Strong Overworld"
 tantegel_throne_room = "Tantegel Throne Room Region"
 tantegel_castle = "Tantegel Castle Region"
 breconnary = "Brecconary Region"
