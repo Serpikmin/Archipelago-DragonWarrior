@@ -78,6 +78,7 @@ class DragonWarriorWorld(World):
                      self.create_item(names.erdricks_sword),
                      self.create_item(names.death_necklace),
                      self.create_item(names.cursed_belt),
+                     self.create_item(names.fighters_ring),
                      self.create_item(names.high_gold),    # Manually put in 4 high gold items cuz I'm lazy
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold),
