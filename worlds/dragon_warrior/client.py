@@ -84,14 +84,14 @@ class DragonWarriorClient(BizHawkClient):
                 new_checks.append(location_data)
 
         # Level checks
-        level_byte = level_byte[0]
-        location_data = "0xD"
-        if level_byte < 10:
-            location_data += "0"
-        location_data += str(level_byte)
-        location_data = int(location_data, 16)
-        if location_data not in ctx.checked_locations:
-            new_checks.append(location_data)
+        for level in range(1, level_byte[0] + 1):
+            location_data = "0xD"
+            if level < 10:
+                location_data += "0"
+            location_data += str(level)
+            location_data = int(location_data, 16)
+            if location_data not in ctx.checked_locations:
+                new_checks.append(location_data)
 
         # Send found checks
         for new_check_id in new_checks:
