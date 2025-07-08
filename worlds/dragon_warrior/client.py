@@ -10,7 +10,7 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "0230"
+EXPECTED_VERSION = "023"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -31,7 +31,7 @@ class DragonWarriorClient(BizHawkClient):
                 )
                 return False
             
-            if version_bytes[:4].decode("ascii") != EXPECTED_VERSION:
+            if version_bytes[:3].decode("ascii") != EXPECTED_VERSION:
                 logger.info(
                     "WARNING: Version mismatch, this was generated on an earlier version of the apworld and may not function as expected"
                 )
