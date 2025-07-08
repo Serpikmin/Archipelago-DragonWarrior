@@ -53,6 +53,13 @@ class DWRegion(Region):
     game = "Dragon Warrior"
 
 def create_regions(world: World) -> None:
+    # Create level-up locations
+    if world.options.levelsanity:
+        for level in range(2, min(world.options.levelsanity_range + 1, 11)):
+            locations.level_locations["Level " + str(level)] = int('0xD' + str(level), 16)
+        for level in range(11, world.options.levelsanity_range + 1):
+            locations.high_level_locations["Level " + str(level)] = int('0xD' + str(level), 16)
+
     menu_region = create_region(world, 'Menu', None)
 
     overworld_region = create_region(world, names.overworld, locations.level_locations)

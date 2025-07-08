@@ -166,30 +166,9 @@ erdricks_token_locations = {
     # names.erdricks_token_location: 0x058,
 }
 
-level_locations = {
-    names.level_2: 0xD02,
-    names.level_3: 0xD03,
-    names.level_4: 0xD04,
-    names.level_5: 0xD05,
-    names.level_6: 0xD06,
-    names.level_7: 0xD07,
-    names.level_8: 0xD08,
-    names.level_9: 0xD09,
-    names.level_10: 0xD10,
-}
-
-high_level_locations = {
-    names.level_11: 0xD11,
-    names.level_12: 0xD12,
-    names.level_13: 0xD13,
-    names.level_14: 0xD14,
-    names.level_15: 0xD15,
-    names.level_16: 0xD16,
-    names.level_17: 0xD17,
-    names.level_18: 0xD18,
-    names.level_19: 0xD19,
-    names.level_20: 0xD20,
-}
+# Filled based on options in regions.py
+level_locations = {}
+high_level_locations = {}
 
 location_table = {
     **throne_room_locations,

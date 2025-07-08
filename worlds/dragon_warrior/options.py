@@ -1,6 +1,21 @@
 from dataclasses import dataclass
-from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, Toggle
+from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, Range, Toggle
 
+
+class LevelSanity(DefaultOnToggle):
+    """
+    Makes level-ups location checks. 
+    """
+    display_name = "LevelSanity"
+
+class LevelSanityRange(Range):
+    """
+    How many level-ups are included as location checks. Levels after 10 have the magic key in logic to prevent a tedious early grind. 
+    """
+    display_name = "LevelSanity Range"
+    range_start = 2
+    range_end = 30
+    default = 16
 
 class RandomGrowth(Toggle):
     """ 
@@ -313,6 +328,10 @@ class DisableRedFlashes(Toggle):
     display_name = "Disable Red Flashes"
 
 DWOptionGroups = [
+    OptionGroup("Location Options", [
+        LevelSanity,
+        LevelSanityRange,
+    ]),
     OptionGroup("Random Options", [
         RandomGrowth,
         RandomSpellLearning,
@@ -374,6 +393,9 @@ DWOptionGroups = [
 
 @dataclass
 class DWOptions(PerGameCommonOptions):
+    levelsanity: LevelSanity
+    levelsanity_range: LevelSanityRange
+
     random_growth: RandomGrowth
     random_spell_learning: RandomSpellLearning
     random_weapon_shops: RandomWeaponShops
