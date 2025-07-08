@@ -69,7 +69,7 @@ class DragonWarriorWorld(World):
 
         itempool = []
 
-        total_locations = len(location_table)
+        total_locations = len(location_table) + (self.options.levelsanity_range * int(self.options.levelsanity))
 
         itempool += [self.create_item(names.silver_harp), 
                      self.create_item(names.staff_of_rain), 
