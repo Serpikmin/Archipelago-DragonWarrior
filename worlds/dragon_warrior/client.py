@@ -10,7 +10,7 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "0210"
+EXPECTED_VERSION = "0230"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"

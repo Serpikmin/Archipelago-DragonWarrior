@@ -9,6 +9,7 @@ from worlds.AutoWorld import World
 import Utils
 import settings
 from worlds.Files import APAutoPatchInterface
+from .client import EXPECTED_VERSION
 
 DRAGON_WARRIOR_PRG0_HASH = "1cfeeac7a20b405780eea318d3d1af2a"
 DRAGON_WARRIOR_PRG1_HASH = "25cf03eb7ac2dec4ef332425c151f373"
@@ -110,4 +111,8 @@ def get_base_rom_path(file_name: str = "") -> str:
 
 def write_rom(seed: int, flags: str, target: str) -> None:
     import dwr # type: ignore
-    dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), seed, bytes(flags, encoding="ascii"), bytes(target, encoding="ascii"))
+    dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), 
+                               seed, 
+                               bytes(flags, encoding="ascii"), 
+                               bytes(target, encoding="ascii"), 
+                               bytes(EXPECTED_VERSION, encoding="ascii"))
