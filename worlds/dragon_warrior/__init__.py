@@ -1,11 +1,11 @@
 import logging
 import os
 import threading
-from typing import Any, ClassVar, Dict, List, Optional, Sequence, Tuple
+from typing import Any, ClassVar, Dict, List, Optional, Sequence, Set, Tuple
 
 from . import names
 from .items import DWItem, item_table, filler_table, lookup_name_to_id, item_names
-from .locations import location_table, lookup_location_to_id, location_names
+from .locations import create_locations, all_locations, location_names
 from .regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
@@ -52,8 +52,8 @@ class DragonWarriorWorld(World):
     options_dataclass = DWOptions
     options: DWOptions
     item_name_to_id = lookup_name_to_id
-    location_name_to_id = lookup_location_to_id
     item_name_groups = item_names
+    location_name_to_id = all_locations
     location_name_groups = location_names
     web = DWWebWorld()
     rom_name: bytearray
@@ -64,18 +64,27 @@ class DragonWarriorWorld(World):
         super().__init__(multiworld, player)
 
     def create_regions(self) -> None:
-        create_regions(self)
+        levels = 0
+        if self.options.levelsanity:
+            levels = self.options.levelsanity_range
+        tup = create_locations(levels)
+        level_locations, high_level_locations = tup[0], tup[1]
+        create_regions(self, level_locations, high_level_locations)
         connect_regions(self)
 
         itempool = []
 
-        total_locations = len(location_table) + (self.options.levelsanity_range * int(self.options.levelsanity))
+        # Get the accurate location count because of levelsanity
+        total_locations = len(all_locations) + len(level_locations) + len(high_level_locations) - 29
 
-        itempool += [self.create_item(names.silver_harp), 
+        itempool += [self.create_item(names.silver_harp),
+                     self.create_item(names.fairy_flute), 
                      self.create_item(names.staff_of_rain), 
                      self.create_item(names.stones_of_sunlight),
+                     self.create_item(names.erdricks_token),
                      self.create_item(names.magic_key),
                      self.create_item(names.erdricks_sword),
+                     self.create_item(names.erdricks_armor),
                      self.create_item(names.death_necklace),
                      self.create_item(names.cursed_belt),
                      self.create_item(names.fighters_ring),
