@@ -7,6 +7,7 @@ progressive_weapon = "Progressive Weapon Upgrade"
 progressive_armor = "Progressive Armor Upgrdade"
 progressive_shield = "Progressive Shield Upgrade"
 erdricks_sword = "Erdrick's Sword"
+erdricks_armor = "Erdrick's Armour"
 dragon_scale = "Dragon Scale"
 fighters_ring = "Fighter's Ring"
 
@@ -62,7 +63,7 @@ charlock_castle = "Charlock Castle Region"
 #   LOCATION NAMES   #
 ######################
 
-# Level Ups
+# Levelups
 level_2 = "Level 2"
 level_3 = "Level 3"
 level_4 = "Level 4"
@@ -82,6 +83,16 @@ level_17 = "Level 17"
 level_18 = "Level 18"
 level_19 = "Level 19"
 level_20 = "Level 20"
+level_21 = "Level 21"
+level_22 = "Level 22"
+level_23 = "Level 23"
+level_24 = "Level 24"
+level_25 = "Level 25"
+level_26 = "Level 26"
+level_27 = "Level 27"
+level_28 = "Level 28"
+level_29 = "Level 29"
+level_30 = "Level 30"
 
 # Tantegel Throne Room
 tantegel_throne_room_gold_chest = "Throne Room - Gold Chest"
@@ -140,7 +151,7 @@ kol_item_shop_2 = "Kol - Item Shop Slot 2"
 kol_item_shop_3 = "Kol - Item Shop Slot 3"
 kol_item_shop_4 = "Kol - Item Shop Slot 4"
 
-kol_fairy_flute = "Fairy Flute"
+fairy_flute_location = "Fairy Flute"
 
 # Rimuldar
 rimuldar_equip_shop_1 = "Rimuldar - Equipment Shop Slot 1"
@@ -155,7 +166,7 @@ rimuldar_inn_chest = "Rimuldar - Inn Chest"
 rimuldar_magic_key_vendor = "Rimuldar - Magic Key Vendor"
 
 # Hauksness
-hauksness_erdrick_armor = "Erdrick's Armor"
+erdricks_armor_location = "Erdrick's Armor"
 
 # Cantlin
 cantlin_equip_shop_1_1 = "Cantlin - Equipment Shop 1 Slot 1"

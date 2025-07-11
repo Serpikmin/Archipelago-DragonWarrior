@@ -44,28 +44,18 @@ OFFSET |        MAP      | CONTENTS
 0x5E4D | MountainCave B2 |   ~10G
 0x5E51 | MountainCave B1 |   Herb
 0x5E55 | Erdrick Cave B2 | Erd. Tablet
-
-TODO: Find where code for opening chests is and hijack to not grant chest contents,
-as well as send data to the client regarding which check was opened
 """
 
 class DWRegion(Region):
     game = "Dragon Warrior"
 
-def create_regions(world: World) -> None:
-    # Create level-up locations
-    if world.options.levelsanity:
-        for level in range(2, min(world.options.levelsanity_range + 1, 11)):
-            locations.level_locations["Level " + str(level)] = int('0xD' + str(level), 16)
-        for level in range(11, world.options.levelsanity_range + 1):
-            locations.high_level_locations["Level " + str(level)] = int('0xD' + str(level), 16)
-
+def create_regions(world: World, level_locations, high_level_locations) -> None:
     menu_region = create_region(world, 'Menu', None)
 
-    overworld_region = create_region(world, names.overworld, locations.level_locations)
+    overworld_region = create_region(world, names.overworld, level_locations)
 
-    # For location checks on levels 11-20
-    strong_overworld_region = create_region(world, names.strong_overworld, locations.high_level_locations)
+    # For location checks on levels 10-30
+    strong_overworld_region = create_region(world, names.strong_overworld, high_level_locations)
 
     tantegel_throne_room_region = create_region(world, names.tantegel_throne_room, locations.throne_room_locations)
     
@@ -151,7 +141,8 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.overworld, names.charlock_castle,      # Connect with gear later
             lambda state: (state.has(names.staff_of_rain, world.player) and 
                            state.has(names.stones_of_sunlight, world.player) and
-                           state.has(names.magic_key, world.player)))
+                           state.has(names.magic_key, world.player) and
+                           state.has(names.erdricks_token, world.player)))
     
 
 def create_region(world: World, name: str, location_checks=None):

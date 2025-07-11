@@ -17,14 +17,15 @@ equipment_table = {
     # names.progressive_weapon: ItemData(0xE1, True),
     # names.progressive_shield: ItemData(0xE2, True),
     # names.progressive_armor: ItemData(0xE3, True),
+    names.erdricks_armor: ItemData(0xFE, True, True),
     names.erdricks_sword: ItemData(0xFF, True, True),
     names.dragon_scale: ItemData(0x4, False, True),
     names.fighters_ring: ItemData(0x6, False, True)
 }
 
 important_table = {
-    # names.fairy_flute: ItemData(0x5, True),
-    # names.erdricks_token: ItemData(0x7, True),
+    names.fairy_flute: ItemData(0x5, True),
+    names.erdricks_token: ItemData(0x7, True),
     # names.gwaelins_love: ItemData(0x8, True),
     names.silver_harp: ItemData(0xA, True),
     names.stones_of_sunlight: ItemData(0xC, True),
@@ -34,7 +35,7 @@ important_table = {
 
 cursed_table = {
     names.cursed_belt: ItemData(0x9),
-    names.death_necklace: ItemData(0xB)
+    names.death_necklace: ItemData(0xB, False, True)
 }
 
 filler_table = {

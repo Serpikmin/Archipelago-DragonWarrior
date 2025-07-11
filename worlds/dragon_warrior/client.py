@@ -10,7 +10,7 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "023"
+EXPECTED_VERSION = "030"
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -52,16 +52,18 @@ class DragonWarriorClient(BizHawkClient):
             return
         
         current_map, chests_array, recv_count, inventory_bytes, \
-            dragonlord_dead, herbs, equip_byte, level_byte, gold_byte = await read(ctx.bizhawk_ctx, [
+            dragonlord_dead, herbs, equip_byte, level_byte, gold_byte, \
+            search_spot = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
-            (0x601C, 16, "System Bus"),
+            (0x601C, 16, "System Bus"), # Bruh moment
             (0x0E, 1, "RAM"),
             (0xC1, 4, "RAM"),
             (0xE4, 1, "RAM"),
             (0xC0, 1, "RAM"),
             (0xBE, 1, "RAM"),
             (0xC7, 1, "RAM"),
-            (0xBD, 1, "RAM")
+            (0xBD, 1, "RAM"),
+            (0x01, 1, "RAM")
         ])
 
         # Game Completion
@@ -84,12 +86,20 @@ class DragonWarriorClient(BizHawkClient):
                 new_checks.append(location_data)
 
         # Level checks
+        nes_logger.info(f'Level: {str(level_byte[0])}')
         for level in range(1, level_byte[0] + 1):
             location_data = "0xD"
             if level < 10:
                 location_data += "0"
             location_data += str(level)
             location_data = int(location_data, 16)
+            if location_data not in ctx.checked_locations:
+                new_checks.append(location_data)
+
+        # Search spot checks
+        nes_logger.info(f'Search Spot: {str(search_spot[0])}')
+        if search_spot[0] in [0x80, 0x40, 0x20]:
+            location_data = 0xE00 | search_spot[0]
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
 
@@ -184,8 +194,12 @@ class DragonWarriorClient(BizHawkClient):
             elif item.item == 0xF:  # Medicinal herb
                 writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))
 
-            else: # Progressive Equipment (Erdrick's Sword for now)
+            elif item.item == 0xFF: # Erdrick's Sword
                 new_byte = equip_byte[0] | 0xE0
+                writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
+            
+            elif item.item == 0xFE: # Erdrick's Armor
+                new_byte = equip_byte[0] | 0x1C
                 writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
 
             writes.append((0x0E, recv_index.to_bytes(1, 'little'), "RAM"))

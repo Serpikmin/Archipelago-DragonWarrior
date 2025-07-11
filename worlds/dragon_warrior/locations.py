@@ -77,7 +77,7 @@ kol_locations = {
     # names.kol_item_shop_3: 0x027,
     # names.kol_item_shop_4: 0x028,
 
-    # names.kol_fairy_flute: 0x029,
+    names.fairy_flute_location: 0xE40,
 }
 
 rimuldar_locations = {
@@ -151,7 +151,7 @@ charlock_locations = {
 }
 
 hauksness_locations = {
-    # names.hauksness_erdrick_armor: 0x055,
+    names.erdricks_armor_location: 0xE20,
 }
 
 erdricks_cave_locations = {
@@ -163,14 +163,45 @@ shrine_of_rain_locations = {
 }
 
 erdricks_token_locations = {
-    # names.erdricks_token_location: 0x058,
+    names.erdricks_token_location: 0xE80
 }
 
-# Filled based on options in regions.py
-level_locations = {}
-high_level_locations = {}
+# Filled based on options
+level_locations = {
+    names.level_2: 0xD02,
+    names.level_3: 0xD03,
+    names.level_4: 0xD04,
+    names.level_5: 0xD05,
+    names.level_6: 0xD06,
+    names.level_7: 0xD07,
+    names.level_8: 0xD08,
+    names.level_9: 0xD09,
+}
+high_level_locations = {
+    names.level_10: 0xD10,
+    names.level_11: 0xD11,
+    names.level_12: 0xD12,
+    names.level_13: 0xD13,
+    names.level_14: 0xD14,
+    names.level_15: 0xD15,
+    names.level_16: 0xD16,
+    names.level_17: 0xD17,
+    names.level_18: 0xD18,
+    names.level_19: 0xD19,
+    names.level_20: 0xD20,
+    names.level_21: 0xD21,
+    names.level_22: 0xD22,
+    names.level_23: 0xD23,
+    names.level_24: 0xD24,
+    names.level_25: 0xD25,
+    names.level_26: 0xD26,
+    names.level_27: 0xD27,
+    names.level_28: 0xD28,
+    names.level_29: 0xD29,
+    names.level_30: 0xD30,
+}
 
-location_table = {
+all_locations = {
     **throne_room_locations,
     **tantegel_castle_locations,
     **brecconary_locations,
@@ -201,11 +232,25 @@ location_names: Dict[str, Set[str]] = {
     "Mountain Cave": set(name for name in mountain_cave_locations.keys()),
     "Garin's Grave": set(name for name in garins_grave_locations.keys()),
     "Charlock": set(name for name in charlock_locations.keys()),
-    "Hauksness": set([names.hauksness_erdrick_armor]),
+    "Hauksness": set([names.erdricks_armor_location]),
     "Erdrick's Grave": set([names.erdrick_tablet]),
     "Staff of Rain Shrine": set([names.staff_of_rain_location]),
     "Erdrick's Token": set([names.erdricks_token_location]),
     "Level Ups": set(name for name in list(level_locations.keys()) + list(high_level_locations.keys())),
 }
 
-lookup_location_to_id: Dict[str, int] = {location: idx for location, idx in location_table.items() if idx is not None}
+def create_locations(levels: int):
+    temp_level_locations = {}
+    temp_high_level_locations = {}
+
+    if levels > 1:
+        for level in range(2, min(levels + 1, 10)):
+            temp_level_locations["Level " + str(level)] = int('0xD0' + str(level), 16)
+        for level in range(10, levels + 1):
+            temp_high_level_locations["Level " + str(level)] = int('0xD' + str(level), 16)
+
+    return (temp_level_locations, temp_high_level_locations)
+
+
+lookup_location_to_id: Dict[str, int] = {location: idx for location, idx in all_locations.items() if idx is not None}
+
