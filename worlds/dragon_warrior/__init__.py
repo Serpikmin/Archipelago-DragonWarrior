@@ -189,7 +189,6 @@ class DragonWarriorWorld(World):
         flag_list[22] += int(self.options.disable_spell_flashing) * 1
         flag_list[27] += int(self.options.disable_red_flashes) * 8
         flag_list[18] += int(self.options.noir_mode) * 8
-        flag_list[27] += int(self.options.disable_red_flashes) * 8
         flag_list[27] += int(self.options.magic_herbs) * 16
         flag_list[35] += int(self.options.normal_flute_speed) * 2
 
