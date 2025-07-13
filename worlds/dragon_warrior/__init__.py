@@ -98,6 +98,11 @@ class DragonWarriorWorld(World):
 
         self.multiworld.itempool += itempool
 
+        self.multiworld.completion_condition[self.player] = lambda state: \
+            state.has(names.stones_of_sunlight, self.player) and \
+            state.has(names.staff_of_rain, self.player) and \
+            state.has(names.erdricks_token, self.player)
+
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
         data = item_table[name]
