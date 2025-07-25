@@ -89,15 +89,17 @@ Your host should send you the `.apdw` patch file, ensure you have the Archipelag
 
 ## What does randomization do to this game?
 
-Currently, only chests and their contents are randomized into the multiworld. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
+Opening chests and search spots are checks by default. There's also a YAML option to make level-ups checks up to level 30 (default 16)
+Items include any of the randomized key items, cursed items, medicinal herbs, and gold
+Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
 
 ## What is the goal of Dragon Warrior when randomized?
 
-In order to beat the game, you must receive the Staff of Rain + Stones of Sunlight, and take them to the Rainbow Shrine (alongside with Erdrick's Token, which is currently in it's vanilla location) in order to receive the Rainbow Drop and reach Charlock Castle. The completion condition is to defeat the Dragonlord.
+In order to beat the game, you must receive the Staff of Rain, Stones of Sunlight, and Erdrick's Token, then take them to the Rainbow Shrine (alongside with Erdrick's Token, which is currently in it's vanilla location) in order to receive the Rainbow Drop and reach Charlock Castle. The completion condition is to defeat the Dragonlord.
 
 ## What items and locations get shuffled?
 
-All items contained in chests are shuffled around.
+All items contained in chests and search spots are shuffled around. Level-ups additionally can count as location checks with extra filler gold/herbs filled in.
 
 ## Which items can be in another player's world?
 
@@ -113,9 +115,6 @@ Currently, items are silently added to the player's inventory. If it is full, a 
 
 ## Future plans (roughly ordered):
 
-- Add boss kills as checks (Green Dragon, Golem, Axe Knight)
-- Add the three search spots to the item/location pool (Fairy Flute, Erdrick's Token, Erdrick's Armor)
 - Add equipment shop slots as locations and create progressive equipment
 - Add some remaining map/goal options from [DWRandomizer](https://dwrandomizer.com/)
-- Spellsanity
 - Deathlink
