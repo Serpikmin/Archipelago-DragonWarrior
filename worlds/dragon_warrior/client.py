@@ -53,7 +53,7 @@ class DragonWarriorClient(BizHawkClient):
         
         current_map, chests_array, recv_count, inventory_bytes, \
             dragonlord_dead, herbs, equip_byte, level_byte, gold_byte, \
-            search_spot = await read(ctx.bizhawk_ctx, [
+            ap_byte = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"), # Bruh moment
             (0x0E, 1, "RAM"),
@@ -66,9 +66,14 @@ class DragonWarriorClient(BizHawkClient):
             (0x01, 1, "RAM")
         ])
 
+        if current_map[0] == 0:  # Don't start processing until we load a map
+            return
+
         # Game Completion
         dragonlord_dead = dragonlord_dead[0] & 0x4
         if not ctx.finished_game and dragonlord_dead:
+            if 0xDD not in ctx.checked_locations:
+                new_checks.append(0xDD)  # Send Ball of Light victory item
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
@@ -97,11 +102,15 @@ class DragonWarriorClient(BizHawkClient):
                 new_checks.append(location_data)
 
         # Search spot checks
-        nes_logger.info(f'Search Spot: {str(search_spot[0])}')
-        if search_spot[0] in [0x80, 0x40, 0x20]:
-            location_data = 0xE00 | search_spot[0]
+        if ap_byte[0] in [0x81, 0x41, 0x21]:   # -1 offset to have compatibility with equipment checks
+            location_data = 0xE00 | (ap_byte[0] - 1)
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
+        
+        # Rainbow drop
+        if ap_byte[0] == 0xFF:
+            if 0xFF not in ctx.checked_locations:
+                new_checks.append(0xFF)
 
         # Send found checks
         for new_check_id in new_checks:
