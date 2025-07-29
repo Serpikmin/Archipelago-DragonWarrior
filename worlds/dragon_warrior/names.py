@@ -32,6 +32,7 @@ staff_of_rain = "Staff of Rain"
 stones_of_sunlight = "Stones of Sunlight"
 rainbow_drop = "Rainbow Drop"
 magic_key = "Magic Key"
+ball_of_light = "Ball of Light"
 
 ######################
 #    REGION NAMES    #
@@ -221,7 +222,7 @@ staff_of_rain_location = "Staff of Rain"
 erdricks_token_location = "Erdrick's Token"
 
 # Rainbow Drop Shrine
-rainbow_drop_location = "Rainbow Drop"
+rainbow_drop_location = "Rainbow Shrine"
 
 # Charlock Castle
 charlock_castle_erdrick_sword = "Erdrick's Sword"
@@ -232,3 +233,5 @@ charlock_castle_chest_3 = "Dragonlord's Lair - Chest 3"
 charlock_castle_chest_4 = "Dragonlord's Lair - Chest 4"
 charlock_castle_chest_5 = "Dragonlord's Lair - Chest 5"
 charlock_castle_chest_6 = "Dragonlord's Lair - Chest 6"
+
+ball_of_light_location = "Defeated Dragonlord"

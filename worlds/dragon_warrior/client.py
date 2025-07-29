@@ -68,6 +68,9 @@ class DragonWarriorClient(BizHawkClient):
 
         if current_map[0] == 0:  # Don't start processing until we load a map
             return
+        
+        # Search for new location checks
+        new_checks = []
 
         # Game Completion
         dragonlord_dead = dragonlord_dead[0] & 0x4
@@ -78,9 +81,6 @@ class DragonWarriorClient(BizHawkClient):
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
             }])
-
-        # Search for new location checks
-        new_checks = []
 
         # Chest checks, See locations.py for an explanation
         for i in range(0, 16, 2):
