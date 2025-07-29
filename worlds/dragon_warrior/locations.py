@@ -148,6 +148,8 @@ charlock_locations = {
     names.charlock_castle_chest_4: 0x060C0C,  # Need Rainbow Drop + Magic Key
     names.charlock_castle_chest_5: 0x060C0D,  # Need Rainbow Drop + Magic Key
     names.charlock_castle_chest_6: 0x060D0D,  # Need Rainbow Drop + Magic Key
+
+    names.ball_of_light_location: 0xDD
 }
 
 hauksness_locations = {
@@ -164,6 +166,10 @@ shrine_of_rain_locations = {
 
 erdricks_token_locations = {
     names.erdricks_token_location: 0xE80
+}
+
+rainbow_shrine_locations = {
+    names.rainbow_drop_location: 0xFF
 }
 
 # Filled based on options
@@ -218,6 +224,7 @@ all_locations = {
     **erdricks_cave_locations,
     **shrine_of_rain_locations,
     **erdricks_token_locations,
+    **rainbow_shrine_locations,
     **level_locations,
     **high_level_locations,
 }
@@ -235,6 +242,7 @@ location_names: Dict[str, Set[str]] = {
     "Hauksness": set([names.erdricks_armor_location]),
     "Erdrick's Grave": set([names.erdrick_tablet]),
     "Staff of Rain Shrine": set([names.staff_of_rain_location]),
+    "Rainbow Drop Shrine": set([names.rainbow_drop_location]),
     "Erdrick's Token": set([names.erdricks_token_location]),
     "Level Ups": set(name for name in list(level_locations.keys()) + list(high_level_locations.keys())),
 }

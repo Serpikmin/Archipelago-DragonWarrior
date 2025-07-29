@@ -72,6 +72,9 @@ class DragonWarriorWorld(World):
         create_regions(self, level_locations, high_level_locations)
         connect_regions(self)
 
+        self.multiworld.get_location(names.rainbow_drop_location, self.player).place_locked_item(self.create_item(names.rainbow_drop))
+        self.multiworld.get_location(names.ball_of_light_location, self.player).place_locked_item(self.create_item(names.ball_of_light))
+
         itempool = []
 
         # Get the accurate location count because of levelsanity
@@ -99,9 +102,7 @@ class DragonWarriorWorld(World):
         self.multiworld.itempool += itempool
 
         self.multiworld.completion_condition[self.player] = lambda state: \
-            state.has(names.stones_of_sunlight, self.player) and \
-            state.has(names.staff_of_rain, self.player) and \
-            state.has(names.erdricks_token, self.player)
+            state.has(names.ball_of_light, self.player)
 
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
