@@ -5,6 +5,7 @@ from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, 
 class LevelSanity(DefaultOnToggle):
     """
     Makes level-ups location checks. 
+    This adds between 1-29 checks depending on on the LevelSanity Range option below.
     """
     display_name = "LevelSanity"
 
@@ -15,7 +16,21 @@ class LevelSanityRange(Range):
     display_name = "LevelSanity Range"
     range_start = 2
     range_end = 30
-    default = 16
+    default = 20
+
+class SearchSanity(DefaultOnToggle):
+    """
+    Adds search spot items as location checks.
+    This adds 3 checks.
+    """
+    display_name = "SearchSanity"
+
+class ShopSanity(DefaultOnToggle):
+    """
+    Buying a piece of equipment causes a location check instead of buying it. Adds progressive equipment items instead.
+    This adds 13 checks. WARNING: Toggle shop randomization at your own risk with this on, it is not accounted for in logic.
+    """
+    display_name = "ShopSanity"
 
 class RandomGrowth(Toggle):
     """ 
@@ -331,6 +346,8 @@ DWOptionGroups = [
     OptionGroup("Location Options", [
         LevelSanity,
         LevelSanityRange,
+        SearchSanity,
+        ShopSanity
     ]),
     OptionGroup("Random Options", [
         RandomGrowth,
@@ -395,6 +412,8 @@ DWOptionGroups = [
 class DWOptions(PerGameCommonOptions):
     levelsanity: LevelSanity
     levelsanity_range: LevelSanityRange
+    searchsanity: SearchSanity
+    shopsanity: ShopSanity
 
     random_growth: RandomGrowth
     random_spell_learning: RandomSpellLearning

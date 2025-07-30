@@ -10,7 +10,8 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "031"
+EXPECTED_VERSION = "040"
+EQUIPMENT_BYTES = [0x1, 0x2, 0x3, 0x4, 0x8, 0xC, 0x10, 0x14, 0x18, 0x1C, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xC0, 0xE0]
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -112,6 +113,11 @@ class DragonWarriorClient(BizHawkClient):
             if 0xFF not in ctx.checked_locations:
                 new_checks.append(0xFF)
 
+        # Buying equipment
+        if ap_byte[0] in EQUIPMENT_BYTES:
+            if ap_byte[0] not in ctx.checked_locations:
+                new_checks.append(ap_byte[0])
+
         # Send found checks
         for new_check_id in new_checks:
             ctx.locations_checked.add(new_check_id)
@@ -210,6 +216,12 @@ class DragonWarriorClient(BizHawkClient):
             elif item.item == 0xFE: # Erdrick's Armor
                 new_byte = equip_byte[0] | 0x1C
                 writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
+            
+            elif item.item in [0xE01, 0xE04, 0xE20]:  # Progressive equipment
+                to_add = item.item & 0xFF
+                new_byte = equip_byte[0] + to_add
+                if new_byte <= 0xFF:
+                    writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
 
             writes.append((0x0E, recv_index.to_bytes(1, 'little'), "RAM"))
         

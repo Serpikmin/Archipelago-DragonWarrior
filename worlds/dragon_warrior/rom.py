@@ -22,6 +22,8 @@ class DWPatch(APAutoPatchInterface):
     result_file_ending = ".nes"
 
     flags: str
+    searchsanity: bool
+    shopsanity: bool
 
     def __init__(self,
                 path: str | None = None,
@@ -29,9 +31,13 @@ class DWPatch(APAutoPatchInterface):
                 player_name: str = "",
                 server: str = "",
                 *,
-                flags: str = "") -> None:
+                flags: str = "",
+                searchsanity: bool = False,
+                shopsanity: bool = False) -> None:
         super().__init__(path=path, player=player, player_name=player_name, server=server)
         self.flags = flags
+        self.searchsanity = searchsanity
+        self.shopsanity = shopsanity
 
     @classmethod
     def get_source_data(cls) -> bytes:
@@ -43,11 +49,19 @@ class DWPatch(APAutoPatchInterface):
         opened_zipfile.writestr("flags.txt",
                                 self.flags,
                                 compress_type=zipfile.ZIP_DEFLATED)
+        opened_zipfile.writestr("search.txt",
+                                str(self.searchsanity),
+                                compress_type=zipfile.ZIP_DEFLATED)
+        opened_zipfile.writestr("shopsanity.txt",
+                                str(self.shopsanity),
+                                compress_type=zipfile.ZIP_DEFLATED)
 
     @override
     def read_contents(self, opened_zipfile: zipfile.ZipFile) -> None:
         super().read_contents(opened_zipfile)
         self.flags = opened_zipfile.read("flags.txt").decode()
+        self.searchsanity = opened_zipfile.read("search.txt").decode()
+        self.shopsanity = opened_zipfile.read("shopsanity.txt").decode()
     
     @override
     def patch(self, target: str) -> None:
@@ -84,7 +98,7 @@ class DWPatch(APAutoPatchInterface):
         while len(temp) < 15:
             temp = temp + "0"
         seed = int(temp[:15])
-        write_rom(seed, self.flags, target)
+        write_rom(seed, self.flags, target, self.searchsanity, self.shopsanity)
 
 
 def get_base_rom_bytes(file_name: str = "") -> bytes:
@@ -109,10 +123,12 @@ def get_base_rom_path(file_name: str = "") -> str:
         file_name = Utils.user_path(file_name)
     return file_name
 
-def write_rom(seed: int, flags: str, target: str) -> None:
+def write_rom(seed: int, flags: str, target: str, search: bool, shopsanity: bool) -> None:
     import dwr # type: ignore
     dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), 
                                seed, 
                                bytes(flags, encoding="ascii"), 
                                bytes(target, encoding="ascii"), 
-                               bytes(EXPECTED_VERSION, encoding="ascii"))
+                               bytes(EXPECTED_VERSION, encoding="ascii"),
+                               search == 'SearchSanity(Yes)',
+                               shopsanity == 'ShopSanity(Yes)')

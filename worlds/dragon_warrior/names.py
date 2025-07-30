@@ -4,7 +4,7 @@
 
 # Equipment
 progressive_weapon = "Progressive Weapon Upgrade"
-progressive_armor = "Progressive Armor Upgrdade"
+progressive_armor = "Progressive Armor Upgrade"
 progressive_shield = "Progressive Shield Upgrade"
 erdricks_sword = "Erdrick's Sword"
 erdricks_armor = "Erdrick's Armour"
@@ -109,90 +109,46 @@ tantegel_castle_gold_chest_4 = "Tantegel Castle - Gold Chest 4"
 # Tantegel Castle Basement
 tantegel_castle_basement = "Stones of Sunlight"
 
-# Brecconary
-brecconary_equip_shop_1 = "Brecconary Equipment Shop Slot 1"
-brecconary_equip_shop_2 = "Brecconary Equipment Shop Slot 2"
-brecconary_equip_shop_3 = "Brecconary Equipment Shop Slot 3"
-brecconary_equip_shop_4 = "Brecconary Equipment Shop Slot 4"
-brecconary_equip_shop_5 = "Brecconary Equipment Shop Slot 5"
-brecconary_equip_shop_6 = "Brecconary Equipment Shop Slot 6"
+# Breconnary
+bamboo_pole = "Purchased: Bamboo Pole"
+club = "Purchased: Club"
+copper_sword = "Purchased: Copper Sword"
 
-brecconary_item_shop_1 = "Brecconary Item Shop Slot 1"
-brecconary_item_shop_2 = "Brecconary Item Shop Slot 2"
-brecconary_item_shop_3 = "Brecconary Item Shop Slot 3"
+clothes = "Purchased: Clothes"
+leather_armor = "Purchased: Leather Armor"
 
-brecconary_fairy_water = "Brecconary Fairy Water Vendor"
+small_shield = "Purchased: Small Shield"
 
 # Garinham
-garinham_equip_shop_1 = "Garinham - Equipment Shop Slot 1"
-garinham_equip_shop_2 = "Garinham - Equipment Shop Slot 2"
-garinham_equip_shop_3 = "Garinham - Equipment Shop Slot 3"
-garinham_equip_shop_4 = "Garinham - Equipment Shop Slot 4"
-garinham_equip_shop_5 = "Garinham - Equipment Shop Slot 5"
-garinham_equip_shop_6 = "Garinham - Equipment Shop Slot 6"
-garinham_equip_shop_7 = "Garinham - Equipment Shop Slot 7"
-
-garinham_item_shop_1 = "Garinham - Item Shop Slot 1"
-garinham_item_shop_2 = "Garinham - Item Shop Slot 2"
-garinham_item_shop_3 = "Garinham - Item Shop Slot 3"
+chain_mail = "Purchased: Chain Mail"
+large_shield = "Purchased: Large Shield"
 
 garinham_chest_1 = "Garinham - Chest 1"
 garinham_chest_2 = "Garinham - Chest 2"
 garinham_chest_3 = "Garinham - Chest 3"
 
 # Kol
-kol_equip_shop_1 = "Kol - Equipment Shop Slot 1"
-kol_equip_shop_2 = "Kol - Equipment Shop Slot 2"
-kol_equip_shop_3 = "Kol - Equipment Shop Slot 3"
-kol_equip_shop_4 = "Kol - Equipment Shop Slot 4"
-kol_equip_shop_5 = "Kol - Equipment Shop Slot 5"
+hand_axe = "Purchased: Hand Axe"
 
-kol_item_shop_1 = "Kol - Item Shop Slot 1"
-kol_item_shop_2 = "Kol - Item Shop Slot 2"
-kol_item_shop_3 = "Kol - Item Shop Slot 3"
-kol_item_shop_4 = "Kol - Item Shop Slot 4"
+half_plate = "Purchased: Half Plate"
+full_plate = "Purchased: Full Plate"
 
 fairy_flute_location = "Fairy Flute"
 
 # Rimuldar
-rimuldar_equip_shop_1 = "Rimuldar - Equipment Shop Slot 1"
-rimuldar_equip_shop_2 = "Rimuldar - Equipment Shop Slot 2"
-rimuldar_equip_shop_3 = "Rimuldar - Equipment Shop Slot 3"
-rimuldar_equip_shop_4 = "Rimuldar - Equipment Shop Slot 4"
-rimuldar_equip_shop_5 = "Rimuldar - Equipment Shop Slot 5"
-rimuldar_equip_shop_6 = "Rimuldar - Equipment Shop Slot 6"
+broad_sword = "Purchased: Broad Sword"
+
+magic_armor = "Purchased: Magic Armor"
 
 rimuldar_inn_chest = "Rimuldar - Inn Chest"
-
-rimuldar_magic_key_vendor = "Rimuldar - Magic Key Vendor"
 
 # Hauksness
 erdricks_armor_location = "Erdrick's Armor"
 
 # Cantlin
-cantlin_equip_shop_1_1 = "Cantlin - Equipment Shop 1 Slot 1"
-cantlin_equip_shop_1_2 = "Cantlin - Equipment Shop 1 Slot 2"
-cantlin_equip_shop_1_3 = "Cantlin - Equipment Shop 1 Slot 3"
-cantlin_equip_shop_1_4 = "Cantlin - Equipment Shop 1 Slot 4"
-cantlin_equip_shop_1_5 = "Cantlin - Equipment Shop 1 Slot 5"
-cantlin_equip_shop_1_6 = "Cantlin - Equipment Shop 1 Slot 6"
+flame_sword = "Purchased: Flame Sword"
 
-cantlin_equip_shop_2_1 = "Cantlin - Equipment Shop 2 Slot 1"
-cantlin_equip_shop_2_2 = "Cantlin - Equipment Shop 2 Slot 2"
-
-cantlin_equip_shop_3_1 = "Cantlin - Equipment Shop 3 Slot 1"
-cantlin_equip_shop_3_2 = "Cantlin - Equipment Shop 3 Slot 2"
-cantlin_equip_shop_3_3 = "Cantlin - Equipment Shop 3 Slot 3"
-cantlin_equip_shop_3_4 = "Cantlin - Equipment Shop 3 Slot 4"
-
-cantlin_item_shop_1_1 = "Cantlin - Item Shop 1 Slot 1"
-cantlin_item_shop_1_2 = "Cantlin - Item Shop 1 Slot 2"
-
-cantlin_item_shop_2_1 = "Cantlin - Item Shop 2 Slot 1"
-cantlin_item_shop_2_2 = "Cantlin - Item Shop 2 Slot 2"
-
-cantlin_magic_key_vendor = "Cantlin - Magic Key Vendor"
-cantlin_fairy_water_vendor = "Cantlin - Fairy Water Vendor"
+silver_shield = "Purchased: Silver Shield"
 
 # Erdrick's Cave
 erdrick_tablet = "Erdrick's Tablet"
