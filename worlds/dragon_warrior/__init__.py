@@ -77,24 +77,52 @@ class DragonWarriorWorld(World):
 
         itempool = []
 
-        # Get the accurate location count because of levelsanity
-        total_locations = len(all_locations) + len(level_locations) + len(high_level_locations) - 29
+        # Get the accurate location count between sanity options
+        total_locations = len(all_locations) + len(level_locations) + len(high_level_locations) - 29 + \
+            (self.options.searchsanity * 3) + (self.options.shopsanity * 15)
 
+        # The following items always get placed
         itempool += [self.create_item(names.silver_harp),
-                     self.create_item(names.fairy_flute), 
                      self.create_item(names.staff_of_rain), 
                      self.create_item(names.stones_of_sunlight),
-                     self.create_item(names.erdricks_token),
                      self.create_item(names.magic_key),
-                     self.create_item(names.erdricks_sword),
-                     self.create_item(names.erdricks_armor),
                      self.create_item(names.death_necklace),
                      self.create_item(names.cursed_belt),
                      self.create_item(names.fighters_ring),
-                     self.create_item(names.high_gold),    # Manually put in 4 high gold items cuz I'm lazy
+                     self.create_item(names.high_gold),
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold)]
+        
+        # The following items are conditional
+        if self.options.searchsanity:
+            itempool += [
+                    self.create_item(names.erdricks_token),
+                    self.create_item(names.fairy_flute)
+                    ]
+            if not self.options.shopsanity:
+                itempool.append(self.create_item(names.erdricks_armor))
+        
+        if self.options.shopsanity:
+            itempool += [
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_armor),
+                self.create_item(names.progressive_shield),
+                self.create_item(names.progressive_shield),
+                self.create_item(names.progressive_shield),
+            ]
+        else:
+            itempool.append(self.create_item(names.erdricks_sword))
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
@@ -129,7 +157,9 @@ class DragonWarriorWorld(World):
             patch = DWPatch(os.path.splitext(rompath)[0] + ".apdw",
                             self.player, 
                             self.multiworld.player_name[self.player],
-                            flags=self.determine_flags())
+                            flags=self.determine_flags(),
+                            searchsanity=self.options.searchsanity,
+                            shopsanity=self.options.shopsanity)
             patch.write()
 
         except Exception:
