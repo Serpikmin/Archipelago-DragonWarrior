@@ -111,6 +111,8 @@ class DragonWarriorWorld(World):
                 self.create_item(names.progressive_weapon),
                 self.create_item(names.progressive_weapon),
                 self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_weapon),
+                self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
