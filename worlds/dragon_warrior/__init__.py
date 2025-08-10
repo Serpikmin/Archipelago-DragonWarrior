@@ -78,7 +78,7 @@ class DragonWarriorWorld(World):
         itempool = []
 
         # Get the accurate location count between sanity options
-        total_locations = len(all_locations) + len(level_locations) + len(high_level_locations) - 29 + \
+        total_locations = 31 + len(level_locations) + len(high_level_locations) + \
             (self.options.searchsanity * 3) + (self.options.shopsanity * 15)
 
         # The following items always get placed
