@@ -92,7 +92,6 @@ class DragonWarriorClient(BizHawkClient):
                 new_checks.append(location_data)
 
         # Level checks
-        nes_logger.info(f'Level: {str(level_byte[0])}')
         for level in range(1, level_byte[0] + 1):
             location_data = "0xD"
             if level < 10:
@@ -103,7 +102,7 @@ class DragonWarriorClient(BizHawkClient):
                 new_checks.append(location_data)
 
         # Search spot checks
-        if ap_byte[0] in [0x81, 0x41, 0x21]:   # -1 offset to have compatibility with equipment checks
+        if ap_byte[0] in [0x81, 0x41, 0x21]:   # +1 offset to have compatibility with equipment checks
             location_data = 0xE00 | (ap_byte[0] - 1)
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
@@ -200,13 +199,14 @@ class DragonWarriorClient(BizHawkClient):
             elif item.item == 0xD4:  # Magic Key
                 writes.append((0xBF, bytes.fromhex('01'), "RAM"))
 
-            elif item.item == 0xD1:  # Gold (256)
+            # Make sure there's no overflow when receiving gold
+            elif item.item == 0xD1 and gold_byte[0] < 0xFF:  # Gold (256)
                 writes.append((0xBD, (gold_byte[0] + 1).to_bytes(1, 'little'), "RAM"))
             
-            elif item.item == 0xD2:  # High Gold (1536)
+            elif item.item == 0xD2 and gold_byte[0] < 0xFA:  # High Gold (1536)
                 writes.append((0xBD, (gold_byte[0] + 6).to_bytes(1, 'little'), "RAM"))
             
-            elif item.item == 0xF:  # Medicinal herb
+            elif item.item == 0xF and herbs[0] < 0xFF:  # Medicinal herb
                 writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))
 
             elif item.item == 0xFF: # Erdrick's Sword
