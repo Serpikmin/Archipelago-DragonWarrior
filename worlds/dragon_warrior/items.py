@@ -26,7 +26,7 @@ equipment_table = {
 important_table = {
     names.fairy_flute: ItemData(0x5, True),
     names.erdricks_token: ItemData(0x7, True),
-    # names.gwaelins_love: ItemData(0x8, True),
+    names.gwaelins_love: ItemData(0x8, True),
     names.silver_harp: ItemData(0xA, True),
     names.stones_of_sunlight: ItemData(0xC, True),
     names.staff_of_rain: ItemData(0xD, True),
