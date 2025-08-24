@@ -18,6 +18,7 @@ throne_room_locations = {
     names.tantegel_throne_room_gold_chest: 0x050404,
     names.tantegel_throne_room_key_chest: 0x050601,
     names.tantegel_throne_room_torch_chest: 0x050504,
+    names.gwaelins_love_location: 0x050304,  # Returned Gwaelin to King
 }
 
 tantegel_castle_locations = {
@@ -81,6 +82,10 @@ mountain_cave_locations = {
     names.mountain_cave_2_chest_2: 0x170302,
     names.mountain_cave_2_chest_3: 0x170202,
     names.mountain_cave_2_chest_4: 0x170A09,
+}
+
+swamp_cave_locations = {
+    names.gwaelin_rescue: 0x150513,  # Need Key
 }
 
 garins_grave_locations = {
@@ -172,6 +177,7 @@ all_locations = {
     **rimuldar_key_locations,
     **cantlin_locations,
     **mountain_cave_locations,
+    **swamp_cave_locations,
     **garins_grave_locations,
     **charlock_locations,
     **hauksness_locations,
@@ -191,6 +197,7 @@ location_names: Dict[str, Set[str]] = {
     "Rimuldar": set(name for name in list(rimuldar_locations.keys()) + list(rimuldar_key_locations.keys())),
     "Cantlin": set(name for name in cantlin_locations.keys()),
     "Mountain Cave": set(name for name in mountain_cave_locations.keys()),
+    "Swamp Cave": set(swamp_cave_locations.keys()),
     "Garin's Grave": set(name for name in garins_grave_locations.keys()),
     "Charlock": set(name for name in charlock_locations.keys()),
     "Hauksness": set([names.erdricks_armor_location]),

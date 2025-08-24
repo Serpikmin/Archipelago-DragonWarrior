@@ -98,6 +98,8 @@ def create_regions(world: World, level_locations, high_level_locations) -> None:
 
     mountain_cave_region = create_region(world, names.mountain_cave, locations.mountain_cave_locations)
 
+    swamp_cave_region = create_region(world, names.swamp_cave, locations.swamp_cave_locations)
+
     garins_grave_region = create_region(world, names.garins_grave, locations.garins_grave_locations)
 
     charlock_region = create_region(world, names.charlock_castle, locations.charlock_locations)
@@ -126,6 +128,7 @@ def create_regions(world: World, level_locations, high_level_locations) -> None:
         rimuldar_key_region,
         cantlin_region,
         mountain_cave_region,
+        swamp_cave_region,
         garins_grave_region,
         charlock_region,
         hauksness_region,
@@ -161,6 +164,9 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.overworld, names.erdricks_cave)
     connect(world, world.player, region_names, names.overworld, names.mountain_cave,
             equipment_helper(world, 3, 3, 2))
+    connect(world, world.player, region_names, names.overworld, names.swamp_cave,
+        lambda state: state.has(names.magic_key, world.player))
+
 
     connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,
             lambda state: (state.has(names.staff_of_rain, world.player) and 
