@@ -153,20 +153,20 @@ def connect_regions(world: World) -> None:
                            state.has(names.progressive_shield, world.player, 2)))))
     connect(world, world.player, region_names, names.overworld, names.breconnary)
     connect(world, world.player, region_names, names.overworld, names.garinham, 
-            equipment_helper(shopsanity, 2, 2, 1))
+            equipment_helper(world, 2, 2, 1))
     connect(world, world.player, region_names, names.overworld, names.kol,
-            equipment_helper(shopsanity, 1, 1, 1))
+            equipment_helper(world, 1, 1, 1))
     connect(world, world.player, region_names, names.overworld, names.rimuldar,
-            equipment_helper(shopsanity, 3, 3, 1))
+            equipment_helper(world, 3, 3, 1))
     connect(world, world.player, region_names, names.overworld, names.hauksness,
-            equipment_helper(shopsanity, 5, 5, 3))
+            equipment_helper(world, 5, 5, 3))
     connect(world, world.player, region_names, names.overworld, names.cantlin,
-            equipment_helper(shopsanity, 4, 4, 2))
+            equipment_helper(world, 4, 4, 2))
     connect(world, world.player, region_names, names.overworld, names.erdricks_cave)
     connect(world, world.player, region_names, names.overworld, names.mountain_cave,
-            equipment_helper(shopsanity, 3, 3, 2))
+            equipment_helper(world, 3, 3, 2))
     connect(world, world.player, region_names, names.overworld, names.swamp_cave,
-            equipment_helper(shopsanity, 4, 4, 2))
+            equipment_helper(world, 4, 4, 2))
 
 
     connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,
@@ -182,13 +182,13 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.rimuldar, names.rimuldar_keys,
             lambda state: (state.has(names.magic_key, world.player)))
     connect(world, world.player, region_names, names.garinham_keys, names.garins_grave,
-            equipment_helper(shopsanity, 4, 3, 2))
+            equipment_helper(world, 4, 3, 2))
     connect(world, world.player, region_names, names.overworld, names.staff_of_rain_shrine, 
             lambda state: (state.has(names.silver_harp, world.player)))
     connect(world, world.player, region_names, names.overworld, names.erdricks_token_tile,
-            equipment_helper(shopsanity, 4, 4, 2))
+            equipment_helper(world, 4, 4, 2))
     connect(world, world.player, region_names, names.rainbow_drop_shrine, names.charlock_castle,
-            equipment_helper(shopsanity, 5, 5, 2))
+            equipment_helper(world, 5, 5, 2))
 
 def create_region(world: World, name: str, location_checks=None):
     ret = DWRegion(name, world.player, world.multiworld)
@@ -219,8 +219,8 @@ def connect(world: World, player: int, used_names: Dict[str, int], source: str, 
     source_region.exits.append(connection)
     connection.connect(target_region)
 
-def equipment_helper(shopsanity, weapons: int, armors: int, shields: int):
-    if not shopsanity:
+def equipment_helper(world, weapons: int, armors: int, shields: int):
+    if not world.options.shopsanity:
         return lambda state: (True)
     return lambda state: (state.has(names.progressive_weapon, world.player, weapons) and 
                           state.has(names.progressive_armor, world.player, armors) and

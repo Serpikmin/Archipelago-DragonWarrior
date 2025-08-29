@@ -10,7 +10,7 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "042"
+EXPECTED_VERSION = "043"
 EQUIPMENT_BYTES = [0x1, 0x2, 0x3, 0x4, 0x8, 0xC, 0x10, 0x14, 0x18, 0x1C, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xC0, 0xE0]
 
 class DragonWarriorClient(BizHawkClient):
@@ -82,6 +82,27 @@ class DragonWarriorClient(BizHawkClient):
             await ctx.send_msgs([{
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
+            }])
+
+        # Send Shop Hints
+        equipment_locations = []
+        match current_map[0]:
+            case 0x07: # Kol
+                equipment_locations = [0x01, 0x10, 0x14, 0x60, 0x80]
+            case 0x08: # Brecconary
+                equipment_locations = [0x01, 0x04, 0x08, 0x20, 0x40, 0x60]
+            case 0x09: # Garinham
+                equipment_locations = [0x02, 0x08, 0x0C, 0x10, 0x40, 0x60, 0x80]
+            case 0x0A: # Cantlin
+                equipment_locations = [0x02, 0x03, 0x0C, 0x10, 0x14, 0x18, 0x20, 0x40, 0x60, 0xA0, 0xC0]
+            case 0x0B: # Rimuldar 
+                equipment_locations = [0x10, 0x14, 0x18, 0x60, 0x80, 0xA0]
+        
+        if equipment_locations:
+            await ctx.send_msgs([{
+                "cmd": "LocationScouts",
+                "locations": equipment_locations,
+                "create_as_hint": 2
             }])
 
         # Chest checks, See locations.py for an explanation
