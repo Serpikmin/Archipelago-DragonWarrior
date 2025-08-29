@@ -18,7 +18,6 @@ throne_room_locations = {
     names.tantegel_throne_room_gold_chest: 0x050404,
     names.tantegel_throne_room_key_chest: 0x050601,
     names.tantegel_throne_room_torch_chest: 0x050504,
-    names.gwaelins_love_location: 0x050304,  # Returned Gwaelin to King
 }
 
 tantegel_castle_locations = {
@@ -86,6 +85,7 @@ mountain_cave_locations = {
 
 swamp_cave_locations = {
     names.gwaelin_rescue: 0x150513,  # Need Key
+    names.gwaelins_love_location: 0x050304,  # Returned Gwaelin to King
 }
 
 garins_grave_locations = {
