@@ -83,16 +83,17 @@ class DragonWarriorWorld(World):
 
         # The following items always get placed
         itempool += [self.create_item(names.silver_harp),
-                     self.create_item(names.staff_of_rain), 
+                     self.create_item(names.staff_of_rain),     
                      self.create_item(names.stones_of_sunlight),
                      self.create_item(names.magic_key),
                      self.create_item(names.death_necklace),
                      self.create_item(names.cursed_belt),
                      self.create_item(names.fighters_ring),
-                     self.create_item(names.high_gold),
+                     self.create_item(names.gwaelins_love),
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold)]
+        
         
         # The following items are conditional
         if self.options.searchsanity:
@@ -101,7 +102,7 @@ class DragonWarriorWorld(World):
                     self.create_item(names.fairy_flute)
                     ]
             if not self.options.shopsanity:
-                itempool.append(self.create_item(names.erdricks_armor))
+                itempool.append(self.create_item(names.erdricks_armor)) # Added to progressives
         
         if self.options.shopsanity:
             itempool += [
@@ -124,7 +125,7 @@ class DragonWarriorWorld(World):
                 self.create_item(names.progressive_shield),
             ]
         else:
-            itempool.append(self.create_item(names.erdricks_sword))
+            itempool.append(self.create_item(names.erdricks_sword)) # Added to progressives
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]

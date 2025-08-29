@@ -99,6 +99,8 @@ level_30 = "Level 30"
 tantegel_throne_room_gold_chest = "Throne Room - Gold Chest"
 tantegel_throne_room_torch_chest = "Throne Room - Torch Chest"
 tantegel_throne_room_key_chest = "Throne Room - Key Chest"
+gwaelins_love_location = "Returned Gwaelin to Castle"
+
 
 # Tantegel Castle
 tantegel_castle_gold_chest_1 = "Tantegel Castle - Gold Chest 1"
@@ -161,7 +163,7 @@ mountain_cave_2_chest_3 = "Mountain Cave - Level 2 - Chest 3"
 mountain_cave_2_chest_4 = "Mountain Cave - Level 2 - Chest 4"
 
 # Swamp Cave
-# Maybe the Princess could be a check?
+gwaelin_rescue = "Rescue Princess Gwaelin"
 
 # Garin's Grave
 garins_grave_1_chest_1 = "Garin's Grave - Level 1 - Chest 1"

@@ -54,7 +54,7 @@ class DragonWarriorClient(BizHawkClient):
         
         current_map, chests_array, recv_count, inventory_bytes, \
             dragonlord_dead, herbs, equip_byte, level_byte, gold_byte, \
-            ap_byte = await read(ctx.bizhawk_ctx, [
+            ap_byte, status_byte = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"), # Bruh moment
             (0x0E, 1, "RAM"),
@@ -64,7 +64,8 @@ class DragonWarriorClient(BizHawkClient):
             (0xBE, 1, "RAM"),
             (0xC7, 1, "RAM"),
             (0xBD, 1, "RAM"),
-            (0x01, 1, "RAM")
+            (0x01, 1, "RAM"),
+            (0xDF, 1, "RAM") 
         ])
 
         if current_map[0] == 0:  # Don't start processing until we load a map
@@ -111,6 +112,22 @@ class DragonWarriorClient(BizHawkClient):
         if ap_byte[0] == 0xFF:
             if 0xFF not in ctx.checked_locations:
                 new_checks.append(0xFF)
+
+         # Princess Rescue - Carrying Gwaelin
+        status_bits = status_byte
+
+        if status_bits[0] & 0x01:  # From mcgrew notes This is picking her up
+            gwaelin_location = 0x150513
+            if gwaelin_location not in ctx.checked_locations:
+                new_checks.append(gwaelin_location)
+
+        # Princess returned - trigger Gwaelin's Love item check
+        if status_bits[0] & 0x02:
+            love_location = 0x050304
+            if love_location not in ctx.checked_locations: 
+               new_checks.append(love_location)
+
+
 
         # Buying equipment
         if ap_byte[0] in EQUIPMENT_BYTES:
@@ -212,7 +229,6 @@ class DragonWarriorClient(BizHawkClient):
             elif item.item == 0xFF: # Erdrick's Sword
                 new_byte = equip_byte[0] | 0xE0
                 writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
-            
             elif item.item == 0xFE: # Erdrick's Armor
                 new_byte = equip_byte[0] | 0x1C
                 writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
