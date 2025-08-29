@@ -165,7 +165,7 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.overworld, names.mountain_cave,
             equipment_helper(world, 3, 3, 2))
     connect(world, world.player, region_names, names.overworld, names.swamp_cave,
-        lambda state: state.has(names.magic_key, world.player))
+            equipment_helper(world, 4, 4, 2))
 
 
     connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,

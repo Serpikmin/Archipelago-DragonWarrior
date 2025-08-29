@@ -226,15 +226,14 @@ class DragonWarriorClient(BizHawkClient):
             elif item.item == 0xF and herbs[0] < 0xFF:  # Medicinal herb
                 writes.append((0xC0, (herbs[0] + 1).to_bytes(1, 'little'), "RAM"))
 
-         #   elif item.item == 0xFF: # Erdrick's Sword
-         #       new_byte = equip_byte[0] | 0xE0
-         #       writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
-                                                                                    # I made these the end of progressive chains
-         #  elif item.item == 0xFE: # Erdrick's Armor
-         #     new_byte = equip_byte[0] | 0x1C
-         #      writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
+            elif item.item == 0xFF: # Erdrick's Sword
+                new_byte = equip_byte[0] | 0xE0
+                writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
+            elif item.item == 0xFE: # Erdrick's Armor
+                new_byte = equip_byte[0] | 0x1C
+                writes.append((0xBE, new_byte.to_bytes(1, 'little'), "RAM"))
             
-            elif item.item in [0xE01, 0xE04, 0xE20, 0xFE, 0xFF]:  # Progressive equipment
+            elif item.item in [0xE01, 0xE04, 0xE20]:  # Progressive equipment
                 to_add = item.item & 0xFF
                 new_byte = equip_byte[0] + to_add
                 if new_byte <= 0xFF:

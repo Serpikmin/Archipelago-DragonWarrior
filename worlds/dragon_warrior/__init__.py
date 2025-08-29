@@ -82,9 +82,9 @@ class DragonWarriorWorld(World):
             (self.options.searchsanity * 3) + (self.options.shopsanity * 15)
 
         # The following items always get placed
-        itempool += [#self.create_item(names.silver_harp),
-                     #self.create_item(names.staff_of_rain),     # These should now be forced out of charlock in block below
-                     #self.create_item(names.stones_of_sunlight),
+        itempool += [self.create_item(names.silver_harp),
+                     self.create_item(names.staff_of_rain),     
+                     self.create_item(names.stones_of_sunlight),
                      self.create_item(names.magic_key),
                      self.create_item(names.death_necklace),
                      self.create_item(names.cursed_belt),
@@ -94,27 +94,6 @@ class DragonWarriorWorld(World):
                      self.create_item(names.high_gold),
                      self.create_item(names.high_gold)]
         
-        # Avoid placing Token, Staff, or Stones in any Charlock chest
-        charlock_exclusions = (
-           lambda name: name.startswith("Dragonlord's Lair") or "Erdrick's Sword" in name
-        )
-
-        charlock_safe_locations = [
-         loc for loc in self.multiworld.get_unfilled_locations(self.player)
-         if not charlock_exclusions(loc.name)
-        ]
-
-        # Place critical items early
-        for item_name in [
-            names.erdricks_token,
-            names.staff_of_rain,
-            names.stones_of_sunlight
-        ]:
-            item = self.create_item(item_name)
-            location = self.multiworld.random.choice(charlock_safe_locations)
-            location.place_locked_item(item)
-            charlock_safe_locations.remove(location)
-
         
         # The following items are conditional
         if self.options.searchsanity:
@@ -122,8 +101,8 @@ class DragonWarriorWorld(World):
                     self.create_item(names.erdricks_token),
                     self.create_item(names.fairy_flute)
                     ]
-         #   if not self.options.shopsanity:
-         #       itempool.append(self.create_item(names.erdricks_armor)) # Added to progressives
+            if not self.options.shopsanity:
+                itempool.append(self.create_item(names.erdricks_armor)) # Added to progressives
         
         if self.options.shopsanity:
             itempool += [
@@ -134,7 +113,6 @@ class DragonWarriorWorld(World):
                 self.create_item(names.progressive_weapon),
                 self.create_item(names.progressive_weapon),
                 self.create_item(names.progressive_weapon),
-                #self.create_item(names.erdricks_sword),  # In case we want out of order option later
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
@@ -142,13 +120,12 @@ class DragonWarriorWorld(World):
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
                 self.create_item(names.progressive_armor),
-                #self.create_item(names.erdricks_armor),  # In case we want out of order option later
                 self.create_item(names.progressive_shield),
                 self.create_item(names.progressive_shield),
                 self.create_item(names.progressive_shield),
             ]
-    #    else:
-    #        itempool.append(self.create_item(names.erdricks_sword)) # Added to progressives
+        else:
+            itempool.append(self.create_item(names.erdricks_sword)) # Added to progressives
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
