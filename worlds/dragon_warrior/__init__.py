@@ -9,6 +9,7 @@ from .locations import create_locations, all_locations, location_names
 from .regions import create_regions, connect_regions
 import settings
 from BaseClasses import Item, ItemClassification, Location, MultiWorld, Tutorial
+from Utils import visualize_regions
 from worlds.AutoWorld import World, WebWorld
 from .rom import DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH, DWPatch
 from .options import DWOptions, DWOptionGroups
@@ -78,7 +79,7 @@ class DragonWarriorWorld(World):
         itempool = []
 
         # Get the accurate location count between sanity options
-        total_locations = 31 + len(level_locations) + len(high_level_locations) + \
+        total_locations = 33 + len(level_locations) + len(high_level_locations) + \
             (self.options.searchsanity * 3) + (self.options.shopsanity * 15)
 
         # The following items always get placed
@@ -102,7 +103,7 @@ class DragonWarriorWorld(World):
                     self.create_item(names.fairy_flute)
                     ]
             if not self.options.shopsanity:
-                itempool.append(self.create_item(names.erdricks_armor)) # Added to progressives
+                itempool.append(self.create_item(names.erdricks_armor))
         
         if self.options.shopsanity:
             itempool += [
@@ -125,7 +126,7 @@ class DragonWarriorWorld(World):
                 self.create_item(names.progressive_shield),
             ]
         else:
-            itempool.append(self.create_item(names.erdricks_sword)) # Added to progressives
+            itempool.append(self.create_item(names.erdricks_sword))
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
@@ -134,6 +135,8 @@ class DragonWarriorWorld(World):
 
         self.multiworld.completion_condition[self.player] = lambda state: \
             state.has(names.ball_of_light, self.player)
+        
+        # visualize_regions(self.get_region("Menu"), "dw_regions.puml", show_locations=True)
 
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
