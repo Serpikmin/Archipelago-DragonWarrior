@@ -10,7 +10,7 @@ When hosted on the AP website, you can hit the `Download Patch File...` button t
 
 ## What does randomization do to this game?
 
-By default, only chests and their contents are randomized into the multiworld. Additional -sanity options exist to randomize search spots, level-ups, and equipment shops. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
+By default, chests and their contents are randomized into the multiworld. There are also two checks associated with rescuing and returning Princess Gwaelin. Additional -sanity options exist to randomize search spots, level-ups, and equipment shops. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
 
 ## What is the goal of Dragon Warrior when randomized?
 
