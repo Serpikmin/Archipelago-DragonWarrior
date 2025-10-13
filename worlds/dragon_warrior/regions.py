@@ -178,12 +178,12 @@ def connect_regions(world: World) -> None:
         equipment_helper(world, 1, 1, 1))
     connect(world, world.player, region_names, names.overworld, names.rimuldar,
         equipment_helper(world, 3, 3, 1))
-    connect(world, world.player, region_names, names.overworld, names.hauksness,
+    connect(world, world.player, region_names, names.garinham, names.hauksness,
         equipment_helper(world, 5, 5, 3))
-    connect(world, world.player, region_names, names.overworld, names.cantlin,
+    connect(world, world.player, region_names, names.garinham, names.cantlin,
         equipment_helper(world, 4, 4, 2))
     connect(world, world.player, region_names, names.overworld, names.erdricks_cave)
-    connect(world, world.player, region_names, names.overworld, names.mountain_cave,
+    connect(world, world.player, region_names, names.garinham, names.mountain_cave,
         equipment_helper(world, 3, 3, 2))
     connect(world, world.player, region_names, names.overworld, names.swamp_cave,
         lambda state: (state.has(names.magic_key, world.player) and (not shopsanity or
@@ -192,7 +192,7 @@ def connect_regions(world: World) -> None:
                 state.has(names.progressive_shield, world.player, 2)))))
 
 
-    connect(world, world.player, region_names, names.overworld, names.rainbow_drop_shrine,
+    connect(world, world.player, region_names, names.rimuldar, names.rainbow_drop_shrine,
         lambda state: (state.has(names.staff_of_rain, world.player) and 
                         state.has(names.stones_of_sunlight, world.player) and
                         state.has(names.magic_key, world.player) and
@@ -200,16 +200,16 @@ def connect_regions(world: World) -> None:
 
     connect(world, world.player, region_names, names.overworld, names.tantegel_castle, 
         lambda state: (state.has(names.magic_key, world.player)))
-    connect(world, world.player, region_names, names.overworld, names.garinham_keys, 
+    connect(world, world.player, region_names, names.garinham, names.garinham_keys, 
         lambda state: (state.has(names.magic_key, world.player)))
     connect(world, world.player, region_names, names.rimuldar, names.rimuldar_keys,
         lambda state: (state.has(names.magic_key, world.player)))
     connect(world, world.player, region_names, names.garinham_keys, names.garins_grave,
         equipment_helper(world, 4, 3, 2))
-    connect(world, world.player, region_names, names.overworld, names.staff_of_rain_shrine, 
+    connect(world, world.player, region_names, names.rimuldar, names.staff_of_rain_shrine, 
         lambda state: (state.has(names.silver_harp, world.player)))
-    connect(world, world.player, region_names, names.overworld, names.erdricks_token_tile,
-        equipment_helper(world, 4, 4, 2))
+    connect(world, world.player, region_names, names.cantlin, names.erdricks_token_tile,
+        lambda state: (state.has(names.gwaelins_love, world.player)))
     connect(world, world.player, region_names, names.rainbow_drop_shrine, names.charlock_castle,
         equipment_helper(world, 6, 6, 2))
     connect(world, world.player, region_names, names.charlock_castle, names.charlock_dragonlord,
