@@ -80,7 +80,8 @@ class DragonWarriorWorld(World):
 
         # Get the accurate location count between sanity options
         total_locations = 33 + len(level_locations) + len(high_level_locations) + \
-            (self.options.searchsanity * 3) + (self.options.shopsanity * 15)
+            (self.options.searchsanity * 3) + (self.options.shopsanity * 15) + \
+            (self.options.monstersanity * 40)
 
         # The following items always get placed
         itempool += [self.create_item(names.silver_harp),
@@ -127,6 +128,13 @@ class DragonWarriorWorld(World):
             ]
         else:
             itempool.append(self.create_item(names.erdricks_sword))
+
+        if self.options.monstersanity:  # Throw a few more of these in
+            itempool += [
+                self.create_item(names.high_gold),
+                self.create_item(names.high_gold),
+                self.create_item(names.high_gold),
+            ]
 
         while len(itempool) < total_locations:
             itempool += [self.create_item(self.get_filler_item_name())]
@@ -187,7 +195,7 @@ class DragonWarriorWorld(World):
         flag_list[3] += int(self.options.heal_hurt_before_more) * 4     # E
         flag_list[3] += int(self.options.random_xp_requirements) * 16
         flag_list[2] += int(self.options.random_weapon_shops) * 8 * int(not self.options.shopsanity)  # Disable random shops when shopsanity is on
-        flag_list[8] += int(self.options.random_monster_zones) * 2
+        flag_list[8] += int(self.options.random_monster_zones) * 2 * int(not self.options.monstersanity) # Disable random monsters when monstersanity is on
         flag_list[9] += int(self.options.random_monster_stats) * 16
         flag_list[9] += int(self.options.random_monster_xp) * 4
         flag_list[9] += int(self.options.make_random_stats_consistent) * 1

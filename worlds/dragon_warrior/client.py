@@ -10,8 +10,11 @@ nes_logger = logging.getLogger("NES")
 logger = logging.getLogger("Client")
 
 EXPECTED_ROM_NAME = "DWAPV"
-EXPECTED_VERSION = "050"
+EXPECTED_VERSION = "100"
 EQUIPMENT_BYTES = [0x1, 0x2, 0x3, 0x4, 0x8, 0xC, 0x10, 0x14, 0x18, 0x1C, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xC0, 0xE0]
+
+# TODO: Store slot name in patched ROM and implement set_auth() to auto read slot name
+# TODO: Deathlink
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
@@ -30,12 +33,17 @@ class DragonWarriorClient(BizHawkClient):
                 logger.info(
                     "Expected: " + EXPECTED_ROM_NAME + ", got: " + rom_name_bytes[:5].decode("ascii")
                 )
+                logger.info("This is not the correct ROM. Please ensure you are using the Archipelago patched Dragon Warrior ROM.")
                 return False
             
             if version_bytes[:3].decode("ascii") != EXPECTED_VERSION:
                 logger.info(
-                    "WARNING: Version mismatch, this was generated on an earlier version of the apworld and may not function as expected"
+                    "WARNING: Version mismatch, this was generated on an earlier version of the apworld and may not function as expected."
                 )
+                logger.info(
+                    "World Version: " + version_bytes[0].decode("ascii") + '.' + version_bytes[1].decode("ascii") + '.' + version_bytes[2].decode("ascii")
+                )
+                logger.info("Client Version: " + EXPECTED_VERSION[0] + '.' + EXPECTED_VERSION[1] + '.' + EXPECTED_VERSION[2])
         except UnicodeDecodeError:
             return False
         except RequestFailedError:
@@ -54,9 +62,9 @@ class DragonWarriorClient(BizHawkClient):
         
         current_map, chests_array, recv_count, inventory_bytes, \
             dragonlord_dead, herbs, equip_byte, level_byte, gold_byte, \
-            ap_byte, status_byte = await read(ctx.bizhawk_ctx, [
+            ap_byte, status_byte, monster_list = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
-            (0x601C, 16, "System Bus"), # Bruh moment
+            (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
             (0xC1, 4, "RAM"),
             (0xE4, 1, "RAM"),
@@ -65,7 +73,8 @@ class DragonWarriorClient(BizHawkClient):
             (0xC7, 1, "RAM"),
             (0xBD, 1, "RAM"),
             (0x01, 1, "RAM"),
-            (0xDF, 1, "RAM") 
+            (0xDF, 1, "RAM"),
+            (0x66C0, 80, "System Bus")
         ])
 
         if current_map[0] == 0:  # Don't start processing until we load a map
@@ -108,7 +117,6 @@ class DragonWarriorClient(BizHawkClient):
         # Chest checks, See locations.py for an explanation
         for i in range(0, 16, 2):
             chest = chests_array[i:i + 2]
-            # I hate working with bytes in Python
             location_data = int(hex((current_map[0] << 16) | ((chest[0] << 8) | chest[1])), 16)
             if location_data not in ctx.checked_locations:
                 new_checks.append(location_data)
@@ -148,12 +156,21 @@ class DragonWarriorClient(BizHawkClient):
             if love_location not in ctx.checked_locations: 
                new_checks.append(love_location)
 
-
-
         # Buying equipment
         if ap_byte[0] in EQUIPMENT_BYTES:
             if ap_byte[0] not in ctx.checked_locations:
                 new_checks.append(ap_byte[0])
+
+        # Defeated Monsters
+        for i in range(0, 80, 2):
+            if monster_list[i] > 0:
+                location_data = "0xDEF"
+                if i < 16:
+                    location_data += "0"
+                location_data += hex(i)[2:]
+                location_data = int(location_data, 16)
+                if location_data not in ctx.checked_locations:
+                    new_checks.append(location_data)
 
         # Send found checks
         for new_check_id in new_checks:

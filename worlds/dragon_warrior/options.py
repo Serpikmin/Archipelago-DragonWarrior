@@ -25,12 +25,19 @@ class SearchSanity(DefaultOnToggle):
     """
     display_name = "SearchSanity"
 
-class ShopSanity(DefaultOnToggle):
+class ShopSanity(Toggle):
     """
-    Buying a piece of equipment causes a location check instead of buying it. Adds progressive equipment items instead.
+    Buying a piece of equipment sends a location check instead of buying it. Adds progressive equipment items instead.
     This adds 13 checks. This option overrides and disables the randomized equipment shops option below.
     """
     display_name = "ShopSanity"
+
+class MonsterSanity(Toggle):
+    """
+    Killing a monster for the first time sends a location check. This adds 40 checks. This option overrides and disables
+    the random monster zones option below.
+    """
+    display_name = "MonsterSanity"
 
 class RandomGrowth(Toggle):
     """ 
@@ -349,7 +356,8 @@ DWOptionGroups = [
         LevelSanity,
         LevelSanityRange,
         SearchSanity,
-        ShopSanity
+        ShopSanity,
+        MonsterSanity
     ]),
     OptionGroup("Random Options", [
         RandomGrowth,
@@ -416,6 +424,7 @@ class DWOptions(PerGameCommonOptions):
     levelsanity_range: LevelSanityRange
     searchsanity: SearchSanity
     shopsanity: ShopSanity
+    monstersanity: MonsterSanity
 
     random_growth: RandomGrowth
     random_spell_learning: RandomSpellLearning
