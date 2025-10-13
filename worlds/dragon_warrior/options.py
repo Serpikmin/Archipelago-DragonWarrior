@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, Range, Toggle
+from Options import Choice, DefaultOnToggle, OptionGroup, PerGameCommonOptions, Range, Toggle, DeathLink
 
 
 class LevelSanity(DefaultOnToggle):
@@ -392,12 +392,13 @@ class DisableRedFlashes(Toggle):
     display_name = "Disable Red Flashes"
 
 DWOptionGroups = [
-    OptionGroup("Location Options", [
+    OptionGroup("Archipelago Options", [
         LevelSanity,
         LevelSanityRange,
         SearchSanity,
         ShopSanity,
-        MonsterSanity
+        MonsterSanity,
+        DeathLink
     ]),
     OptionGroup("Random Options", [
         RandomGrowth,
@@ -469,6 +470,7 @@ class DWOptions(PerGameCommonOptions):
     searchsanity: SearchSanity
     shopsanity: ShopSanity
     monstersanity: MonsterSanity
+    deathlink: DeathLink
 
     random_growth: RandomGrowth
     random_map: RandomMap

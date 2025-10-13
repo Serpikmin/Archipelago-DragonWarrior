@@ -181,6 +181,15 @@ class DragonWarriorWorld(World):
         finally:
             self.rom_name_available_event.set()
 
+    def fill_slot_data(self) -> Dict[str, any]:
+        return {
+            "searchsanity": self.options.searchsanity,
+            "levelsanity": self.options.levelsanity,
+            "shopsanity": self.options.shopsanity,
+            "monstersanity": self.options.monstersanity,
+            "deathlink": self.options.deathlink
+        }
+
     def determine_flags(self) -> str:
         ops = self.options
         default_flags = "AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAA"
