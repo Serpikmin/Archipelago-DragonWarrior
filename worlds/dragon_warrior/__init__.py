@@ -189,10 +189,11 @@ class DragonWarriorWorld(World):
 
         # If false, 0 * flag value, otherwise 1 * flag value
         flag_list[1] += int(self.options.random_spell_learning) * 1     # B 
+        flag_list[1] += int(self.options.random_map) * 4                # E
         flag_list[1] += int(self.options.random_growth) * 16            # Q
         flag_list[2] += int(self.options.random_weapon_prices) * 2      # C
         flag_list[8] += int(self.options.random_monster_abilities) * 8  # I
-        flag_list[3] += int(self.options.heal_hurt_before_more) * 4     # E
+        flag_list[3] += int(self.options.heal_hurt_before_more) * 4
         flag_list[3] += int(self.options.random_xp_requirements) * 16
         flag_list[2] += int(self.options.random_weapon_shops) * 8 * int(not self.options.shopsanity)  # Disable random shops when shopsanity is on
         flag_list[8] += int(self.options.random_monster_zones) * 2 * int(not self.options.monstersanity) # Disable random monsters when monstersanity is on
@@ -241,6 +242,41 @@ class DragonWarriorWorld(World):
         flag_list[18] += int(self.options.noir_mode) * 8
         flag_list[27] += int(self.options.magic_herbs) * 16
         flag_list[35] += int(self.options.normal_flute_speed) * 2
+
+        # Multiple-choice options
+        # Random Map Size
+        if self.options.random_map_size == 2:
+            flag_list[20] += 1
+        else:
+            flag_list[21] += self.options.random_map_size * 16
+
+        # Run Mechanics
+        if self.options.run_mechanics == 1:
+            flag_list[33] += 1
+            flag_list[34] += 16
+        elif self.options.run_mechanics == 2:
+            flag_list[34] += 16
+        elif self.options.run_mechanics == 3:
+            flag_list[33] += 1
+
+        # Bonk Damage
+        match self.options.bonk_damage:
+            case 0:
+                pass
+            case 1:
+                flag_list[29] += 8
+            case 2:
+                flag_list[29] += 16
+            case 3:
+                flag_list[29] += 24
+            case 4:
+                flag_list[28] += 1
+            case 5:
+                flag_list[28] += 1
+                flag_list[29] += 8
+            case 6:
+                flag_list[28] += 1
+                flag_list[29] += 16
 
         final_flags = ""
         for flag in flag_list:
