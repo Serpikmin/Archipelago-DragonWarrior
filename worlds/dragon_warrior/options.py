@@ -48,6 +48,8 @@ class RandomGrowth(Toggle):
 class RandomMap(Toggle):
     """
     The overworld map will be randomly generated.
+
+    WARNING: This will likely break combat logic and you may have to logically traverse areas you are too weak for.
     """
     display_name = "Random Map"
 
