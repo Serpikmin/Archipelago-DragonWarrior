@@ -1,7 +1,8 @@
 import logging
+import time
 from worlds._bizhawk.client import BizHawkClient
 from NetUtils import ClientStatus, NetworkItem, color
-from typing import List, Optional, TYPE_CHECKING
+from typing import Any, Dict, List, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from worlds._bizhawk.context import BizHawkClientContext
@@ -12,22 +13,29 @@ logger = logging.getLogger("Client")
 EXPECTED_ROM_NAME = "DWAPV"
 EXPECTED_VERSION = "100"
 EQUIPMENT_BYTES = [0x1, 0x2, 0x3, 0x4, 0x8, 0xC, 0x10, 0x14, 0x18, 0x1C, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xC0, 0xE0]
-
-# TODO: Store slot name in patched ROM and implement set_auth() to auto read slot name
-# TODO: Deathlink
+ENEMY_NAMES = ['Slime', 'Red Slime', 'Drakee', 'Ghost', 'Magician', 'Magidrakee', 'Scorpion', 'Druin', 'Poltergeist',
+               'Droll', 'Drakeema', 'Skeleton', 'Warlock', 'Metal Scorpion', 'Wolf', 'Wraith', 'Metal Slime', 'Specter',
+               'Wolflord', 'Druinlord', 'Drollmagi', 'Wyvern', 'Rogue Scorpion', 'Wraith Knight', 'Golem', 'Goldman',
+               'Knight', 'Magiwyvern', 'Demon Knight', 'Werewolf', 'Green Dragon', 'Starwyvern', 'Wizard', 'Axe Knight',
+               'Blue Dragon', 'Stoneman', 'Armored Knight', 'Red Dragon', 'the Dragonlord', 'the Dragonlord']
 
 class DragonWarriorClient(BizHawkClient):
     game = "Dragon Warrior"
     system = "NES"
     patch_suffix = ".apdw"
+    slot_name = ""
+    deathlink = False
+    pending_deathlink = False
+    own_deathlink = False
     item_queue: List[NetworkItem] = []
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         from worlds._bizhawk import RequestFailedError, read
         try:
             # Check ROM name/patch version
-            rom_name_bytes, version_bytes = (await read(ctx.bizhawk_ctx, [(0x7FE0, 5, "PRG ROM"),
-                                                                          (0x7FE5, 4, "PRG ROM")]))
+            rom_name_bytes, version_bytes, slot_name = (await read(ctx.bizhawk_ctx, [(0x7FE0, 5, "PRG ROM"),
+                                                                                     (0x7FE5, 4, "PRG ROM"),
+                                                                                    (0xBFE0, 16, "PRG ROM")]))
 
             if rom_name_bytes[:5].decode("ascii") != EXPECTED_ROM_NAME:
                 logger.info(
@@ -48,13 +56,42 @@ class DragonWarriorClient(BizHawkClient):
             return False
         except RequestFailedError:
             return False  # Should verify on the next pass
+        
+        deathlink = await read(ctx.bizhawk_ctx, [(0x7FEF, 1, "PRG ROM")])
+
+        if deathlink[0] == b'\xDE':
+            self.deathlink = True
 
         ctx.game = self.game
         ctx.items_handling = 0b111
+        self.slot_name = slot_name.decode("ascii").rstrip("\x00")  # Remove the trailing whitespace indicating end of name
 
         return True
     
-    async def game_watcher(self, ctx):
+    async def set_auth(self, ctx: "BizHawkClientContext") -> None:
+        if self.slot_name:
+            ctx.auth = self.slot_name
+
+    def on_package(self, ctx: "BizHawkClientContext", cmd: str, args: Dict[str, Any]) -> None:
+        if cmd == "Bounced":
+            if "tags" in args:
+                assert ctx.slot is not None
+                if "DeathLink" in args["tags"]:
+                    if self.own_deathlink:
+                        self.own_deathlink = False
+                    else:
+                        self.pending_deathlink = True
+                        ctx.last_death_link = time.time()
+
+    async def send_deathlink(self, ctx: "BizHawkClientContext", enemy_id: int) -> None:
+        death_message = self.slot_name + ' was slain by '
+        if enemy_id < 38:
+            death_message += 'a '
+        death_message += ENEMY_NAMES[enemy_id] + '.'
+        ctx.last_death_link = time.time()
+        await ctx.send_death(death_message)
+    
+    async def game_watcher(self, ctx: "BizHawkClientContext"):
         from worlds._bizhawk import read, write
 
         if ctx.server is None or ctx.slot is None:
@@ -62,7 +99,7 @@ class DragonWarriorClient(BizHawkClient):
         
         current_map, chests_array, recv_count, inventory_bytes, \
             dragonlord_dead, herbs, equip_byte, level_byte, gold_byte, \
-            ap_byte, status_byte, monster_list = await read(ctx.bizhawk_ctx, [
+            ap_byte, status_byte, monster_list, deathlink, enemy = await read(ctx.bizhawk_ctx, [
             (0x45, 1, "RAM"),
             (0x601C, 16, "System Bus"),
             (0x0E, 1, "RAM"),
@@ -74,7 +111,9 @@ class DragonWarriorClient(BizHawkClient):
             (0xBD, 1, "RAM"),
             (0x01, 1, "RAM"),
             (0xDF, 1, "RAM"),
-            (0x66C0, 80, "System Bus")
+            (0x66C0, 80, "System Bus"),
+            (0xE4, 1, "RAM"),
+            (0xE0, 1, "RAM")
         ])
 
         if current_map[0] == 0:  # Don't start processing until we load a map
@@ -82,6 +121,7 @@ class DragonWarriorClient(BizHawkClient):
         
         # Search for new location checks
         new_checks = []
+        writes = []
 
         # Game Completion
         dragonlord_dead = dragonlord_dead[0] & 0x4
@@ -92,6 +132,23 @@ class DragonWarriorClient(BizHawkClient):
                 "cmd": "StatusUpdate",
                 "status": ClientStatus.CLIENT_GOAL
             }])
+
+        # Deathlink
+        # 0x20 flag indicates we died, 0x10 flag indicates we should die
+        if self.deathlink:
+            await ctx.update_death_link(True)
+            if (deathlink[0] & 0x20) and not (deathlink[0] & 0x10):
+                self.own_deathlink = True
+                writes.append((0xE4, (deathlink[0] & 0xCF).to_bytes(1, 'little'), "RAM"))  # & 0xCF clears the deathlink flags
+                await self.send_deathlink(ctx, enemy[0])
+
+            if (deathlink[0] & 0x20) and (deathlink[0] & 0x10):
+                writes.append((0xE4, (deathlink[0] & 0xCF).to_bytes(1, 'little'), "RAM"))  # & 0xCF clears the deathlink flags
+
+            # Set the 0x10 flag to kill the player 
+            if self.pending_deathlink:
+                writes.append((0xE4, (deathlink[0] | 0x10).to_bytes(1, 'little'), "RAM"))
+                self.pending_deathlink = False
 
         # Send Shop Hints
         equipment_locations = []
@@ -184,7 +241,6 @@ class DragonWarriorClient(BizHawkClient):
         # Receive Items
         # Compare items_received index in the RAM at 0x0E to len(ctx.items_received)
         # If smaller, we should grant the missing items
-        writes = []
         important_items = [0x5, 0x7, 0x8, 0xA, 0xC, 0xD, 0xE]
         filler_items = [0x1, 0x2, 0x3, 0x4, 0x6, 0x9, 0xB]
 

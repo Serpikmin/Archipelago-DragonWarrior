@@ -470,7 +470,7 @@ class DWOptions(PerGameCommonOptions):
     searchsanity: SearchSanity
     shopsanity: ShopSanity
     monstersanity: MonsterSanity
-    deathlink: DeathLink
+    death_link: DeathLink
 
     random_growth: RandomGrowth
     random_map: RandomMap

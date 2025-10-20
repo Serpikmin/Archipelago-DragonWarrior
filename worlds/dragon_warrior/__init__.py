@@ -144,7 +144,7 @@ class DragonWarriorWorld(World):
         self.multiworld.completion_condition[self.player] = lambda state: \
             state.has(names.ball_of_light, self.player)
         
-        # visualize_regions(self.get_region("Menu"), "dw_regions.puml", show_locations=True)
+        visualize_regions(self.get_region("Menu"), "dw_regions.puml", show_locations=True)
 
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
@@ -173,7 +173,8 @@ class DragonWarriorWorld(World):
                             self.multiworld.player_name[self.player],
                             flags=self.determine_flags(),
                             searchsanity=self.options.searchsanity,
-                            shopsanity=self.options.shopsanity)
+                            shopsanity=self.options.shopsanity,
+                            deathlink=self.options.death_link)
             patch.write()
 
         except Exception:
@@ -183,11 +184,11 @@ class DragonWarriorWorld(World):
 
     def fill_slot_data(self) -> Dict[str, any]:
         return {
-            "searchsanity": self.options.searchsanity,
-            "levelsanity": self.options.levelsanity,
-            "shopsanity": self.options.shopsanity,
-            "monstersanity": self.options.monstersanity,
-            "deathlink": self.options.deathlink
+            "searchsanity": self.options.searchsanity.value,
+            "levelsanity": self.options.levelsanity.value,
+            "shopsanity": self.options.shopsanity.value,
+            "monstersanity": self.options.monstersanity.value,
+            "death_link": self.options.death_link.value
         }
 
     def determine_flags(self) -> str:
