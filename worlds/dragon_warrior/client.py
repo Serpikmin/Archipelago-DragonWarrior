@@ -137,11 +137,14 @@ class DragonWarriorClient(BizHawkClient):
         # 0x20 flag indicates we died, 0x10 flag indicates we should die
         if self.deathlink:
             await ctx.update_death_link(True)
+
+            # Dying normally
             if (deathlink[0] & 0x20) and not (deathlink[0] & 0x10):
                 self.own_deathlink = True
                 writes.append((0xE4, (deathlink[0] & 0xCF).to_bytes(1, 'little'), "RAM"))  # & 0xCF clears the deathlink flags
                 await self.send_deathlink(ctx, enemy[0])
 
+            # Dying from a received deathlink
             if (deathlink[0] & 0x20) and (deathlink[0] & 0x10):
                 writes.append((0xE4, (deathlink[0] & 0xCF).to_bytes(1, 'little'), "RAM"))  # & 0xCF clears the deathlink flags
 

@@ -73,7 +73,7 @@ class DWPatch(APAutoPatchInterface):
     @override
     def patch(self, target: str) -> None:
         # Extract the dwr module from the .apworld depending on OS into a temp directory
-        current_directory = os.getcwd()
+        current_directory = Utils.user_path()
         new_dir = os.path.join(current_directory, "dragon_warrior_randomizer")
 
         if platform.system() == "Windows":
@@ -140,6 +140,8 @@ def write_rom(
         deathlink: bool
     ) -> None:
     # Patch using DWRandomizer
+    if os.path.isfile(target):
+        return
     import dwr # type: ignore
     dwr.py_dwr_randomize(bytes(get_base_rom_path(), encoding="ascii"), 
                                seed, 
