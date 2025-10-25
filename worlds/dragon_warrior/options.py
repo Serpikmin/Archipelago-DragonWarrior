@@ -259,7 +259,7 @@ class BonkDamage(Choice):
     option_2_hp = 2
     option_20_hp = 3
     option_instakill = 4
-    option_random = 5
+    option_random_damage = 5
     option_halve_health = 6
     default = 0
 
