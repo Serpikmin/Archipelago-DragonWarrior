@@ -109,7 +109,7 @@ class DragonWarriorClient(BizHawkClient):
             (0xBE, 1, "RAM"),
             (0xC7, 1, "RAM"),
             (0xBD, 1, "RAM"),
-            (0x01, 1, "RAM"),
+            (0xB9, 1, "RAM"),
             (0xDF, 1, "RAM"),
             (0x66C0, 80, "System Bus"),
             (0xE4, 1, "RAM"),
