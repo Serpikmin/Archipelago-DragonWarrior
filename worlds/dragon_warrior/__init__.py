@@ -144,7 +144,7 @@ class DragonWarriorWorld(World):
         self.multiworld.completion_condition[self.player] = lambda state: \
             state.has(names.ball_of_light, self.player)
         
-        visualize_regions(self.get_region("Menu"), "dw_regions.puml", show_locations=True)
+        # visualize_regions(self.get_region("Menu"), "dw_regions.puml", show_locations=True)
 
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
