@@ -196,7 +196,7 @@ def connect_regions(world: World) -> None:
                         state.has(names.stones_of_sunlight, world.player) and
                         state.has(names.magic_key, world.player) and
                         (not searchsanity or (state.has(names.erdricks_token, world.player) and
-                                              state.has(names.fairy_flute)))))
+                                              state.has(names.fairy_flute, world.player)))))
 
     connect(world, world.player, region_names, names.overworld, names.tantegel_castle, 
         lambda state: (state.has(names.magic_key, world.player)))
