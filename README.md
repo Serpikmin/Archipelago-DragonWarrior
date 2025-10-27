@@ -6,11 +6,11 @@ You can install the dragon_warrior.apworld file in the Releases tab to your AP L
 
 ## How do I join a multiworld with Dragon Warrior?
 
-When hosted on the AP website, you can hit the `Download Patch File...` button to get your `.apdw` file, otherwise your host should send it to you. Ensure you have the Archipelago Launcher, and open the `.apdw` patch file using the "Open Patch" option in the launcher. NOTE THAT DOUBLE CLICKING THE PATCH FILE WILL NOT WORK!! (due to some under the hood stuff)
+When hosted on the AP website, you can hit the `Download Patch File...` button to get your `.apdw` file, otherwise your host should send it to you. Ensure you have the Archipelago Launcher and Bizhawk installed, and double-click the `.apdw` patch file. This will open up the client and emulator with the patched ROM file.
 
 ## What does randomization do to this game?
 
-By default, chests and their contents are randomized into the multiworld. There are also two checks associated with rescuing and returning Princess Gwaelin. Additional -sanity options exist to randomize search spots, level-ups, and equipment shops. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
+By default, chests and their contents are randomized into the multiworld. There are also two checks associated with rescuing and returning Princess Gwaelin. Additional -sanity options exist to randomize search spots, level-ups,equipment shops, and monsters. Magic Key Vendors no longer sell them, instead, a single unbreakable Magic Key is shuffled into the multiworld as a progression item.
 
 ## What is the goal of Dragon Warrior when randomized?
 
@@ -26,12 +26,8 @@ Any shuffled item can be in other players' worlds.
 
 ## What does another world's item look like in Dragon Warrior?
 
-All items appear in chests and search spots as "APItem". Levelups and Purchases do not have an explicit appearence and simply send a check out when reached.
+All items appear in chests and search spots as "APItem". Levelups, Purchases, and Monster Kills do not have an explicit appearence and simply send a check out when achieved.
 
 ## When the player receives an item, what happens?
 
 Currently, items are silently added to the player's inventory. If the player's inventory is full, a quest item will drop a filler item (Similar to the logic for Gwaelin's Love).
-
-## Future plans:
-
-- DeathLink
