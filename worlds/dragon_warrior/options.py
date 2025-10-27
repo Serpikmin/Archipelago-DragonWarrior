@@ -47,9 +47,10 @@ class RandomGrowth(Toggle):
 
 class RandomMap(Toggle):
     """
-    The overworld map will be randomly generated.
+    The overworld map will be randomly generated. Stairs leading to other maps (Tantegel Basement, Garin's Grave) 
+    are also shuffled.
 
-    WARNING: This is currently an experimental option and may result in unwinnable seeds depending on where 
+    WARNING!!!: This is currently an experimental option and may result in unwinnable seeds depending on where 
     the Magic Key is placed. Use at your own risk!
     """
     display_name = "Random Map"
