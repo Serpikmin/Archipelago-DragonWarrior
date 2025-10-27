@@ -156,7 +156,7 @@ def write_rom(
         f.seek(0xBFF0)
         f.write(player_name.encode() + 0x00.to_bytes() * (16 - len(player_name)))  # Pad to 16 chars
         f.flush()
-        if deathlink:
+        if deathlink == "True":
             f.seek(0x7FFF)
             f.write(0xDE.to_bytes())
             f.flush()
