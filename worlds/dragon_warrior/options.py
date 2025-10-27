@@ -50,8 +50,7 @@ class RandomMap(Toggle):
     The overworld map will be randomly generated. Stairs leading to other maps (Tantegel Basement, Garin's Grave) 
     are also shuffled.
 
-    WARNING!!!: This is currently an experimental option and may result in unwinnable seeds depending on where 
-    the Magic Key is placed. Use at your own risk!
+    Note that this is currently an experimental option! If you roll an unwinnable seed please let the developer know.
     """
     display_name = "Random Map"
 
