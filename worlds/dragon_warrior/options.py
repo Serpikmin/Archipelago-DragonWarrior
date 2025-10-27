@@ -49,7 +49,8 @@ class RandomMap(Toggle):
     """
     The overworld map will be randomly generated.
 
-    WARNING: This will likely break combat logic and you may have to logically traverse areas you are too weak for.
+    WARNING: This is currently an experimental option and may result in unwinnable seeds depending on where 
+    the Magic Key is placed. Use at your own risk!
     """
     display_name = "Random Map"
 
