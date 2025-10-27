@@ -265,7 +265,6 @@ hauksness_monster_locations = {
 }
 
 charlock_monster_locations = {  # Requires Rainbow Drop + Magic Key
-    names.golem: 0xDEF30,
     names.blue_dragon: 0xDEF44,
     names.stoneman: 0xDEF46,
     names.armored_knight: 0xDEF48,
@@ -273,6 +272,8 @@ charlock_monster_locations = {  # Requires Rainbow Drop + Magic Key
 }
 
 charlock_dragonlord_locations = {  # Requires Rainbow Drop + Magic Key (+ Max Equipment if Shopsanity)
+    # Golem is here so it doesn't self-lock fairy flute
+    names.golem: 0xDEF30,
     names.dragonlord_1: 0xDEF4C,
     names.dragonlord_2: 0xDEF4E
 }
