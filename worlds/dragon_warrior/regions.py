@@ -61,6 +61,7 @@ def create_regions(world: World, level_locations, high_level_locations) -> None:
     hauksness_locations = {}
     token_locations = {}
     charlock_locations = {**locations.charlock_locations}
+    dragonlord_locations = {}
 
     if world.options.searchsanity:
         kol_locations = {**kol_locations, **locations.kol_locations}
@@ -84,6 +85,7 @@ def create_regions(world: World, level_locations, high_level_locations) -> None:
         swamp_cave_locations = {**swamp_cave_locations, **locations.swamp_cave_monster_locations}
         hauksness_locations = {**hauksness_locations, **locations.hauksness_monster_locations}
         charlock_locations = {**charlock_locations, **locations.charlock_monster_locations}
+        dragonlord_locations = {**dragonlord_locations, **locations.charlock_dragonlord_locations}
 
         
     
@@ -121,7 +123,7 @@ def create_regions(world: World, level_locations, high_level_locations) -> None:
     charlock_region = create_region(world, names.charlock_castle, charlock_locations)
 
     # For MonsterSanity, connect with equipment so the Dragonlord kills don't have any
-    dragonlord_region = create_region(world, names.charlock_dragonlord, locations.charlock_dragonlord_locations)
+    dragonlord_region = create_region(world, names.charlock_dragonlord, dragonlord_locations)
 
     hauksness_region = create_region(world, names.hauksness, hauksness_locations)
 
@@ -196,6 +198,7 @@ def connect_regions(world: World) -> None:
         lambda state: (state.has(names.staff_of_rain, world.player) and 
                         state.has(names.stones_of_sunlight, world.player) and
                         state.has(names.magic_key, world.player) and
+                        state.has(names.fairy_flute, world.player) and
                         (not searchsanity or state.has(names.erdricks_token, world.player))))
 
     connect(world, world.player, region_names, names.overworld, names.tantegel_castle, 
