@@ -167,7 +167,8 @@ class DragonWarriorClient(BizHawkClient):
             case 0x0B: # Rimuldar 
                 equipment_locations = [0x10, 0x14, 0x18, 0x60, 0x80, 0xA0]
         
-        if equipment_locations:
+        # Don't send scouts unless shopsanity is on, seeing if 0x01 is in the locations list
+        if equipment_locations and 0x01 in ctx.server_locations:
             await ctx.send_msgs([{
                 "cmd": "LocationScouts",
                 "locations": equipment_locations,
