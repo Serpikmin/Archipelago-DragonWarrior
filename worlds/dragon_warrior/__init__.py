@@ -12,10 +12,7 @@ from BaseClasses import Item, ItemClassification, MultiWorld, Tutorial
 from worlds.AutoWorld import World, WebWorld
 from .rom import DRAGON_WARRIOR_PRG0_HASH, DRAGON_WARRIOR_PRG1_HASH, DWPatch
 from .options import DWOptions, DWOptionGroups
-from .client import EXPECTED_VERSION, DragonWarriorClient
-
-v = str(EXPECTED_VERSION)
-version = v[0] + '.' + v[1] + '.' + v[2]
+from .client import DragonWarriorClient
 
 class DWSettings(settings.Group):
     class RomFile(settings.UserFilePath):
@@ -50,7 +47,6 @@ class DragonWarriorWorld(World):
     on a quest to vanquish the Dragonlord, and save the land from darkness!
     """
     game = "Dragon Warrior"
-    world_version = version
     authors = ["Serp"]
     settings_key = "dw_options"
     settings: ClassVar[DWSettings]
