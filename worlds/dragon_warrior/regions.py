@@ -171,7 +171,7 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, 'Menu', names.tantegel_throne_room)
     connect(world, world.player, region_names, 'Menu', names.overworld)
     connect(world, world.player, region_names, names.overworld, names.strong_overworld,
-        equipment_helper(3, 3, 2, True))
+        equipment_helper(world, 3, 3, 2, True))
     connect(world, world.player, region_names, names.overworld, names.breconnary)
     connect(world, world.player, region_names, names.overworld, names.garinham, 
         equipment_helper(world, 2, 2, 1))
@@ -188,7 +188,7 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.garinham, names.mountain_cave,
         equipment_helper(world, 3, 3, 2, random_map))
     connect(world, world.player, region_names, names.overworld, names.swamp_cave,
-        equipment_helper(4, 4, 2, random_map))
+        equipment_helper(world, 4, 4, 2, random_map))
 
 
     connect(world, world.player, region_names, names.rimuldar, names.rainbow_drop_shrine,
@@ -196,7 +196,7 @@ def connect_regions(world: World) -> None:
                         state.has(names.stones_of_sunlight, world.player) and
                         state.has(names.magic_key, world.player) and
                         (not searchsanity or (state.has(names.erdricks_token, world.player) and
-                                              state.has(names.fairy_flute)))))
+                                              state.has(names.fairy_flute, world.player)))))
 
     connect(world, world.player, region_names, names.overworld, names.tantegel_castle, 
         lambda state: (state.has(names.magic_key, world.player)))
