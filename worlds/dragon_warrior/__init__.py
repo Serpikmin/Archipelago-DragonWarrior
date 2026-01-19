@@ -150,18 +150,15 @@ class DragonWarriorWorld(World):
 
     def create_item(self, name: str, force_non_progression=False) -> Item:
         data = item_table[name]
-        classification = None
+        classification = ItemClassification.filler
 
         if force_non_progression:
-            classification = ItemClassification.filler
+            pass
         elif data.progression:
             classification = ItemClassification.progression
 
         if data.useful:
             classification = classification | ItemClassification.useful
-
-        if not classification:
-            classification = ItemClassification.filler
 
         created_item = DWItem(name, classification, data.code, self.player)
 
