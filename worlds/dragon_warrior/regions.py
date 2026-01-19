@@ -190,7 +190,7 @@ def connect_regions(world: World) -> None:
     connect(world, world.player, region_names, names.garinham, names.mountain_cave,
         equipment_helper(world, 3, 3, 2, random_map))
     connect(world, world.player, region_names, names.overworld, names.swamp_cave,
-        equipment_helper(world, 4, 4, 2, random_map))
+        equipment_helper(world, 4, 4, 2, True))
 
 
     connect(world, world.player, region_names, names.rimuldar, names.rainbow_drop_shrine,
