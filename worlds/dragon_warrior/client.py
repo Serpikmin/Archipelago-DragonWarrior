@@ -45,11 +45,12 @@ class DragonWarriorClient(BizHawkClient):
                 return False
             
             if version_bytes[:3].decode("ascii") != EXPECTED_VERSION:
+                version = version_bytes[:3].decode("ascii")
                 logger.info(
                     "WARNING: Version mismatch, this was generated on an earlier version of the apworld and may not function as expected."
                 )
                 logger.info(
-                    "World Version: " + version_bytes[0].decode("ascii") + '.' + version_bytes[1].decode("ascii") + '.' + version_bytes[2].decode("ascii")
+                    "World Version: " + version[0] + '.' + version[1] + '.' + version[2]
                 )
                 logger.info("Client Version: " + EXPECTED_VERSION[0] + '.' + EXPECTED_VERSION[1] + '.' + EXPECTED_VERSION[2])
         except UnicodeDecodeError:
