@@ -215,8 +215,18 @@ def connect_regions(world: World) -> None:
         lambda state: (state.has(names.gwaelins_love, world.player)))
     connect(world, world.player, region_names, names.rainbow_drop_shrine, names.charlock_castle,
         equipment_helper(world, 6, 6, 2))
+    # Special logic for Dragonlord region for monstersanity between shopsanity on or off
+    # (Whether all progressive equipment are needed or just Erdr. Armor + Sword)
     connect(world, world.player, region_names, names.charlock_castle, names.charlock_dragonlord,
-        equipment_helper(world, 7, 7, 3))
+        lambda state: ((world.options.shopsanity and 
+                            state.has(names.progressive_weapon, world.player, 7) and
+                            state.has(names.progressive_armor, world.player, 7) and
+                            state.has(names.progressive_shield, world.player, 3)
+                        ) or
+                       (not world.options.shopsanity and
+                            state.has(names.erdricks_sword, world.player) and
+                            (not world.options.searchsanity or state.has(names.erdricks_armor, world.player))
+                        )))
 
 def create_region(world: World, name: str, location_checks=None):
     ret = DWRegion(name, world.player, world.multiworld)
