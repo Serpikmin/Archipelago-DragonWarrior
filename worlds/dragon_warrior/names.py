@@ -7,7 +7,7 @@ progressive_weapon = "Progressive Weapon Upgrade"
 progressive_armor = "Progressive Armor Upgrade"
 progressive_shield = "Progressive Shield Upgrade"
 erdricks_sword = "Erdrick's Sword"
-erdricks_armor = "Erdrick's Armour"
+erdricks_armor = "Erdrick's Armor"
 dragon_scale = "Dragon Scale"
 fighters_ring = "Fighter's Ring"
 
