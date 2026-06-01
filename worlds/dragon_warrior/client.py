@@ -28,6 +28,7 @@ class DragonWarriorClient(BizHawkClient):
     pending_deathlink = False
     own_deathlink = False
     item_queue: List[NetworkItem] = []
+    tracker_map: int = 0
 
     async def validate_rom(self, ctx: "BizHawkClientContext") -> bool:
         from worlds._bizhawk import RequestFailedError, read
@@ -91,6 +92,17 @@ class DragonWarriorClient(BizHawkClient):
         death_message += ENEMY_NAMES[enemy_id] + '.'
         ctx.last_death_link = time.time()
         await ctx.send_death(death_message)
+        
+    async def update_map(self, ctx: "BizHawkClientContext", current_map: int):
+        if self.tracker_map != current_map:
+            self.tracker_map = current_map
+            await ctx.send_msgs([{
+                "cmd": "Bounce",
+                "slots": [ctx.slot],
+                "data": {
+                    "current_map": self.tracker_map
+                }
+            }])
     
     async def game_watcher(self, ctx: "BizHawkClientContext"):
         from worlds._bizhawk import read, write
@@ -242,6 +254,9 @@ class DragonWarriorClient(BizHawkClient):
                 f'New Check: {location} ({len(ctx.locations_checked)}/'
                 f'{len(ctx.missing_locations) + len(ctx.checked_locations)})')
             await ctx.send_msgs([{"cmd": 'LocationChecks', "locations": [new_check_id]}])
+            
+        # Update map for Poptracker
+        await self.update_map(ctx, current_map[0])
 
         # Receive Items
         # Compare items_received index in the RAM at 0x0E to len(ctx.items_received)

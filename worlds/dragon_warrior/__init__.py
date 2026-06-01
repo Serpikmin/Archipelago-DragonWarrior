@@ -189,6 +189,7 @@ class DragonWarriorWorld(World):
         return {
             "searchsanity": self.options.searchsanity.value,
             "levelsanity": self.options.levelsanity.value,
+            "levelsanity_range": self.options.levelsanity_range.value,
             "shopsanity": self.options.shopsanity.value,
             "monstersanity": self.options.monstersanity.value,
             "death_link": self.options.death_link.value
